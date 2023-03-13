@@ -78,7 +78,7 @@ described in {{ISSUANCE, Section 5.1}}.
 The Client first creates a context as follows:
 
 ~~~
-client_context = SetupVOPRFClient(0x0001, pkI)
+client_context = SetupVOPRFClient("ristretto255-SHA512", pkI)
 ~~~
 
 Here, 0x0001 is the two-octet identifier corresponding to the OPRF(ristretto255,
