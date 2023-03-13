@@ -151,7 +151,7 @@ the Client, the issuer forms a list of `Element` values, denoted
 `blinded_elements`, and computes a blinded response as follows:
 
 ~~~
-server_context = SetupVOPRFServer(0x0001, skI, pkI)
+server_context = SetupVOPRFServer("ristretto255-SHA512", skI, pkI)
 evaluated_elements, proof = server_context.BlindEvaluateBatch(skI, blinded_elements)
 ~~~
 
