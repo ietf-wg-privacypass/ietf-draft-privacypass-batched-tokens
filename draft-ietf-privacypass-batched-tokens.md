@@ -1,8 +1,8 @@
 ---
 title: "Batched Token Issuance Protocol"
 abbrev: Batched Tokens
-docname: draft-robert-privacypass-batched-tokens-latest
-category: info
+docname: draft-ietf-privacypass-batched-tokens-latest
+category: std
 
 ipr: trust200902
 keyword: Internet-Draft
