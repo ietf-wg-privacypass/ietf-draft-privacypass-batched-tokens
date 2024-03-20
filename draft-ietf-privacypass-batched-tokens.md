@@ -297,5 +297,6 @@ following value:
 
 | Value  | Name                                        | Publicly Verifiable | Public Metadata | Private Metadata | Nk  | Reference        |
 |:-------|:--------------------------------------------|:--------------------|:----------------|:-----------------|:----|:-----------------|
+| 0xF901 | Batched Token VOPRF (P-384, SHA-384) | N                   | N               | N                | 32  | This document    |
 | 0xF91A | Batched Token VOPRF (ristretto255, SHA-512) | N                   | N               | N                | 32  | This document    |
 {: #aeadid-values title="Token Types"}
