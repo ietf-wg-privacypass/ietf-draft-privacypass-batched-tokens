@@ -78,12 +78,12 @@ described in {{ISSUANCE, Section 5.1}}.
 The Client first creates a context as follows:
 
 ~~~
-client_context = SetupVOPRFClient("ristretto255-SHA512", pkI)
+client_context = SetupVOPRFClient(ciphersuiteID, pkI)
 ~~~
 
-Here, "ristretto255-SHA512" is the identifier corresponding to the OPRF(ristretto255,
-SHA-512) ciphersuite in {{OPRF}}. SetupVOPRFClient is defined in {{OPRF, Section
-3.2}}.
+`ciphersuiteID` is the ciphersuite identifier from {{OPRF}} corresponding
+to the ciphersuite being used for this token version. SetupVOPRFClient is
+defined in {{OPRF, Section 3.2}}.
 
 `Nr` denotes the number of tokens the clients wants to request. For every token,
 the Client then creates an issuance request message for a random value `nonce`
@@ -92,9 +92,11 @@ with the input challenge and Issuer key identifier as described below:
 ~~~
 nonce_i = random(32)
 challenge_digest = SHA256(challenge)
-token_input = concat(0xF91A, nonce_i, challenge_digest, key_id)
+token_input = concat(token_type, nonce_i, challenge_digest, key_id)
 blind_i, blinded_element_i = client_context.Blind(token_input)
 ~~~
+
+`token_type` corresponds to the 2-octet integer in the challenge.
 
 The above is repeated for each token to be requested. Importantly, a fresh nonce
 MUST be sampled each time.
@@ -107,7 +109,7 @@ struct {
 } BlindedElement;
 
 struct {
-   uint16_t token_type = 0xF91A;
+   uint16_t token_type;
    uint8_t token_key_id;
    BlindedElement blinded_elements<0..2^16-1>;
 } TokenRequest;
@@ -127,7 +129,8 @@ The structure fields are defined as follows:
 
 Upon receipt of the request, the Issuer validates the following conditions:
 
-- The TokenRequest contains a supported token_type equal to 0xF91A.
+- The TokenRequest contains a supported token_type equal to one of the batched
+  token types defined in this document.
 - The TokenRequest.token_key_id corresponds to a key ID of a Public Key owned by
   the issuer.
 - Nr, as determined based on the size of TokenRequest.blinded_elements, is
@@ -151,11 +154,13 @@ the Client, the issuer forms a list of `Element` values, denoted
 `blinded_elements`, and computes a blinded response as follows:
 
 ~~~
-server_context = SetupVOPRFServer("ristretto255-SHA512", skI, pkI)
+server_context = SetupVOPRFServer(ciphersuiteID, skI, pkI)
 evaluated_elements, proof = server_context.BlindEvaluateBatch(skI, blinded_elements)
 ~~~
 
-SetupVOPRFServer is defined in {{OPRF, Section 3.2}}. The issuer uses a list of
+`ciphersuiteID` is the ciphersuite identifier from {{OPRF}} corresponding
+to the ciphersuite being used for this token version. SetupVOPRFServer is 
+defined in {{OPRF, Section 3.2}}. The issuer uses a list of
 blinded elements to compute in the proof generation step. The
 `BlindEvaluateBatch` function is a batch-oriented version of the `BlindEvaluate`
 function described in {{OPRF, Section 3.3.2}}. The description of
@@ -271,7 +276,7 @@ corresponds to `nonce`, the i-th nonce that was sampled in
 
 ~~~
 struct {
-    uint16_t token_type = 0xF91A
+    uint16_t token_type;
     uint8_t nonce[32];
     uint8_t challenge_digest[32];
     uint8_t token_key_id[32];
