@@ -159,7 +159,7 @@ evaluated_elements, proof = server_context.BlindEvaluateBatch(skI, blinded_eleme
 ~~~
 
 `ciphersuiteID` is the ciphersuite identifier from {{OPRF}} corresponding
-to the ciphersuite being used for this token version. SetupVOPRFServer is 
+to the ciphersuite being used for this token version. SetupVOPRFServer is
 defined in {{OPRF, Section 3.2}}. The issuer uses a list of
 blinded elements to compute in the proof generation step. The
 `BlindEvaluateBatch` function is a batch-oriented version of the `BlindEvaluate`
