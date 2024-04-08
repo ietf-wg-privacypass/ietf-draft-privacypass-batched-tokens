@@ -5,8 +5,8 @@
 Network Working Group                                          R. Robert
 Internet-Draft                                               Phoenix R&D
 Intended status: Standards Track                              C. A. Wood
-Expires: 22 September 2024                                    Cloudflare
-                                                           21 March 2024
+Expires: 10 October 2024                                      Cloudflare
+                                                            8 April 2024
 
 
                     Batched Token Issuance Protocol
@@ -34,7 +34,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 September 2024.
+   This Internet-Draft will expire on 10 October 2024.
 
 Copyright Notice
 
@@ -126,10 +126,10 @@ Table of Contents
    a random value nonce with the input challenge and Issuer key
    identifier as described below:
 
-   nonce_i = random(32)
-   challenge_digest = SHA256(challenge)
-   token_input = concat(token_type, nonce_i, challenge_digest, key_id)
-   blind_i, blinded_element_i = client_context.Blind(token_input)
+nonce_i = random(32)
+challenge_digest = SHA256(challenge)
+token_input = concat(token_type, nonce_i, challenge_digest, token_key_id)
+blind_i, blinded_element_i = client_context.Blind(token_input)
 
    token_type corresponds to the 2-octet integer in the challenge.
 
@@ -144,7 +144,7 @@ Table of Contents
 
    struct {
       uint16_t token_type;
-      uint8_t token_key_id;
+      uint8_t truncated_token_key_id;
       BlindedElement blinded_elements<0..2^16-1>;
    } TokenRequest;
 
@@ -153,8 +153,9 @@ Table of Contents
    *  "token_type" is a 2-octet integer, which matches the type in the
       challenge.
 
-   *  "token_key_id" is the least significant byte of the key_id in
-      network byte order (in other words, the last 8 bits of key_id).
+   *  "truncated_token_key_id" is the least significant byte of the
+      token_key_id in network byte order (in other words, the last 8
+      bits of token_key_id).
 
    *  "blinded_elements" is a list of Nr serialized elements, each of
       length Ne bytes and computed as
@@ -168,8 +169,8 @@ Table of Contents
    *  The TokenRequest contains a supported token_type equal to one of
       the batched token types defined in this document.
 
-   *  The TokenRequest.token_key_id corresponds to a key ID of a Public
-      Key owned by the issuer.
+   *  The TokenRequest.truncated_token_key_id corresponds to a key ID of
+      a Public Key owned by the issuer.
 
    *  Nr, as determined based on the size of
       TokenRequest.blinded_elements, is less than or equal to the number
