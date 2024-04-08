@@ -92,7 +92,7 @@ with the input challenge and Issuer key identifier as described below:
 ~~~
 nonce_i = random(32)
 challenge_digest = SHA256(challenge)
-token_input = concat(token_type, nonce_i, challenge_digest, key_id)
+token_input = concat(token_type, nonce_i, challenge_digest, token_key_id)
 blind_i, blinded_element_i = client_context.Blind(token_input)
 ~~~
 
@@ -110,7 +110,7 @@ struct {
 
 struct {
    uint16_t token_type;
-   uint8_t token_key_id;
+   uint8_t truncated_token_key_id;
    BlindedElement blinded_elements<0..2^16-1>;
 } TokenRequest;
 ~~~
@@ -119,8 +119,8 @@ The structure fields are defined as follows:
 
 - "token_type" is a 2-octet integer, which matches the type in the challenge.
 
-- "token_key_id" is the least significant byte of the `key_id` in network byte
-  order (in other words, the last 8 bits of `key_id`).
+- "truncated_token_key_id" is the least significant byte of the `token_key_id`
+  in network byte order (in other words, the last 8 bits of `token_key_id`).
 
 - "blinded_elements" is a list of `Nr` serialized elements, each of length `Ne`
   bytes and computed as `SerializeElement(blinded_element_i)`, where
@@ -131,8 +131,8 @@ Upon receipt of the request, the Issuer validates the following conditions:
 
 - The TokenRequest contains a supported token_type equal to one of the batched
   token types defined in this document.
-- The TokenRequest.token_key_id corresponds to a key ID of a Public Key owned by
-  the issuer.
+- The TokenRequest.truncated_token_key_id corresponds to a key ID of a Public
+  Key owned by the issuer.
 - Nr, as determined based on the size of TokenRequest.blinded_elements, is
   less than or equal to the number of tokens that the issuer can issue in a
   single batch.
