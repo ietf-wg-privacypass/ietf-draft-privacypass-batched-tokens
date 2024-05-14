@@ -385,8 +385,6 @@ def FinalizeBatch(input, blind, evaluatedElements, blindedElements, proof):
 
    *  Private Metadata: N
 
-   *  Batched Issuance: Y
-
    *  Nk: 32
 
    *  Nid: 32
