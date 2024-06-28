@@ -5,8 +5,8 @@
 Network Working Group                                          R. Robert
 Internet-Draft                                               Phoenix R&D
 Intended status: Standards Track                              C. A. Wood
-Expires: 21 November 2024                                     Cloudflare
-                                                             20 May 2024
+Expires: 30 December 2024                                     Cloudflare
+                                                            28 June 2024
 
 
                     Batched Token Issuance Protocol
@@ -34,7 +34,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 November 2024.
+   This Internet-Draft will expire on 30 December 2024.
 
 Copyright Notice
 
@@ -136,10 +136,11 @@ Table of Contents
    a random value nonce with the input challenge and Issuer key
    identifier as described below:
 
-nonce_i = random(32)
-challenge_digest = SHA256(challenge)
-token_input = concat(token_type, nonce_i, challenge_digest, token_key_id)
-blind_i, blinded_element_i = client_context.Blind(token_input)
+   nonce_i = random(32)
+   challenge_digest = SHA256(challenge)
+   token_input = concat(token_type, nonce_i, challenge_digest,
+                   token_key_id)
+   blind_i, blinded_element_i = client_context.Blind(token_input)
 
    token_type corresponds to the 2-octet integer in the challenge.
 
@@ -217,8 +218,9 @@ blind_i, blinded_element_i = client_context.Blind(token_input)
    the issuer forms a list of Element values, denoted blinded_elements,
    and computes a blinded response as follows:
 
-server_context = SetupVOPRFServer(ciphersuiteID, skI, pkI)
-evaluated_elements, proof = server_context.BlindEvaluateBatch(skI, blinded_elements)
+   server_context = SetupVOPRFServer(ciphersuiteID, skI, pkI)
+   evaluated_elements, proof =
+     server_context.BlindEvaluateBatch(skI, blinded_elements)
 
    ciphersuiteID is the ciphersuite identifier from [OPRF] corresponding
    to the ciphersuite being used for this token version.
@@ -293,47 +295,49 @@ evaluated_elements, proof = server_context.BlindEvaluateBatch(skI, blinded_eleme
    If deserialization of either value fails, the Client aborts the
    protocol.  Otherwise, the Client processes the response as follows:
 
-authenticator_values = client_context.FinalizeBatch(token_input, blind, evaluated_elements, blinded_elements, proof)
+ authenticator_values = client_context.FinalizeBatch(token_input, blind,
+                          evaluated_elements, blinded_elements, proof)
 
    The FinalizeBatch function is a batched variant of the Finalize
    function as defined in [OPRF], Section 3.3.2.  FinalizeBatch accepts
    lists of evaluated elements and blinded elements as input parameters,
    and is implemented as described below:
 
-Input:
+  Input:
 
-  PrivateInput input
-  Scalar blind
-  Element evaluatedElements[Nr]
-  Element blindedElements[Nr]
-  Proof proof
+    PrivateInput input
+    Scalar blind
+    Element evaluatedElements[Nr]
+    Element blindedElements[Nr]
+    Proof proof
 
-Output:
+  Output:
 
-  opaque output[Nh * Nr]
+    opaque output[Nh * Nr]
 
-Parameters:
+  Parameters:
 
-  Group G
-  Element pkS
+    Group G
+    Element pkS
 
-Errors: VerifyError
+  Errors: VerifyError
 
-def FinalizeBatch(input, blind, evaluatedElements, blindedElements, proof):
-  if VerifyProof(G.Generator(), pkS, blindedElements,
-                 evaluatedElements, proof) == false:
-    raise VerifyError
+  def FinalizeBatch(input, blind,
+    evaluatedElements, blindedElements, proof):
+    if VerifyProof(G.Generator(), pkS, blindedElements,
+                   evaluatedElements, proof) == false:
+      raise VerifyError
 
-  output = nil
-  for evaluatedElement in evaluatedElements:
-    N = G.ScalarInverse(blind) * evaluatedElement
-    unblindedElement = G.SerializeElement(N)
-    hashInput = I2OSP(len(input), 2) || input ||
-                I2OSP(len(unblindedElement), 2) || unblindedElement ||
-                "Finalize"
-    output = concat(output, Hash(hashInput))
+    output = nil
+    for evaluatedElement in evaluatedElements:
+      N = G.ScalarInverse(blind) * evaluatedElement
+      unblindedElement = G.SerializeElement(N)
+      hashInput = I2OSP(len(input), 2) || input ||
+                  I2OSP(len(unblindedElement), 2) || unblindedElement ||
+                  "Finalize"
+      output = concat(output, Hash(hashInput))
 
-  return output
+    return output
 
    If this succeeds, the Client then constructs Nr Token values, where
    authenticator is the i-th Nh-byte length slice of
