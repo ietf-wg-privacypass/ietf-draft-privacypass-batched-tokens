@@ -2,6 +2,7 @@
 title: "Batched Token Issuance Protocol"
 abbrev: Batched Tokens
 docname: draft-ietf-privacypass-batched-tokens-latest
+submissiontype: IETF
 category: std
 
 ipr: trust200902
@@ -29,6 +30,22 @@ allows for batched issuance of tokens. This allows clients to request more than
 one token at a time and for issuers to issue more than one token at a time.
 
 --- middle
+
+# Change Log:
+
+RFC EDITOR PLEASE DELETE THIS SECTION.
+
+draft-02
+
+- Renaming TokenRequest to BatchTokenRequest and TokenResponse to
+  BatchTokenResponse
+- IANA: Media types for BatchTokenRequest and BatchTokenResponse
+- IANA: Expand Token Type registry entry
+- Various editorial fixes
+
+draft-01
+
+- Initial WG document version
 
 # Introduction
 
