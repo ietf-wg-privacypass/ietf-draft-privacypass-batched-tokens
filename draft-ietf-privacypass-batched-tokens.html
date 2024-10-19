@@ -12,23 +12,22 @@
 allows for batched issuance of tokens. This allows clients to request more than
 one token at a time and for issuers to issue more than one token at a time. 
     " name="description">
-<meta content="xml2rfc 3.21.0" name="generator">
+<meta content="xml2rfc 3.23.2" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-privacypass-batched-tokens-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.21.0
-    Python 3.12.3
+  xml2rfc 3.23.2
+    Python 3.12.7
     ConfigArgParse 1.7
-    google-i18n-address 3.1.0
+    google-i18n-address 3.1.1
     intervaltree 3.1.0
     Jinja2 3.1.4
     lxml 4.9.4
-    platformdirs 4.2.2
+    platformdirs 4.3.6
     pycountry 22.3.5
     PyYAML 6.0.1
-    requests 2.31.0
-    setuptools 69.5.1
-    six 1.16.0
+    requests 2.32.3
+    setuptools 70.3.0
     wcwidth 0.2.13
 -->
 <link href="draft-ietf-privacypass-batched-tokens.xml" rel="alternate" type="application/rfc+xml">
@@ -1028,11 +1027,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Batched Tokens</td>
-<td class="right">June 2024</td>
+<td class="right">October 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Robert &amp; Wood</td>
-<td class="center">Expires 30 December 2024</td>
+<td class="center">Expires 22 April 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1045,12 +1044,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-privacypass-batched-tokens-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-06-28" class="published">28 June 2024</time>
+<time datetime="2024-10-19" class="published">19 October 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-12-30">30 December 2024</time></dd>
+<dd class="expires"><time datetime="2025-04-22">22 April 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1090,7 +1089,7 @@ one token at a time and for issuers to issue more than one token at a time.<a hr
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 30 December 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 22 April 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1120,147 +1119,180 @@ one token at a time and for issuers to issue more than one token at a time.<a hr
         </h2>
 <nav class="toc"><ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
-            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-change-log" class="internal xref">Change Log:</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-motivation" class="internal xref">Motivation</a></p>
+            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-client-to-issuer-request" class="internal xref">Client-to-Issuer Request</a></p>
+            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-motivation" class="internal xref">Motivation</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-issuer-to-client-response" class="internal xref">Issuer-to-Client Response</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-client-to-issuer-request" class="internal xref">Client-to-Issuer Request</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-finalization" class="internal xref">Finalization</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-issuer-to-client-response" class="internal xref">Issuer-to-Client Response</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-security-considerations" class="internal xref">Security considerations</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-finalization" class="internal xref">Finalization</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-iana-considerations" class="internal xref">IANA considerations</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
-                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-token-type" class="internal xref">Token Type</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-security-considerations" class="internal xref">Security considerations</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
-                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-media-types" class="internal xref">Media Types</a></p>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-iana-considerations" class="internal xref">IANA considerations</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.1">
-                    <p id="section-toc.1-1.7.2.2.2.1.1"><a href="#section-7.2.1" class="auto internal xref">7.2.1</a>.  <a href="#name-application-private-token-b" class="internal xref">"application/private-token-batch-request" media type</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-token-type" class="internal xref">Token Type</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.2">
-                    <p id="section-toc.1-1.7.2.2.2.2.1"><a href="#section-7.2.2" class="auto internal xref">7.2.2</a>.  <a href="#name-application-private-token-ba" class="internal xref">"application/private-token-batch-response" media type</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
+                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-media-types" class="internal xref">Media Types</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2.2.1">
+                    <p id="section-toc.1-1.8.2.2.2.1.1"><a href="#section-8.2.1" class="auto internal xref">8.2.1</a>.  <a href="#name-application-private-token-b" class="internal xref">"application/private-token-batch-request" media type</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2.2.2">
+                    <p id="section-toc.1-1.8.2.2.2.2.1"><a href="#section-8.2.2" class="auto internal xref">8.2.2</a>.  <a href="#name-application-private-token-ba" class="internal xref">"application/private-token-batch-response" media type</a></p>
 </li>
                 </ul>
 </li>
             </ul>
 </li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
-            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-references" class="internal xref">References</a></p>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-references" class="internal xref">References</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
-                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
+                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="auto internal xref">9.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
-                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
+                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="auto internal xref">9.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
 </li>
             </ul>
 </li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
-            <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
 </section>
 </div>
-<div id="introduction">
+<div id="change-log">
 <section id="section-1">
-      <h2 id="name-introduction">
-<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      <h2 id="name-change-log">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-change-log" class="section-name selfRef">Change Log:</a>
       </h2>
-<p id="section-1-1">This document specifies a variant of the Privacy Pass issuance protocol (as
+<p id="section-1-1">RFC EDITOR PLEASE DELETE THIS SECTION.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">draft-02<a href="#section-1-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1-3.1">
+          <p id="section-1-3.1.1">Renaming TokenRequest to BatchTokenRequest and TokenResponse to
+BatchTokenResponse<a href="#section-1-3.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-1-3.2">
+          <p id="section-1-3.2.1">IANA: Media types for BatchTokenRequest and BatchTokenResponse<a href="#section-1-3.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-1-3.3">
+          <p id="section-1-3.3.1">IANA: Expand Token Type registry entry<a href="#section-1-3.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-1-3.4">
+          <p id="section-1-3.4.1">Various editorial fixes<a href="#section-1-3.4.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-1-4">draft-01<a href="#section-1-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1-5.1">
+          <p id="section-1-5.1.1">Initial WG document version<a href="#section-1-5.1.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+</section>
+</div>
+<div id="introduction">
+<section id="section-2">
+      <h2 id="name-introduction">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-2-1">This document specifies a variant of the Privacy Pass issuance protocol (as
 defined in <span>[<a href="#ARCH" class="cite xref">ARCH</a>]</span>) that allows for batched
 issuance of tokens. This allows clients to request more than one token at a time
-and for issuers to issue more than one token at a time.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">The base Privacy Pass issuance protocol
+and for issuers to issue more than one token at a time.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">The base Privacy Pass issuance protocol
 <span>[<a href="#ISSUANCE" class="cite xref">ISSUANCE</a>]</span> defines stateless anonymous tokens,
 which can either be publicly verifiable or not. While it is possible to run
 multiple instances of the issuance protocol in parallel, e.g., over a
 multiplexed transport such as HTTP/3 <span>[<a href="#HTTP3" class="cite xref">HTTP3</a>]</span>, the cost of doing so
-scales linearly with the number of instances.<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">This variant of the issuance protocol builds upon the privately verifiable
+scales linearly with the number of instances.<a href="#section-2-2" class="pilcrow">¶</a></p>
+<p id="section-2-3">This variant of the issuance protocol builds upon the privately verifiable
 issuance protocol in <span>[<a href="#ISSUANCE" class="cite xref">ISSUANCE</a>]</span> that uses VOPRF <span>[<a href="#OPRF" class="cite xref">OPRF</a>]</span>,
 and allows for batched issuance of tokens. This allows clients to request more
 than one token at a time and for issuers to issue more than one token at a
-time. In effect, batched issuance performance scales better than linearly.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">The token type for this issuance protocol is the same as in the non-batched
+time. In effect, batched issuance performance scales better than linearly.<a href="#section-2-3" class="pilcrow">¶</a></p>
+<p id="section-2-4">The token type for this issuance protocol is the same as in the non-batched
 issuance protocol. This is because the underlying cryptographic protocol is
 the same. As a result, the batched issuance protocol in this document only
-works with token types that support batching.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5">This batched issuance protocol registers one new token type (<a href="#iana-token-type" class="auto internal xref">Section 7.1</a>),
+works with token types that support batching.<a href="#section-2-4" class="pilcrow">¶</a></p>
+<p id="section-2-5">This batched issuance protocol registers one new token type (<a href="#iana-token-type" class="auto internal xref">Section 8.1</a>),
 to be used with the PrivateToken HTTP authentication scheme defined in
-<span>[<a href="#AUTHSCHEME" class="cite xref">AUTHSCHEME</a>]</span>.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<span>[<a href="#AUTHSCHEME" class="cite xref">AUTHSCHEME</a>]</span>.<a href="#section-2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="motivation">
-<section id="section-2">
+<section id="section-3">
       <h2 id="name-motivation">
-<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-motivation" class="section-name selfRef">Motivation</a>
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-motivation" class="section-name selfRef">Motivation</a>
       </h2>
-<p id="section-2-1">Privately Verifiable Tokens (as defines in
+<p id="section-3-1">Privately Verifiable Tokens (as defines in
 <span>[<a href="#ISSUANCE" class="cite xref">ISSUANCE</a>]</span>) offer a simple way to unlink the
 issuance from the redemption. The base protocol however only allows for a single
 token to be issued at a time for every challenge. In some cases, especially
 where a large number of clients need to fetch a large number of tokens, this may
 introduce performance bottlenecks. The Batched Token Issuance Protocol improves
 upon the basic Privately Verifiable Token issuance protocol in the following key
-ways:<a href="#section-2-1" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-2-2">
-<li id="section-2-2.1">
-          <p id="section-2-2.1.1">Issuing multiple tokens at once in response to a single TokenChallenge,
-thereby reducing the size of the proofs required for multiple tokens.<a href="#section-2-2.1.1" class="pilcrow">¶</a></p>
+ways:<a href="#section-3-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-3-2">
+<li id="section-3-2.1">
+          <p id="section-3-2.1.1">Issuing multiple tokens at once in response to a single TokenChallenge,
+thereby reducing the size of the proofs required for multiple tokens.<a href="#section-3-2.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li id="section-2-2.2">
-          <p id="section-2-2.2.1">Improving server and client issuance efficiency by amortizing the cost of the
-VOPRF proof generation and verification, respectively.<a href="#section-2-2.2.1" class="pilcrow">¶</a></p>
+        <li id="section-3-2.2">
+          <p id="section-3-2.2.1">Improving server and client issuance efficiency by amortizing the cost of the
+VOPRF proof generation and verification, respectively.<a href="#section-3-2.2.1" class="pilcrow">¶</a></p>
 </li>
       </ol>
 </section>
 </div>
 <div id="client-to-issuer-request">
-<section id="section-3">
+<section id="section-4">
       <h2 id="name-client-to-issuer-request">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-client-to-issuer-request" class="section-name selfRef">Client-to-Issuer Request</a>
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-client-to-issuer-request" class="section-name selfRef">Client-to-Issuer Request</a>
       </h2>
-<p id="section-3-1">Except where specified otherwise, the client follows the same protocol as
-described in <span>[<a href="#ISSUANCE" class="cite xref">ISSUANCE</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-protocol-16#section-5.1" class="relref">Section 5.1</a></span>.<a href="#section-3-1" class="pilcrow">¶</a></p>
-<p id="section-3-2">The Client first creates a context as follows:<a href="#section-3-2" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-3-3">
+<p id="section-4-1">Except where specified otherwise, the client follows the same protocol as
+described in <span>[<a href="#ISSUANCE" class="cite xref">ISSUANCE</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-protocol-16#section-5.1" class="relref">Section 5.1</a></span>.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">The Client first creates a context as follows:<a href="#section-4-2" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-4-3">
 <pre>
 client_context = SetupVOPRFClient(ciphersuiteID, pkI)
-</pre><a href="#section-3-3" class="pilcrow">¶</a>
+</pre><a href="#section-4-3" class="pilcrow">¶</a>
 </div>
-<p id="section-3-4"><code>ciphersuiteID</code> is the ciphersuite identifier from <span>[<a href="#OPRF" class="cite xref">OPRF</a>]</span> corresponding
+<p id="section-4-4"><code>ciphersuiteID</code> is the ciphersuite identifier from <span>[<a href="#OPRF" class="cite xref">OPRF</a>]</span> corresponding
 to the ciphersuite being used for this token version. SetupVOPRFClient is
-defined in <span>[<a href="#OPRF" class="cite xref">OPRF</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-voprf-21#section-3.2" class="relref">Section 3.2</a></span>.<a href="#section-3-4" class="pilcrow">¶</a></p>
-<p id="section-3-5"><code>Nr</code> denotes the number of tokens the clients wants to request. For every token,
+defined in <span>[<a href="#OPRF" class="cite xref">OPRF</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-voprf-21#section-3.2" class="relref">Section 3.2</a></span>.<a href="#section-4-4" class="pilcrow">¶</a></p>
+<p id="section-4-5"><code>Nr</code> denotes the number of tokens the clients wants to request. For every token,
 the Client then creates an issuance request message for a random value <code>nonce</code>
-with the input challenge and Issuer key identifier as described below:<a href="#section-3-5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-3-6">
+with the input challenge and Issuer key identifier as described below:<a href="#section-4-5" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-4-6">
 <pre>
 nonce_i = random(32)
 challenge_digest = SHA256(challenge)
 token_input = concat(token_type, nonce_i, challenge_digest,
                 token_key_id)
 blind_i, blinded_element_i = client_context.Blind(token_input)
-</pre><a href="#section-3-6" class="pilcrow">¶</a>
+</pre><a href="#section-4-6" class="pilcrow">¶</a>
 </div>
-<p id="section-3-7"><code>token_type</code> corresponds to the 2-octet integer in the challenge.<a href="#section-3-7" class="pilcrow">¶</a></p>
-<p id="section-3-8">The above is repeated for each token to be requested. Importantly, a fresh nonce
-MUST be sampled each time.<a href="#section-3-8" class="pilcrow">¶</a></p>
-<p id="section-3-9">The Client then creates a BatchTokenRequest structured as follows:<a href="#section-3-9" class="pilcrow">¶</a></p>
-<div class="lang-tls sourcecode" id="section-3-10">
+<p id="section-4-7"><code>token_type</code> corresponds to the 2-octet integer in the challenge.<a href="#section-4-7" class="pilcrow">¶</a></p>
+<p id="section-4-8">The above is repeated for each token to be requested. Importantly, a fresh nonce
+MUST be sampled each time.<a href="#section-4-8" class="pilcrow">¶</a></p>
+<p id="section-4-9">The Client then creates a BatchTokenRequest structured as follows:<a href="#section-4-9" class="pilcrow">¶</a></p>
+<div class="lang-tls sourcecode" id="section-4-10">
 <pre>
 struct {
     uint8_t blinded_element[Ne];
@@ -1271,29 +1303,29 @@ struct {
    uint8_t truncated_token_key_id;
    BlindedElement blinded_elements&lt;0..2^16-1&gt;;
 } BatchTokenRequest;
-</pre><a href="#section-3-10" class="pilcrow">¶</a>
+</pre><a href="#section-4-10" class="pilcrow">¶</a>
 </div>
-<p id="section-3-11">The structure fields are defined as follows:<a href="#section-3-11" class="pilcrow">¶</a></p>
+<p id="section-4-11">The structure fields are defined as follows:<a href="#section-4-11" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3-12.1">
-          <p id="section-3-12.1.1">"token_type" is a 2-octet integer, which matches the type in the challenge.<a href="#section-3-12.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-4-12.1">
+          <p id="section-4-12.1.1">"token_type" is a 2-octet integer, which matches the type in the challenge.<a href="#section-4-12.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-3-12.2">
-          <p id="section-3-12.2.1">"truncated_token_key_id" is the least significant byte of the <code>token_key_id</code>
-in network byte order (in other words, the last 8 bits of <code>token_key_id</code>).<a href="#section-3-12.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-4-12.2">
+          <p id="section-4-12.2.1">"truncated_token_key_id" is the least significant byte of the <code>token_key_id</code>
+in network byte order (in other words, the last 8 bits of <code>token_key_id</code>).<a href="#section-4-12.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-3-12.3">
-          <p id="section-3-12.3.1">"blinded_elements" is a list of <code>Nr</code> serialized elements, each of length <code>Ne</code>
+        <li class="normal" id="section-4-12.3">
+          <p id="section-4-12.3.1">"blinded_elements" is a list of <code>Nr</code> serialized elements, each of length <code>Ne</code>
 bytes and computed as <code>SerializeElement(blinded_element_i)</code>, where
 blinded_element_i is the i-th output sequence of <code>Blind</code> invocations above. Ne
-is as defined in <span>[<a href="#OPRF" class="cite xref">OPRF</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-voprf-21#section-4" class="relref">Section 4</a></span>.<a href="#section-3-12.3.1" class="pilcrow">¶</a></p>
+is as defined in <span>[<a href="#OPRF" class="cite xref">OPRF</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-voprf-21#section-4" class="relref">Section 4</a></span>.<a href="#section-4-12.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-3-13">The Client then generates an HTTP POST request to send to the Issuer Request
+<p id="section-4-13">The Client then generates an HTTP POST request to send to the Issuer Request
 URL, with the BatchTokenRequest as the content. The media type for this request
 is "application/private-token-batch-request". An example request for the Issuer
-Request URL "https://issuer.example.net/request" is shown below.<a href="#section-3-13" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-3-14">
+Request URL "https://issuer.example.net/request" is shown below.<a href="#section-4-13" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-4-14">
 <pre>
 POST /request HTTP/1.1
 Host: issuer.example.net
@@ -1302,56 +1334,56 @@ Content-Type: application/private-token-batch-request
 Content-Length: &lt;Length of BatchTokenRequest&gt;
 
 &lt;Bytes containing the BatchTokenRequest&gt;
-</pre><a href="#section-3-14" class="pilcrow">¶</a>
+</pre><a href="#section-4-14" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="issuer-to-client-response">
-<section id="section-4">
+<section id="section-5">
       <h2 id="name-issuer-to-client-response">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-issuer-to-client-response" class="section-name selfRef">Issuer-to-Client Response</a>
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-issuer-to-client-response" class="section-name selfRef">Issuer-to-Client Response</a>
       </h2>
-<p id="section-4-1">Except where specified otherwise, the client follows the same protocol as
-described in <span>[<a href="#ISSUANCE" class="cite xref">ISSUANCE</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-protocol-16#section-5.2" class="relref">Section 5.2</a></span>.<a href="#section-4-1" class="pilcrow">¶</a></p>
-<p id="section-4-2">Upon receipt of the request, the Issuer validates the following conditions:<a href="#section-4-2" class="pilcrow">¶</a></p>
+<p id="section-5-1">Except where specified otherwise, the client follows the same protocol as
+described in <span>[<a href="#ISSUANCE" class="cite xref">ISSUANCE</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-protocol-16#section-5.2" class="relref">Section 5.2</a></span>.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">Upon receipt of the request, the Issuer validates the following conditions:<a href="#section-5-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4-3.1">
-          <p id="section-4-3.1.1">The BatchTokenRequest contains a supported token_type equal to one of the batched
-token types defined in this document.<a href="#section-4-3.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-5-3.1">
+          <p id="section-5-3.1.1">The BatchTokenRequest contains a supported token_type equal to one of the batched
+token types defined in this document.<a href="#section-5-3.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-4-3.2">
-          <p id="section-4-3.2.1">The BatchTokenRequest.truncated_token_key_id corresponds to a key ID of a Public
-Key owned by the issuer.<a href="#section-4-3.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-5-3.2">
+          <p id="section-5-3.2.1">The BatchTokenRequest.truncated_token_key_id corresponds to a key ID of a Public
+Key owned by the issuer.<a href="#section-5-3.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-4-3.3">
-          <p id="section-4-3.3.1">Nr, as determined based on the size of BatchTokenRequest.blinded_elements, is
+        <li class="normal" id="section-5-3.3">
+          <p id="section-5-3.3.1">Nr, as determined based on the size of BatchTokenRequest.blinded_elements, is
 less than or equal to the number of tokens that the issuer can issue in a
-single batch.<a href="#section-4-3.3.1" class="pilcrow">¶</a></p>
+single batch.<a href="#section-5-3.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-4-4">If any of these conditions is not met, the Issuer MUST return an HTTP 400 error
-to the client.<a href="#section-4-4" class="pilcrow">¶</a></p>
-<p id="section-4-5">The Issuer then tries to deseralize the i-th element
+<p id="section-5-4">If any of these conditions is not met, the Issuer MUST return an HTTP 400 error
+to the client.<a href="#section-5-4" class="pilcrow">¶</a></p>
+<p id="section-5-5">The Issuer then tries to deseralize the i-th element
 of BatchTokenRequest.blinded_elements using DeserializeElement from <span><a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-voprf-21#section-2.1" class="relref">Section 2.1</a> of [<a href="#OPRF" class="cite xref">OPRF</a>]</span>, yielding <code>blinded_element_i</code> of type <code>Element</code>. If this fails for any of
 the BatchTokenRequest.blinded_elements values, the Issuer MUST return an HTTP 400
 error to the client. Otherwise, if the Issuer is willing to produce a token to
 the Client, the issuer forms a list of <code>Element</code> values, denoted
-<code>blinded_elements</code>, and computes a blinded response as follows:<a href="#section-4-5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4-6">
+<code>blinded_elements</code>, and computes a blinded response as follows:<a href="#section-5-5" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5-6">
 <pre>
 server_context = SetupVOPRFServer(ciphersuiteID, skI, pkI)
 evaluated_elements, proof =
   server_context.BlindEvaluateBatch(skI, blinded_elements)
-</pre><a href="#section-4-6" class="pilcrow">¶</a>
+</pre><a href="#section-5-6" class="pilcrow">¶</a>
 </div>
-<p id="section-4-7"><code>ciphersuiteID</code> is the ciphersuite identifier from <span>[<a href="#OPRF" class="cite xref">OPRF</a>]</span> corresponding
+<p id="section-5-7"><code>ciphersuiteID</code> is the ciphersuite identifier from <span>[<a href="#OPRF" class="cite xref">OPRF</a>]</span> corresponding
 to the ciphersuite being used for this token version. SetupVOPRFServer is
 defined in <span>[<a href="#OPRF" class="cite xref">OPRF</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-voprf-21#section-3.2" class="relref">Section 3.2</a></span>. The issuer uses a list of
 blinded elements to compute in the proof generation step. The
 <code>BlindEvaluateBatch</code> function is a batch-oriented version of the <code>BlindEvaluate</code>
 function described in <span>[<a href="#OPRF" class="cite xref">OPRF</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-voprf-21#section-3.3.2" class="relref">Section 3.3.2</a></span>. The description of
-<code>BlindEvaluateBatch</code> is below.<a href="#section-4-7" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4-8">
+<code>BlindEvaluateBatch</code> is below.<a href="#section-5-7" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5-8">
 <pre>
 Input:
 
@@ -1376,10 +1408,10 @@ def BlindEvaluateBatch(blindedElements):
   proof = GenerateProof(skS, G.Generator(), pkS,
                         blindedElements, evaluatedElements)
   return evaluatedElements, proof
-</pre><a href="#section-4-8" class="pilcrow">¶</a>
+</pre><a href="#section-5-8" class="pilcrow">¶</a>
 </div>
-<p id="section-4-9">The Issuer then creates a BatchTokenResponse structured as follows:<a href="#section-4-9" class="pilcrow">¶</a></p>
-<div class="lang-tls sourcecode" id="section-4-10">
+<p id="section-5-9">The Issuer then creates a BatchTokenResponse structured as follows:<a href="#section-5-9" class="pilcrow">¶</a></p>
+<div class="lang-tls sourcecode" id="section-5-10">
 <pre>
 struct {
     uint8_t evaluated_element[Ne];
@@ -1389,56 +1421,56 @@ struct {
    EvaluatedElement evaluated_elements&lt;0..2^16-1&gt;;
    uint8_t evaluated_proof[Ns + Ns];
 } BatchTokenResponse;
-</pre><a href="#section-4-10" class="pilcrow">¶</a>
+</pre><a href="#section-5-10" class="pilcrow">¶</a>
 </div>
-<p id="section-4-11">The structure fields are defined as follows:<a href="#section-4-11" class="pilcrow">¶</a></p>
+<p id="section-5-11">The structure fields are defined as follows:<a href="#section-5-11" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4-12.1">
-          <p id="section-4-12.1.1">"evaluated_elements" is a list of <code>Nr</code> serialized elements, each of length
+<li class="normal" id="section-5-12.1">
+          <p id="section-5-12.1.1">"evaluated_elements" is a list of <code>Nr</code> serialized elements, each of length
 <code>Ne</code> bytes and computed as <code>SerializeElement(evaluate_element_i)</code>, where
-evaluate_element_i is the i-th output of <code>BlindEvaluate</code>.<a href="#section-4-12.1.1" class="pilcrow">¶</a></p>
+evaluate_element_i is the i-th output of <code>BlindEvaluate</code>.<a href="#section-5-12.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-4-12.2">
-          <p id="section-4-12.2.1">"evaluated_proof" is the (Ns+Ns)-octet serialized proof, which is a pair of
+        <li class="normal" id="section-5-12.2">
+          <p id="section-5-12.2.1">"evaluated_proof" is the (Ns+Ns)-octet serialized proof, which is a pair of
 Scalar values, computed as <code>concat(SerializeScalar(proof[0]),
-SerializeScalar(proof[1]))</code>, where Ns is as defined in <span>[<a href="#OPRF" class="cite xref">OPRF</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-voprf-21#section-4" class="relref">Section 4</a></span>.<a href="#section-4-12.2.1" class="pilcrow">¶</a></p>
+SerializeScalar(proof[1]))</code>, where Ns is as defined in <span>[<a href="#OPRF" class="cite xref">OPRF</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-voprf-21#section-4" class="relref">Section 4</a></span>.<a href="#section-5-12.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-4-13">The Issuer generates an HTTP response with status code 200 whose content
+<p id="section-5-13">The Issuer generates an HTTP response with status code 200 whose content
 consists of TokenResponse, with the content type set as
-"application/private-token-batch-response".<a href="#section-4-13" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4-14">
+"application/private-token-batch-response".<a href="#section-5-13" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5-14">
 <pre>
 HTTP/1.1 200 OK
 Content-Type: application/private-token-batch-response
 Content-Length: &lt;Length of BatchTokenResponse&gt;
 
 &lt;Bytes containing the BatchTokenResponse&gt;
-</pre><a href="#section-4-14" class="pilcrow">¶</a>
+</pre><a href="#section-5-14" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="finalization">
-<section id="section-5">
+<section id="section-6">
       <h2 id="name-finalization">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-finalization" class="section-name selfRef">Finalization</a>
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-finalization" class="section-name selfRef">Finalization</a>
       </h2>
-<p id="section-5-1">Upon receipt, the Client handles the response and, if successful, deserializes
+<p id="section-6-1">Upon receipt, the Client handles the response and, if successful, deserializes
 the body values TokenResponse.evaluate_response and
 TokenResponse.evaluate_proof, yielding <code>evaluated_elements</code> and <code>proof</code>. If
 deserialization of either value fails, the Client aborts the protocol.
-Otherwise, the Client processes the response as follows:<a href="#section-5-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-5-2">
+Otherwise, the Client processes the response as follows:<a href="#section-6-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6-2">
 <pre>
 authenticator_values = client_context.FinalizeBatch(token_input, blind,
                          evaluated_elements, blinded_elements, proof)
-</pre><a href="#section-5-2" class="pilcrow">¶</a>
+</pre><a href="#section-6-2" class="pilcrow">¶</a>
 </div>
-<p id="section-5-3">The <code>FinalizeBatch</code> function is a batched variant of the <code>Finalize</code> function as
+<p id="section-6-3">The <code>FinalizeBatch</code> function is a batched variant of the <code>Finalize</code> function as
 defined in <span>[<a href="#OPRF" class="cite xref">OPRF</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-voprf-21#section-3.3.2" class="relref">Section 3.3.2</a></span>. <code>FinalizeBatch</code> accepts lists of evaluated
 elements and blinded elements as input parameters, and is implemented as
-described below:<a href="#section-5-3" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-5-4">
+described below:<a href="#section-6-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6-4">
 <pre>
 Input:
 
@@ -1475,13 +1507,13 @@ def FinalizeBatch(input, blind,
     output = concat(output, Hash(hashInput))
 
   return output
-</pre><a href="#section-5-4" class="pilcrow">¶</a>
+</pre><a href="#section-6-4" class="pilcrow">¶</a>
 </div>
-<p id="section-5-5">If this succeeds, the Client then constructs <code>Nr</code> Token values, where
+<p id="section-6-5">If this succeeds, the Client then constructs <code>Nr</code> Token values, where
 <code>authenticator</code> is the i-th Nh-byte length slice of <code>authenticator_values</code> that
 corresponds to <code>nonce</code>, the i-th nonce that was sampled in
-<a href="#client-to-issuer-request" class="auto internal xref">Section 3</a>:<a href="#section-5-5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-5-6">
+<a href="#client-to-issuer-request" class="auto internal xref">Section 4</a>:<a href="#section-6-5" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6-6">
 <pre>
 struct {
     uint16_t token_type;
@@ -1490,301 +1522,301 @@ struct {
     uint8_t token_key_id[32];
     uint8_t authenticator[Nh];
 } Token;
-</pre><a href="#section-5-6" class="pilcrow">¶</a>
+</pre><a href="#section-6-6" class="pilcrow">¶</a>
 </div>
-<p id="section-5-7">If the FinalizeBatch function fails, the Client aborts the protocol. Token
-verification works exactly as specified in <span>[<a href="#ISSUANCE" class="cite xref">ISSUANCE</a>]</span>.<a href="#section-5-7" class="pilcrow">¶</a></p>
+<p id="section-6-7">If the FinalizeBatch function fails, the Client aborts the protocol. Token
+verification works exactly as specified in <span>[<a href="#ISSUANCE" class="cite xref">ISSUANCE</a>]</span>.<a href="#section-6-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-considerations">
-<section id="section-6">
+<section id="section-7">
       <h2 id="name-security-considerations">
-<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security considerations</a>
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-security-considerations" class="section-name selfRef">Security considerations</a>
       </h2>
-<p id="section-6-1">Implementors SHOULD be aware of the security considerations described in <span>[<a href="#OPRF" class="cite xref">OPRF</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-voprf-21#section-6.2.3" class="relref">Section 6.2.3</a></span> and implement mitigation mechanisms. Application can mitigate
+<p id="section-7-1">Implementors SHOULD be aware of the security considerations described in <span>[<a href="#OPRF" class="cite xref">OPRF</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-voprf-21#section-6.2.3" class="relref">Section 6.2.3</a></span> and implement mitigation mechanisms. Application can mitigate
 this issue by limiting the number of clients and limiting the number of token
-requests per client per key.<a href="#section-6-1" class="pilcrow">¶</a></p>
+requests per client per key.<a href="#section-7-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
-<section id="section-7">
+<section id="section-8">
       <h2 id="name-iana-considerations">
-<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA considerations</a>
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA considerations</a>
       </h2>
-<p id="section-7-1">This section contains IANA codepoint allocation requests.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-8-1">This section contains IANA codepoint allocation requests.<a href="#section-8-1" class="pilcrow">¶</a></p>
 <div id="iana-token-type">
-<section id="section-7.1">
+<section id="section-8.1">
         <h3 id="name-token-type">
-<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-token-type" class="section-name selfRef">Token Type</a>
+<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-token-type" class="section-name selfRef">Token Type</a>
         </h3>
-<p id="section-7.1-1">This document updates the "Token Type" Registry (<span>[<a href="#AUTHSCHEME" class="cite xref">AUTHSCHEME</a>]</span>) with the
-following entry:<a href="#section-7.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.1-1">This document updates the "Token Type" Registry (<span>[<a href="#AUTHSCHEME" class="cite xref">AUTHSCHEME</a>]</span>) with the
+following entry:<a href="#section-8.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-7.1-2.1">
-            <p id="section-7.1-2.1.1">Value: 0xF91A<a href="#section-7.1-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-8.1-2.1">
+            <p id="section-8.1-2.1.1">Value: 0xF91A<a href="#section-8.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-7.1-2.2">
-            <p id="section-7.1-2.2.1">Name: VOPRF (ristretto255, SHA-512)<a href="#section-7.1-2.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-8.1-2.2">
+            <p id="section-8.1-2.2.1">Name: VOPRF (ristretto255, SHA-512)<a href="#section-8.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-7.1-2.3">
-            <p id="section-7.1-2.3.1">Token Structure: As defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-auth-scheme-15#section-2.2" class="relref">Section 2.2</a> of [<a href="#AUTHSCHEME" class="cite xref">AUTHSCHEME</a>]</span><a href="#section-7.1-2.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-8.1-2.3">
+            <p id="section-8.1-2.3.1">Token Structure: As defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-auth-scheme-15#section-2.2" class="relref">Section 2.2</a> of [<a href="#AUTHSCHEME" class="cite xref">AUTHSCHEME</a>]</span><a href="#section-8.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-7.1-2.4">
-            <p id="section-7.1-2.4.1">Token Key Encoding: Serialized using SerializeElement from <span><a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-voprf-21#section-2.1" class="relref">Section 2.1</a> of [<a href="#OPRF" class="cite xref">OPRF</a>]</span><a href="#section-7.1-2.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-8.1-2.4">
+            <p id="section-8.1-2.4.1">Token Key Encoding: Serialized using SerializeElement from <span><a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-voprf-21#section-2.1" class="relref">Section 2.1</a> of [<a href="#OPRF" class="cite xref">OPRF</a>]</span><a href="#section-8.1-2.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-7.1-2.5">
-            <p id="section-7.1-2.5.1">TokenChallenge Structure: As defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-auth-scheme-15#section-2.1" class="relref">Section 2.1</a> of [<a href="#AUTHSCHEME" class="cite xref">AUTHSCHEME</a>]</span><a href="#section-7.1-2.5.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-8.1-2.5">
+            <p id="section-8.1-2.5.1">TokenChallenge Structure: As defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-auth-scheme-15#section-2.1" class="relref">Section 2.1</a> of [<a href="#AUTHSCHEME" class="cite xref">AUTHSCHEME</a>]</span><a href="#section-8.1-2.5.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-7.1-2.6">
-            <p id="section-7.1-2.6.1">Publicly Verifiable: N<a href="#section-7.1-2.6.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-8.1-2.6">
+            <p id="section-8.1-2.6.1">Publicly Verifiable: N<a href="#section-8.1-2.6.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-7.1-2.7">
-            <p id="section-7.1-2.7.1">Public Metadata: N<a href="#section-7.1-2.7.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-8.1-2.7">
+            <p id="section-8.1-2.7.1">Public Metadata: N<a href="#section-8.1-2.7.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-7.1-2.8">
-            <p id="section-7.1-2.8.1">Private Metadata: N<a href="#section-7.1-2.8.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-8.1-2.8">
+            <p id="section-8.1-2.8.1">Private Metadata: N<a href="#section-8.1-2.8.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-7.1-2.9">
-            <p id="section-7.1-2.9.1">Nk: 32<a href="#section-7.1-2.9.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-8.1-2.9">
+            <p id="section-8.1-2.9.1">Nk: 32<a href="#section-8.1-2.9.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-7.1-2.10">
-            <p id="section-7.1-2.10.1">Nid: 32<a href="#section-7.1-2.10.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-8.1-2.10">
+            <p id="section-8.1-2.10.1">Nid: 32<a href="#section-8.1-2.10.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-7.1-2.11">
-            <p id="section-7.1-2.11.1">Reference: <span>[<a href="#ISSUANCE" class="cite xref">ISSUANCE</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-protocol-16#section-5" class="relref">Section 5</a></span><a href="#section-7.1-2.11.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-8.1-2.11">
+            <p id="section-8.1-2.11.1">Reference: <span>[<a href="#ISSUANCE" class="cite xref">ISSUANCE</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-protocol-16#section-5" class="relref">Section 5</a></span><a href="#section-8.1-2.11.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-7.1-2.12">
-            <p id="section-7.1-2.12.1">Notes: None<a href="#section-7.1-2.12.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-8.1-2.12">
+            <p id="section-8.1-2.12.1">Notes: None<a href="#section-8.1-2.12.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="media-types">
-<section id="section-7.2">
+<section id="section-8.2">
         <h3 id="name-media-types">
-<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-media-types" class="section-name selfRef">Media Types</a>
+<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-media-types" class="section-name selfRef">Media Types</a>
         </h3>
-<p id="section-7.2-1">The following entries should be added to the IANA "media types"
-registry:<a href="#section-7.2-1" class="pilcrow">¶</a></p>
+<p id="section-8.2-1">The following entries should be added to the IANA "media types"
+registry:<a href="#section-8.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-7.2-2.1">
-            <p id="section-7.2-2.1.1">"application/private-token-batch-request"<a href="#section-7.2-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-8.2-2.1">
+            <p id="section-8.2-2.1.1">"application/private-token-batch-request"<a href="#section-8.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-7.2-2.2">
-            <p id="section-7.2-2.2.1">"application/private-token-batch-response"<a href="#section-7.2-2.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-8.2-2.2">
+            <p id="section-8.2-2.2.1">"application/private-token-batch-response"<a href="#section-8.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-7.2-3">The templates for these entries are listed below and the
-reference should be this RFC.<a href="#section-7.2-3" class="pilcrow">¶</a></p>
+<p id="section-8.2-3">The templates for these entries are listed below and the
+reference should be this RFC.<a href="#section-8.2-3" class="pilcrow">¶</a></p>
 <div id="applicationprivate-token-batch-request-media-type">
-<section id="section-7.2.1">
+<section id="section-8.2.1">
           <h4 id="name-application-private-token-b">
-<a href="#section-7.2.1" class="section-number selfRef">7.2.1. </a><a href="#name-application-private-token-b" class="section-name selfRef">"application/private-token-batch-request" media type</a>
+<a href="#section-8.2.1" class="section-number selfRef">8.2.1. </a><a href="#name-application-private-token-b" class="section-name selfRef">"application/private-token-batch-request" media type</a>
           </h4>
-<span class="break"></span><dl class="dlCompact dlParallel" id="section-7.2.1-1">
-            <dt id="section-7.2.1-1.1">Type name:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.1-1.2">
-              <p id="section-7.2.1-1.2.1">application<a href="#section-7.2.1-1.2.1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlCompact dlParallel" id="section-8.2.1-1">
+            <dt id="section-8.2.1-1.1">Type name:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.1-1.2">
+              <p id="section-8.2.1-1.2.1">application<a href="#section-8.2.1-1.2.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.1-1.3">Subtype name:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.1-1.4">
-              <p id="section-7.2.1-1.4.1">private-token-request<a href="#section-7.2.1-1.4.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.1-1.3">Subtype name:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.1-1.4">
+              <p id="section-8.2.1-1.4.1">private-token-request<a href="#section-8.2.1-1.4.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.1-1.5">Required parameters:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.1-1.6">
-              <p id="section-7.2.1-1.6.1">N/A<a href="#section-7.2.1-1.6.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.1-1.5">Required parameters:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.1-1.6">
+              <p id="section-8.2.1-1.6.1">N/A<a href="#section-8.2.1-1.6.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.1-1.7">Optional parameters:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.1-1.8">
-              <p id="section-7.2.1-1.8.1">N/A<a href="#section-7.2.1-1.8.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.1-1.7">Optional parameters:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.1-1.8">
+              <p id="section-8.2.1-1.8.1">N/A<a href="#section-8.2.1-1.8.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.1-1.9">Encoding considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.1-1.10">
-              <p id="section-7.2.1-1.10.1">"binary"<a href="#section-7.2.1-1.10.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.1-1.9">Encoding considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.1-1.10">
+              <p id="section-8.2.1-1.10.1">"binary"<a href="#section-8.2.1-1.10.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.1-1.11">Security considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.1-1.12">
-              <p id="section-7.2.1-1.12.1">see <a href="#security-considerations" class="auto internal xref">Section 6</a><a href="#section-7.2.1-1.12.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.1-1.11">Security considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.1-1.12">
+              <p id="section-8.2.1-1.12.1">see <a href="#security-considerations" class="auto internal xref">Section 7</a><a href="#section-8.2.1-1.12.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.1-1.13">Interoperability considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.1-1.14">
-              <p id="section-7.2.1-1.14.1">N/A<a href="#section-7.2.1-1.14.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.1-1.13">Interoperability considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.1-1.14">
+              <p id="section-8.2.1-1.14.1">N/A<a href="#section-8.2.1-1.14.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.1-1.15">Published specification:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.1-1.16">
-              <p id="section-7.2.1-1.16.1">this specification<a href="#section-7.2.1-1.16.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.1-1.15">Published specification:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.1-1.16">
+              <p id="section-8.2.1-1.16.1">this specification<a href="#section-8.2.1-1.16.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.1-1.17">Applications that use this media type:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.1-1.18">
-              <p id="section-7.2.1-1.18.1">Applications that want to issue or facilitate issuance of Privacy Pass tokens,
-including Privacy Pass issuer applications themselves.<a href="#section-7.2.1-1.18.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.1-1.17">Applications that use this media type:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.1-1.18">
+              <p id="section-8.2.1-1.18.1">Applications that want to issue or facilitate issuance of Privacy Pass tokens,
+including Privacy Pass issuer applications themselves.<a href="#section-8.2.1-1.18.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.1-1.19">Fragment identifier considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.1-1.20">
-              <p id="section-7.2.1-1.20.1">N/A<a href="#section-7.2.1-1.20.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.1-1.19">Fragment identifier considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.1-1.20">
+              <p id="section-8.2.1-1.20.1">N/A<a href="#section-8.2.1-1.20.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.1-1.21">Additional information:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.1-1.22">
-              <span class="break"></span><dl class="dlCompact dlParallel" id="section-7.2.1-1.22.1">
-                <dt id="section-7.2.1-1.22.1.1">Magic number(s):</dt>
-                <dd style="margin-left: 1.5em" id="section-7.2.1-1.22.1.2">N/A<a href="#section-7.2.1-1.22.1.2" class="pilcrow">¶</a>
+<dt id="section-8.2.1-1.21">Additional information:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.1-1.22">
+              <span class="break"></span><dl class="dlCompact dlParallel" id="section-8.2.1-1.22.1">
+                <dt id="section-8.2.1-1.22.1.1">Magic number(s):</dt>
+                <dd style="margin-left: 1.5em" id="section-8.2.1-1.22.1.2">N/A<a href="#section-8.2.1-1.22.1.2" class="pilcrow">¶</a>
 </dd>
                 <dd class="break"></dd>
-<dt id="section-7.2.1-1.22.1.3">Deprecated alias names for this type:</dt>
-                <dd style="margin-left: 1.5em" id="section-7.2.1-1.22.1.4">N/A<a href="#section-7.2.1-1.22.1.4" class="pilcrow">¶</a>
+<dt id="section-8.2.1-1.22.1.3">Deprecated alias names for this type:</dt>
+                <dd style="margin-left: 1.5em" id="section-8.2.1-1.22.1.4">N/A<a href="#section-8.2.1-1.22.1.4" class="pilcrow">¶</a>
 </dd>
                 <dd class="break"></dd>
-<dt id="section-7.2.1-1.22.1.5">File extension(s):</dt>
-                <dd style="margin-left: 1.5em" id="section-7.2.1-1.22.1.6">N/A<a href="#section-7.2.1-1.22.1.6" class="pilcrow">¶</a>
+<dt id="section-8.2.1-1.22.1.5">File extension(s):</dt>
+                <dd style="margin-left: 1.5em" id="section-8.2.1-1.22.1.6">N/A<a href="#section-8.2.1-1.22.1.6" class="pilcrow">¶</a>
 </dd>
                 <dd class="break"></dd>
-<dt id="section-7.2.1-1.22.1.7">Macintosh file type code(s):</dt>
-                <dd style="margin-left: 1.5em" id="section-7.2.1-1.22.1.8">N/A<a href="#section-7.2.1-1.22.1.8" class="pilcrow">¶</a>
+<dt id="section-8.2.1-1.22.1.7">Macintosh file type code(s):</dt>
+                <dd style="margin-left: 1.5em" id="section-8.2.1-1.22.1.8">N/A<a href="#section-8.2.1-1.22.1.8" class="pilcrow">¶</a>
 </dd>
               <dd class="break"></dd>
 </dl>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.1-1.23">Person and email address to contact for further information:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.1-1.24">
-              <p id="section-7.2.1-1.24.1">see Authors' Addresses section<a href="#section-7.2.1-1.24.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.1-1.23">Person and email address to contact for further information:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.1-1.24">
+              <p id="section-8.2.1-1.24.1">see Authors' Addresses section<a href="#section-8.2.1-1.24.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.1-1.25">Intended usage:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.1-1.26">
-              <p id="section-7.2.1-1.26.1">COMMON<a href="#section-7.2.1-1.26.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.1-1.25">Intended usage:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.1-1.26">
+              <p id="section-8.2.1-1.26.1">COMMON<a href="#section-8.2.1-1.26.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.1-1.27">Restrictions on usage:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.1-1.28">
-              <p id="section-7.2.1-1.28.1">N/A<a href="#section-7.2.1-1.28.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.1-1.27">Restrictions on usage:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.1-1.28">
+              <p id="section-8.2.1-1.28.1">N/A<a href="#section-8.2.1-1.28.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.1-1.29">Author:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.1-1.30">
-              <p id="section-7.2.1-1.30.1">see Authors' Addresses section<a href="#section-7.2.1-1.30.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.1-1.29">Author:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.1-1.30">
+              <p id="section-8.2.1-1.30.1">see Authors' Addresses section<a href="#section-8.2.1-1.30.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.1-1.31">Change controller:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.1-1.32">
-              <p id="section-7.2.1-1.32.1">IETF<a href="#section-7.2.1-1.32.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.1-1.31">Change controller:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.1-1.32">
+              <p id="section-8.2.1-1.32.1">IETF<a href="#section-8.2.1-1.32.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
 </section>
 </div>
 <div id="applicationprivate-token-batch-response-media-type">
-<section id="section-7.2.2">
+<section id="section-8.2.2">
           <h4 id="name-application-private-token-ba">
-<a href="#section-7.2.2" class="section-number selfRef">7.2.2. </a><a href="#name-application-private-token-ba" class="section-name selfRef">"application/private-token-batch-response" media type</a>
+<a href="#section-8.2.2" class="section-number selfRef">8.2.2. </a><a href="#name-application-private-token-ba" class="section-name selfRef">"application/private-token-batch-response" media type</a>
           </h4>
-<span class="break"></span><dl class="dlCompact dlParallel" id="section-7.2.2-1">
-            <dt id="section-7.2.2-1.1">Type name:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.2-1.2">
-              <p id="section-7.2.2-1.2.1">application<a href="#section-7.2.2-1.2.1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlCompact dlParallel" id="section-8.2.2-1">
+            <dt id="section-8.2.2-1.1">Type name:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.2-1.2">
+              <p id="section-8.2.2-1.2.1">application<a href="#section-8.2.2-1.2.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.2-1.3">Subtype name:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.2-1.4">
-              <p id="section-7.2.2-1.4.1">private-token-response<a href="#section-7.2.2-1.4.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.2-1.3">Subtype name:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.2-1.4">
+              <p id="section-8.2.2-1.4.1">private-token-response<a href="#section-8.2.2-1.4.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.2-1.5">Required parameters:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.2-1.6">
-              <p id="section-7.2.2-1.6.1">N/A<a href="#section-7.2.2-1.6.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.2-1.5">Required parameters:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.2-1.6">
+              <p id="section-8.2.2-1.6.1">N/A<a href="#section-8.2.2-1.6.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.2-1.7">Optional parameters:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.2-1.8">
-              <p id="section-7.2.2-1.8.1">N/A<a href="#section-7.2.2-1.8.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.2-1.7">Optional parameters:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.2-1.8">
+              <p id="section-8.2.2-1.8.1">N/A<a href="#section-8.2.2-1.8.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.2-1.9">Encoding considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.2-1.10">
-              <p id="section-7.2.2-1.10.1">"binary"<a href="#section-7.2.2-1.10.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.2-1.9">Encoding considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.2-1.10">
+              <p id="section-8.2.2-1.10.1">"binary"<a href="#section-8.2.2-1.10.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.2-1.11">Security considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.2-1.12">
-              <p id="section-7.2.2-1.12.1">see <a href="#security-considerations" class="auto internal xref">Section 6</a><a href="#section-7.2.2-1.12.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.2-1.11">Security considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.2-1.12">
+              <p id="section-8.2.2-1.12.1">see <a href="#security-considerations" class="auto internal xref">Section 7</a><a href="#section-8.2.2-1.12.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.2-1.13">Interoperability considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.2-1.14">
-              <p id="section-7.2.2-1.14.1">N/A<a href="#section-7.2.2-1.14.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.2-1.13">Interoperability considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.2-1.14">
+              <p id="section-8.2.2-1.14.1">N/A<a href="#section-8.2.2-1.14.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.2-1.15">Published specification:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.2-1.16">
-              <p id="section-7.2.2-1.16.1">this specification<a href="#section-7.2.2-1.16.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.2-1.15">Published specification:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.2-1.16">
+              <p id="section-8.2.2-1.16.1">this specification<a href="#section-8.2.2-1.16.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.2-1.17">Applications that use this media type:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.2-1.18">
-              <p id="section-7.2.2-1.18.1">Applications that want to issue or facilitate issuance of Privacy Pass tokens,
-including Privacy Pass issuer applications themselves.<a href="#section-7.2.2-1.18.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.2-1.17">Applications that use this media type:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.2-1.18">
+              <p id="section-8.2.2-1.18.1">Applications that want to issue or facilitate issuance of Privacy Pass tokens,
+including Privacy Pass issuer applications themselves.<a href="#section-8.2.2-1.18.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.2-1.19">Fragment identifier considerations:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.2-1.20">
-              <p id="section-7.2.2-1.20.1">N/A<a href="#section-7.2.2-1.20.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.2-1.19">Fragment identifier considerations:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.2-1.20">
+              <p id="section-8.2.2-1.20.1">N/A<a href="#section-8.2.2-1.20.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.2-1.21">Additional information:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.2-1.22">
-              <span class="break"></span><dl class="dlCompact dlParallel" id="section-7.2.2-1.22.1">
-                <dt id="section-7.2.2-1.22.1.1">Magic number(s):</dt>
-                <dd style="margin-left: 1.5em" id="section-7.2.2-1.22.1.2">N/A<a href="#section-7.2.2-1.22.1.2" class="pilcrow">¶</a>
+<dt id="section-8.2.2-1.21">Additional information:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.2-1.22">
+              <span class="break"></span><dl class="dlCompact dlParallel" id="section-8.2.2-1.22.1">
+                <dt id="section-8.2.2-1.22.1.1">Magic number(s):</dt>
+                <dd style="margin-left: 1.5em" id="section-8.2.2-1.22.1.2">N/A<a href="#section-8.2.2-1.22.1.2" class="pilcrow">¶</a>
 </dd>
                 <dd class="break"></dd>
-<dt id="section-7.2.2-1.22.1.3">Deprecated alias names for this type:</dt>
-                <dd style="margin-left: 1.5em" id="section-7.2.2-1.22.1.4">N/A<a href="#section-7.2.2-1.22.1.4" class="pilcrow">¶</a>
+<dt id="section-8.2.2-1.22.1.3">Deprecated alias names for this type:</dt>
+                <dd style="margin-left: 1.5em" id="section-8.2.2-1.22.1.4">N/A<a href="#section-8.2.2-1.22.1.4" class="pilcrow">¶</a>
 </dd>
                 <dd class="break"></dd>
-<dt id="section-7.2.2-1.22.1.5">File extension(s):</dt>
-                <dd style="margin-left: 1.5em" id="section-7.2.2-1.22.1.6">N/A<a href="#section-7.2.2-1.22.1.6" class="pilcrow">¶</a>
+<dt id="section-8.2.2-1.22.1.5">File extension(s):</dt>
+                <dd style="margin-left: 1.5em" id="section-8.2.2-1.22.1.6">N/A<a href="#section-8.2.2-1.22.1.6" class="pilcrow">¶</a>
 </dd>
                 <dd class="break"></dd>
-<dt id="section-7.2.2-1.22.1.7">Macintosh file type code(s):</dt>
-                <dd style="margin-left: 1.5em" id="section-7.2.2-1.22.1.8">N/A<a href="#section-7.2.2-1.22.1.8" class="pilcrow">¶</a>
+<dt id="section-8.2.2-1.22.1.7">Macintosh file type code(s):</dt>
+                <dd style="margin-left: 1.5em" id="section-8.2.2-1.22.1.8">N/A<a href="#section-8.2.2-1.22.1.8" class="pilcrow">¶</a>
 </dd>
               <dd class="break"></dd>
 </dl>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.2-1.23">Person and email address to contact for further information:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.2-1.24">
-              <p id="section-7.2.2-1.24.1">see Authors' Addresses section<a href="#section-7.2.2-1.24.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.2-1.23">Person and email address to contact for further information:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.2-1.24">
+              <p id="section-8.2.2-1.24.1">see Authors' Addresses section<a href="#section-8.2.2-1.24.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.2-1.25">Intended usage:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.2-1.26">
-              <p id="section-7.2.2-1.26.1">COMMON<a href="#section-7.2.2-1.26.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.2-1.25">Intended usage:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.2-1.26">
+              <p id="section-8.2.2-1.26.1">COMMON<a href="#section-8.2.2-1.26.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.2-1.27">Restrictions on usage:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.2-1.28">
-              <p id="section-7.2.2-1.28.1">N/A<a href="#section-7.2.2-1.28.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.2-1.27">Restrictions on usage:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.2-1.28">
+              <p id="section-8.2.2-1.28.1">N/A<a href="#section-8.2.2-1.28.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.2-1.29">Author:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.2-1.30">
-              <p id="section-7.2.2-1.30.1">see Authors' Addresses section<a href="#section-7.2.2-1.30.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.2-1.29">Author:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.2-1.30">
+              <p id="section-8.2.2-1.30.1">see Authors' Addresses section<a href="#section-8.2.2-1.30.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-7.2.2-1.31">Change controller:</dt>
-            <dd style="margin-left: 1.5em" id="section-7.2.2-1.32">
-              <p id="section-7.2.2-1.32.1">IETF<a href="#section-7.2.2-1.32.1" class="pilcrow">¶</a></p>
+<dt id="section-8.2.2-1.31">Change controller:</dt>
+            <dd style="margin-left: 1.5em" id="section-8.2.2-1.32">
+              <p id="section-8.2.2-1.32.1">IETF<a href="#section-8.2.2-1.32.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
@@ -1794,14 +1826,15 @@ including Privacy Pass issuer applications themselves.<a href="#section-7.2.2-1.
 </div>
 </section>
 </div>
-<section id="section-8">
+<div id="sec-combined-references">
+<section id="section-9">
       <h2 id="name-references">
-<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-references" class="section-name selfRef">References</a>
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
 <div id="sec-normative-references">
-<section id="section-8.1">
+<section id="section-9.1">
         <h3 id="name-normative-references">
-<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
 <dt id="ARCH">[ARCH]</dt>
@@ -1824,9 +1857,9 @@ including Privacy Pass issuer applications themselves.<a href="#section-7.2.2-1.
 </section>
 </div>
 <div id="sec-informative-references">
-<section id="section-8.2">
+<section id="section-9.2">
         <h3 id="name-informative-references">
-<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+<a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
 <dt id="HTTP3">[HTTP3]</dt>
@@ -1837,6 +1870,7 @@ including Privacy Pass issuer applications themselves.<a href="#section-7.2.2-1.
 </section>
 </div>
 </section>
+</div>
 <div id="authors-addresses">
 <section id="appendix-A">
       <h2 id="name-authors-addresses">

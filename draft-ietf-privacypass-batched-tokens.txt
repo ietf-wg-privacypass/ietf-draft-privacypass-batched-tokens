@@ -5,8 +5,8 @@
 Network Working Group                                          R. Robert
 Internet-Draft                                               Phoenix R&D
 Intended status: Standards Track                              C. A. Wood
-Expires: 30 December 2024                                     Cloudflare
-                                                            28 June 2024
+Expires: 22 April 2025                                        Cloudflare
+                                                         19 October 2024
 
 
                     Batched Token Issuance Protocol
@@ -34,7 +34,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 December 2024.
+   This Internet-Draft will expire on 22 April 2025.
 
 Copyright Notice
 
@@ -52,23 +52,43 @@ Copyright Notice
 
 Table of Contents
 
-   1.  Introduction
-   2.  Motivation
-   3.  Client-to-Issuer Request
-   4.  Issuer-to-Client Response
-   5.  Finalization
-   6.  Security considerations
-   7.  IANA considerations
-     7.1.  Token Type
-     7.2.  Media Types
-       7.2.1.  "application/private-token-batch-request" media type
-       7.2.2.  "application/private-token-batch-response" media type
-   8.  References
-     8.1.  Normative References
-     8.2.  Informative References
+   1.  Change Log:
+   2.  Introduction
+   3.  Motivation
+   4.  Client-to-Issuer Request
+   5.  Issuer-to-Client Response
+   6.  Finalization
+   7.  Security considerations
+   8.  IANA considerations
+     8.1.  Token Type
+     8.2.  Media Types
+       8.2.1.  "application/private-token-batch-request" media type
+       8.2.2.  "application/private-token-batch-response" media type
+   9.  References
+     9.1.  Normative References
+     9.2.  Informative References
    Authors' Addresses
 
-1.  Introduction
+1.  Change Log:
+
+   RFC EDITOR PLEASE DELETE THIS SECTION.
+
+   draft-02
+
+   *  Renaming TokenRequest to BatchTokenRequest and TokenResponse to
+      BatchTokenResponse
+
+   *  IANA: Media types for BatchTokenRequest and BatchTokenResponse
+
+   *  IANA: Expand Token Type registry entry
+
+   *  Various editorial fixes
+
+   draft-01
+
+   *  Initial WG document version
+
+2.  Introduction
 
    This document specifies a variant of the Privacy Pass issuance
    protocol (as defined in [ARCH]) that allows for batched issuance of
@@ -96,10 +116,10 @@ Table of Contents
    support batching.
 
    This batched issuance protocol registers one new token type
-   (Section 7.1), to be used with the PrivateToken HTTP authentication
+   (Section 8.1), to be used with the PrivateToken HTTP authentication
    scheme defined in [AUTHSCHEME].
 
-2.  Motivation
+3.  Motivation
 
    Privately Verifiable Tokens (as defines in [ISSUANCE]) offer a simple
    way to unlink the issuance from the redemption.  The base protocol
@@ -118,7 +138,7 @@ Table of Contents
        cost of the VOPRF proof generation and verification,
        respectively.
 
-3.  Client-to-Issuer Request
+4.  Client-to-Issuer Request
 
    Except where specified otherwise, the client follows the same
    protocol as described in [ISSUANCE], Section 5.1.
@@ -188,7 +208,7 @@ Table of Contents
 
    <Bytes containing the BatchTokenRequest>
 
-4.  Issuer-to-Client Response
+5.  Issuer-to-Client Response
 
    Except where specified otherwise, the client follows the same
    protocol as described in [ISSUANCE], Section 5.2.
@@ -287,7 +307,7 @@ Table of Contents
 
    <Bytes containing the BatchTokenResponse>
 
-5.  Finalization
+6.  Finalization
 
    Upon receipt, the Client handles the response and, if successful,
    deserializes the body values TokenResponse.evaluate_response and
@@ -342,7 +362,7 @@ Table of Contents
    If this succeeds, the Client then constructs Nr Token values, where
    authenticator is the i-th Nh-byte length slice of
    authenticator_values that corresponds to nonce, the i-th nonce that
-   was sampled in Section 3:
+   was sampled in Section 4:
 
    struct {
        uint16_t token_type;
@@ -355,18 +375,18 @@ Table of Contents
    If the FinalizeBatch function fails, the Client aborts the protocol.
    Token verification works exactly as specified in [ISSUANCE].
 
-6.  Security considerations
+7.  Security considerations
 
    Implementors SHOULD be aware of the security considerations described
    in [OPRF], Section 6.2.3 and implement mitigation mechanisms.
    Application can mitigate this issue by limiting the number of clients
    and limiting the number of token requests per client per key.
 
-7.  IANA considerations
+8.  IANA considerations
 
    This section contains IANA codepoint allocation requests.
 
-7.1.  Token Type
+8.1.  Token Type
 
    This document updates the "Token Type" Registry ([AUTHSCHEME]) with
    the following entry:
@@ -397,7 +417,7 @@ Table of Contents
 
    *  Notes: None
 
-7.2.  Media Types
+8.2.  Media Types
 
    The following entries should be added to the IANA "media types"
    registry:
@@ -409,14 +429,14 @@ Table of Contents
    The templates for these entries are listed below and the reference
    should be this RFC.
 
-7.2.1.  "application/private-token-batch-request" media type
+8.2.1.  "application/private-token-batch-request" media type
 
    Type name:  application
    Subtype name:  private-token-request
    Required parameters:  N/A
    Optional parameters:  N/A
    Encoding considerations:  "binary"
-   Security considerations:  see Section 6
+   Security considerations:  see Section 7
    Interoperability considerations:  N/A
    Published specification:  this specification
    Applications that use this media type:  Applications that want to
@@ -434,14 +454,14 @@ Table of Contents
    Author:  see Authors' Addresses section
    Change controller:  IETF
 
-7.2.2.  "application/private-token-batch-response" media type
+8.2.2.  "application/private-token-batch-response" media type
 
    Type name:  application
    Subtype name:  private-token-response
    Required parameters:  N/A
    Optional parameters:  N/A
    Encoding considerations:  "binary"
-   Security considerations:  see Section 6
+   Security considerations:  see Section 7
    Interoperability considerations:  N/A
    Published specification:  this specification
    Applications that use this media type:  Applications that want to
@@ -459,9 +479,9 @@ Table of Contents
    Author:  see Authors' Addresses section
    Change controller:  IETF
 
-8.  References
+9.  References
 
-8.1.  Normative References
+9.1.  Normative References
 
    [ARCH]     Davidson, A., Iyengar, J., and C. A. Wood, "The Privacy
               Pass Architecture", Work in Progress, Internet-Draft,
@@ -489,7 +509,7 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-
               voprf-21>.
 
-8.2.  Informative References
+9.2.  Informative References
 
    [HTTP3]    Bishop, M., Ed., "HTTP/3", RFC 9114, DOI 10.17487/RFC9114,
               June 2022, <https://www.rfc-editor.org/rfc/rfc9114>.
