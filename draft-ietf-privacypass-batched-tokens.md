@@ -192,16 +192,16 @@ Upon receipt of the request, the Issuer validates the following conditions:
   less than or equal to the number of tokens that the issuer can issue in a
   single batch.
 
-If any of these conditions is not met, the Issuer MUST return an HTTP 400 error
-to the client.
+If any of these conditions is not met, the Issuer MUST return an HTTP 422
+(Unprocessable Content) error to the client.
 
-The Issuer then tries to deseralize the i-th element
-of BatchTokenRequest.blinded_elements using DeserializeElement from {{Section 2.1 of
-OPRF}}, yielding `blinded_element_i` of type `Element`. If this fails for any of
-the BatchTokenRequest.blinded_elements values, the Issuer MUST return an HTTP 400
-error to the client. Otherwise, if the Issuer is willing to produce a token to
-the Client, the issuer forms a list of `Element` values, denoted
-`blinded_elements`, and computes a blinded response as follows:
+The Issuer then tries to deseralize the i-th element of
+BatchTokenRequest.blinded_elements using DeserializeElement from {{Section 2.1
+of OPRF}}, yielding `blinded_element_i` of type `Element`. If this fails for any
+of the BatchTokenRequest.blinded_elements values, the Issuer MUST return an HTTP
+422 (Unprocessable Content) error to the client. Otherwise, if the Issuer is
+willing to produce a token to the Client, the issuer forms a list of `Element`
+values, denoted `blinded_elements`, and computes a blinded response as follows:
 
 ~~~
 server_context = SetupVOPRFServer(ciphersuiteID, skI, pkI)
@@ -409,14 +409,13 @@ Upon receipt of the request, the Issuer validates the following conditions:
 
 - The Content-Type is application/private-token-arbitrary-batch-request as registered with IANA.
 
-If this condition is not met, the Issuer MUST return an HTTP 400 error
+If this condition is not met, the Issuer MUST return an HTTP 422 (Unprocessable Content) error
 to the client.
 
-The Issuer then tries to deserialize the first 2 bytes of the i-th element
-of BatchTokenRequest.token_requests.
-If this is not a token type registered with IANA, the Issuer MUST return an HTTP 400 error
-to the client.
-The issuer creates a BatchTokenResponse structured as follows:
+The Issuer then tries to deserialize the first 2 bytes of the i-th element of
+BatchTokenRequest.token_requests. If this is not a token type registered with
+IANA, the Issuer MUST return an HTTP 422 (Unprocessable Content) error to the
+client. The issuer creates a BatchTokenResponse structured as follows:
 
 ~~~tls
 struct {
