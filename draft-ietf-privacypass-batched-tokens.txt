@@ -88,6 +88,12 @@ Table of Contents
 
    RFC EDITOR PLEASE DELETE THIS SECTION.
 
+   draft-03
+
+   *  Arbitrary token types
+
+   *  Error code 400 aligned with RFC9578 and replaced by error code 422
+
    draft-02
 
    *  Renaming TokenRequest to BatchTokenRequest and TokenResponse to
