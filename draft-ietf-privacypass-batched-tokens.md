@@ -106,6 +106,49 @@ to be sent that encompasses multiple token requests. This enables the issuance
 of tokens for more than one key in one round trip between the Client and the
 Issuer. The cost remains linear.
 
+# Presentation Language
+
+This document uses the TLS presentation language {{!RFC8446}} to describe the
+structure of protocol messages.  In addition to the base syntax, it uses two
+additional features: the ability for fields to be optional and the ability for
+vectors to have variable-size length headers.
+
+## Optional Value
+
+An optional value is encoded with a presence-signaling octet, followed by the
+value itself if present.  When decoding, a presence octet with a value other
+than 0 or 1 MUST be rejected as malformed.
+
+~~~ tls-presentation
+struct {
+    uint8 present;
+    select (present) {
+        case 0: struct{};
+        case 1: T value;
+    };
+} optional<T>;
+~~~
+
+## Variable-Size Vector Length Headers
+
+In the TLS presentation language, vectors are encoded as a sequence of encoded
+elements prefixed with a length.  The length field has a fixed size set by
+specifying the minimum and maximum lengths of the encoded sequence of elements.
+
+In this document, there are several vectors whose sizes vary over significant
+ranges.  So instead of using a fixed-size length field, it uses a variable-size
+length using a variable-length integer encoding based on the one described in
+{{Section 16 of ?RFC9000}}. They differ only in that the one here requires a
+minimum-size encoding. Instead of presenting min and max values, the vector
+description simply includes a `V`. For example:
+
+~~~ tls-presentation
+struct {
+    uint32 fixed<0..255>;
+    opaque variable<V>;
+} StructWithVectors;
+~~~
+
 # Batched Privately Verifiable Token
 
 This section describes a batched issuance protocol for select token types,
@@ -155,7 +198,7 @@ struct {
 struct {
    uint16_t token_type;
    uint8_t truncated_token_key_id;
-   BlindedElement blinded_elements<0..2^16-1>;
+   BlindedElement blinded_elements<V>;
 } BatchTokenRequest;
 ~~~
 
@@ -260,7 +303,7 @@ struct {
 } EvaluatedElement;
 
 struct {
-   EvaluatedElement evaluated_elements<0..2^16-1>;
+   EvaluatedElement evaluated_elements<V>;
    uint8_t evaluated_proof[Ns + Ns];
 } BatchTokenResponse;
 ~~~
@@ -389,7 +432,7 @@ struct {
 } TokenRequest;
 
 struct {
-  TokenRequest token_requests<0..2^16-1>;
+  TokenRequest token_requests<V>;
 } BatchTokenRequest
 ~~~
 
@@ -437,11 +480,11 @@ client. The issuer creates a BatchTokenResponse structured as follows:
 
 ~~~tls
 struct {
-  TokenResponse token_response<0..2^16-1>; /* Defined by token_type */
+  optional<TokenResponse> token_response; /* Defined by token_type */
 } OptionalTokenResponse;
 
 struct {
-  OptionalTokenResponse token_responses<0..2^16-1>;
+  OptionalTokenResponse token_responses<V>;
 } BatchTokenResponse
 ~~~
 
