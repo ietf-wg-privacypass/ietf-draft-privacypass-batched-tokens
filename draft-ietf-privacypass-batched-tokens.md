@@ -109,7 +109,7 @@ Issuer. The cost remains linear.
 # Batched Privately Verifiable Token
 
 This section describes a batched issuance protocol for select token types,
-including 0x0001 (defined in {{RFC9578}}) and 0xF91A (defined in this document).
+including 0x0001 (defined in {{RFC9578}}) and 0x0005 (defined in this document).
 This variant is more efficient than Arbitary Batch Token Issuance defined below.
 It does so by requiring the same key to be used by all token requests.
 
@@ -499,7 +499,7 @@ This section contains IANA codepoint allocation requests.
 This document updates the "Token Type" Registry ({{AUTHSCHEME}}) with the
 following entry:
 
-* Value: 0xF91A
+* Value: 0x0005 (suggested)
 * Name: VOPRF (ristretto255, SHA-512)
 * Token Structure: As defined in {{Section 2.2 of AUTHSCHEME}}
 * Token Key Encoding: Serialized using SerializeElement from {{Section 2.1 of
