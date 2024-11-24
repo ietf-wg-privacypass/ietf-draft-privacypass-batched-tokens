@@ -437,6 +437,16 @@ client. The issuer creates a BatchTokenResponse structured as follows:
 
 ~~~tls
 struct {
+  select (token_type) {
+    case (0x0001): /* Type VOPRF(P-384, SHA-384), RFC 9578 */
+      uint8_t evaluated_msg[Ne];
+      uint8_t evaluated_proof[Ns + Ns];
+    case (0x0002): /* Type Blind RSA (2048-bit), RFC 9578 */
+      uint8_t blind_sig[Nk];
+  }
+} TokenResponse;
+
+struct {
   TokenResponse token_response<0..2^16-1>; /* Defined by token_type */
 } OptionalTokenResponse;
 
