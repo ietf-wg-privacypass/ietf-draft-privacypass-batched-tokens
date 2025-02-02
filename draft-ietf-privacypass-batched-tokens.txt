@@ -55,33 +55,36 @@ Table of Contents
    1.  Change Log:
    2.  Introduction
    3.  Motivation
-   4.  Batched Privately Verifiable Token
-     4.1.  Client-to-Issuer Request
-     4.2.  Issuer-to-Client Response
-     4.3.  Finalization
-   5.  Arbitrary Batched Token Issuance
+   4.  Presentation Language
+     4.1.  Optional Value
+     4.2.  Variable-Size Vector Length Headers
+   5.  Batched Privately Verifiable Token
      5.1.  Client-to-Issuer Request
      5.2.  Issuer-to-Client Response
      5.3.  Finalization
-   6.  Security considerations
-     6.1.  Batched Privately Verifiable Tokens
-     6.2.  Arbitrary Batched Verifiable Tokens
-   7.  IANA considerations
-     7.1.  Token Type
-     7.2.  Media Types
-       7.2.1.  "application/
+   6.  Arbitrary Batched Token Issuance
+     6.1.  Client-to-Issuer Request
+     6.2.  Issuer-to-Client Response
+     6.3.  Finalization
+   7.  Security considerations
+     7.1.  Batched Privately Verifiable Tokens
+     7.2.  Arbitrary Batched Verifiable Tokens
+   8.  IANA considerations
+     8.1.  Token Type
+     8.2.  Media Types
+       8.2.1.  "application/
                private-token-privately-verifiable-batch-request" media
                type
-       7.2.2.  "application/
+       8.2.2.  "application/
                private-token-privately-verifiable-batch-response" media
                type
-       7.2.3.  "application/private-token-arbitrary-batch-request"
+       8.2.3.  "application/private-token-arbitrary-batch-request"
                media type
-       7.2.4.  "application/private-token-arbitrary-batch-response"
+       8.2.4.  "application/private-token-arbitrary-batch-response"
                media type
-   8.  References
-     8.1.  Normative References
-     8.2.  Informative References
+   9.  References
+     9.1.  Normative References
+     9.2.  Informative References
    Authors' Addresses
 
 1.  Change Log:
@@ -140,7 +143,7 @@ Table of Contents
    responses and the issuance performance remains linear.
 
    This batched issuance protocol registers one new token type
-   (Section 7.1), to be used with the PrivateToken HTTP authentication
+   (Section 8.1), to be used with the PrivateToken HTTP authentication
    scheme defined in [AUTHSCHEME].
 
 3.  Motivation
@@ -168,7 +171,49 @@ Table of Contents
    round trip between the Client and the Issuer.  The cost remains
    linear.
 
-4.  Batched Privately Verifiable Token
+4.  Presentation Language
+
+   This document uses the TLS presentation language [RFC8446] to
+   describe the structure of protocol messages.  In addition to the base
+   syntax, it uses two additional features: the ability for fields to be
+   optional and the ability for vectors to have variable-size length
+   headers.
+
+4.1.  Optional Value
+
+   An optional value is encoded with a presence-signaling octet,
+   followed by the value itself if present.  When decoding, a presence
+   octet with a value other than 0 or 1 MUST be rejected as malformed.
+
+   struct {
+       uint8 present;
+       select (present) {
+           case 0: struct{};
+           case 1: T value;
+       };
+   } optional<T>;
+
+4.2.  Variable-Size Vector Length Headers
+
+   In the TLS presentation language, vectors are encoded as a sequence
+   of encoded elements prefixed with a length.  The length field has a
+   fixed size set by specifying the minimum and maximum lengths of the
+   encoded sequence of elements.
+
+   In this document, there are several vectors whose sizes vary over
+   significant ranges.  So instead of using a fixed-size length field,
+   it uses a variable-size length using a variable-length integer
+   encoding based on the one described in Section 16 of [RFC9000].  They
+   differ only in that the one here requires a minimum-size encoding.
+   Instead of presenting min and max values, the vector description
+   simply includes a V.  For example:
+
+   struct {
+       uint32 fixed<0..255>;
+       opaque variable<V>;
+   } StructWithVectors;
+
+5.  Batched Privately Verifiable Token
 
    This section describes a batched issuance protocol for select token
    types, including 0x0001 (defined in [RFC9578]) and 0x0005 (defined in
@@ -176,7 +221,7 @@ Table of Contents
    Token Issuance defined below.  It does so by requiring the same key
    to be used by all token requests.
 
-4.1.  Client-to-Issuer Request
+5.1.  Client-to-Issuer Request
 
    Except where specified otherwise, the client follows the same
    protocol as described in [RFC9578], Section 5.1.
@@ -214,7 +259,7 @@ Table of Contents
    struct {
       uint16_t token_type;
       uint8_t truncated_token_key_id;
-      BlindedElement blinded_elements<0..2^16-1>;
+      BlindedElement blinded_elements<V>;
    } BatchTokenRequest;
 
    The structure fields are defined as follows:
@@ -246,7 +291,7 @@ Content-Length: <Length of BatchTokenRequest>
 
 <Bytes containing the BatchTokenRequest>
 
-4.2.  Issuer-to-Client Response
+5.2.  Issuer-to-Client Response
 
    Except where specified otherwise, the client follows the same
    protocol as described in [RFC9578], Section 5.2.
@@ -319,7 +364,7 @@ Content-Length: <Length of BatchTokenRequest>
    } EvaluatedElement;
 
    struct {
-      EvaluatedElement evaluated_elements<0..2^16-1>;
+      EvaluatedElement evaluated_elements<V>;
       uint8_t evaluated_proof[Ns + Ns];
    } BatchTokenResponse;
 
@@ -345,7 +390,7 @@ Content-Length: <Length of BatchTokenResponse>
 
 <Bytes containing the BatchTokenResponse>
 
-4.3.  Finalization
+5.3.  Finalization
 
    Upon receipt, the Client handles the response and, if successful,
    deserializes the body values TokenResponse.evaluate_response and
@@ -400,7 +445,7 @@ Content-Length: <Length of BatchTokenResponse>
    If this succeeds, the Client then constructs Nr Token values, where
    authenticator is the i-th Nh-byte length slice of
    authenticator_values that corresponds to nonce, the i-th nonce that
-   was sampled in Section 4.1:
+   was sampled in Section 5.1:
 
    struct {
        uint16_t token_type;
@@ -413,14 +458,14 @@ Content-Length: <Length of BatchTokenResponse>
    If the FinalizeBatch function fails, the Client aborts the protocol.
    Token verification works exactly as specified in [RFC9578].
 
-5.  Arbitrary Batched Token Issuance
+6.  Arbitrary Batched Token Issuance
 
    This section describes an issuance protocol mechanism for issuing
    multiple tokens in one round trip between Client and Issuer.  An
    arbitrary batched token request can contain token requests for any
    token type.
 
-5.1.  Client-to-Issuer Request
+6.1.  Client-to-Issuer Request
 
    The Client first creates all TokenRequest it wants to batch.  To do
    so, the client follows protocol describing issuance, such as
@@ -441,7 +486,7 @@ Content-Length: <Length of BatchTokenResponse>
    } TokenRequest;
 
    struct {
-     TokenRequest token_requests<0..2^16-1>;
+     TokenRequest token_requests<V>;
    } BatchTokenRequest
 
    The structure fields are defined as follows:
@@ -471,7 +516,7 @@ Content-Length: <Length of BatchTokenResponse>
 
    <Bytes containing the BatchTokenRequest>
 
-5.2.  Issuer-to-Client Response
+6.2.  Issuer-to-Client Response
 
    Upon receipt of the request, the Issuer validates the following
    conditions:
@@ -489,11 +534,11 @@ Content-Length: <Length of BatchTokenResponse>
    BatchTokenResponse structured as follows:
 
    struct {
-     TokenResponse token_response<0..2^16-1>; /* Defined by token_type */
+     optional<TokenResponse> token_response; /* Defined by token_type */
    } OptionalTokenResponse;
 
    struct {
-     OptionalTokenResponse token_responses<0..2^16-1>;
+     OptionalTokenResponse token_responses<V>;
    } BatchTokenResponse
 
    BatchTokenResponse.token_responses is a vector of
@@ -515,7 +560,7 @@ Content-Length: <Length of BatchTokenResponse>
 
    <Bytes containing the BatchTokenResponse>
 
-5.3.  Finalization
+6.3.  Finalization
 
    The Client tries to deserialize the i-th element of
    BatchTokenResponse.token_responses using the protocol associated to
@@ -525,26 +570,26 @@ Content-Length: <Length of BatchTokenResponse>
    the matching TokenRequest according to the corresponding finalization
    procedure defined by the token type.
 
-6.  Security considerations
+7.  Security considerations
 
-6.1.  Batched Privately Verifiable Tokens
+7.1.  Batched Privately Verifiable Tokens
 
    Implementors SHOULD be aware of the security considerations described
    in [OPRF], Section 6.2.3 and implement mitigation mechanisms.
    Application can mitigate this issue by limiting the number of clients
    and limiting the number of token requests per client per key.
 
-6.2.  Arbitrary Batched Verifiable Tokens
+7.2.  Arbitrary Batched Verifiable Tokens
 
    Implementors SHOULD be aware of the inherent linear cost of this
    token type.  An Issuer MAY ignore TokenRequest if the number of
    tokens per request past a limit.
 
-7.  IANA considerations
+8.  IANA considerations
 
    This section contains IANA codepoint allocation requests.
 
-7.1.  Token Type
+8.1.  Token Type
 
    This document updates the "Token Type" Registry ([AUTHSCHEME]) with
    the following entry:
@@ -575,7 +620,7 @@ Content-Length: <Length of BatchTokenResponse>
 
    *  Notes: None
 
-7.2.  Media Types
+8.2.  Media Types
 
    The following entries should be added to the IANA "media types"
    registry:
@@ -591,7 +636,7 @@ Content-Length: <Length of BatchTokenResponse>
    The templates for these entries are listed below and the reference
    should be this RFC.
 
-7.2.1.  "application/private-token-privately-verifiable-batch-request"
+8.2.1.  "application/private-token-privately-verifiable-batch-request"
         media type
 
    Type name:  application
@@ -599,7 +644,7 @@ Content-Length: <Length of BatchTokenResponse>
    Required parameters:  N/A
    Optional parameters:  N/A
    Encoding considerations:  "binary"
-   Security considerations:  see Section 6
+   Security considerations:  see Section 7
    Interoperability considerations:  N/A
    Published specification:  this specification
    Applications that use this media type:  Applications that want to
@@ -617,7 +662,7 @@ Content-Length: <Length of BatchTokenResponse>
    Author:  see Authors' Addresses section
    Change controller:  IETF
 
-7.2.2.  "application/private-token-privately-verifiable-batch-response"
+8.2.2.  "application/private-token-privately-verifiable-batch-response"
         media type
 
    Type name:  application
@@ -625,7 +670,7 @@ Content-Length: <Length of BatchTokenResponse>
    Required parameters:  N/A
    Optional parameters:  N/A
    Encoding considerations:  "binary"
-   Security considerations:  see Section 6
+   Security considerations:  see Section 7
    Interoperability considerations:  N/A
    Published specification:  this specification
    Applications that use this media type:  Applications that want to
@@ -643,14 +688,14 @@ Content-Length: <Length of BatchTokenResponse>
    Author:  see Authors' Addresses section
    Change controller:  IETF
 
-7.2.3.  "application/private-token-arbitrary-batch-request" media type
+8.2.3.  "application/private-token-arbitrary-batch-request" media type
 
    Type name:  application
    Subtype name:  private-token-request
    Required parameters:  N/A
    Optional parameters:  N/A
    Encoding considerations:  "binary"
-   Security considerations:  see Section 6
+   Security considerations:  see Section 7
    Interoperability considerations:  N/A
    Published specification:  this specification
    Applications that use this media type:  Applications that want to
@@ -668,14 +713,14 @@ Content-Length: <Length of BatchTokenResponse>
    Author:  see Authors' Addresses section
    Change controller:  IETF
 
-7.2.4.  "application/private-token-arbitrary-batch-response" media type
+8.2.4.  "application/private-token-arbitrary-batch-response" media type
 
    Type name:  application
    Subtype name:  private-token-response
    Required parameters:  N/A
    Optional parameters:  N/A
    Encoding considerations:  "binary"
-   Security considerations:  see Section 6
+   Security considerations:  see Section 7
    Interoperability considerations:  N/A
    Published specification:  this specification
    Applications that use this media type:  Applications that want to
@@ -693,9 +738,9 @@ Content-Length: <Length of BatchTokenResponse>
    Author:  see Authors' Addresses section
    Change controller:  IETF
 
-8.  References
+9.  References
 
-8.1.  Normative References
+9.1.  Normative References
 
    [AUTHSCHEME]
               Pauly, T., Valdez, S., and C. A. Wood, "The Privacy Pass
@@ -711,6 +756,10 @@ Content-Length: <Length of BatchTokenResponse>
               <https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-
               voprf-21>.
 
+   [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
+              Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
+              <https://www.rfc-editor.org/rfc/rfc8446>.
+
    [RFC9576]  Davidson, A., Iyengar, J., and C. A. Wood, "The Privacy
               Pass Architecture", Work in Progress, Internet-Draft,
               draft-ietf-privacypass-architecture-16, 25 September 2023,
@@ -723,10 +772,15 @@ Content-Length: <Length of BatchTokenResponse>
               October 2023, <https://datatracker.ietf.org/doc/html/
               draft-ietf-privacypass-protocol-16>.
 
-8.2.  Informative References
+9.2.  Informative References
 
    [HTTP3]    Bishop, M., Ed., "HTTP/3", RFC 9114, DOI 10.17487/RFC9114,
               June 2022, <https://www.rfc-editor.org/rfc/rfc9114>.
+
+   [RFC9000]  Iyengar, J., Ed. and M. Thomson, Ed., "QUIC: A UDP-Based
+              Multiplexed and Secure Transport", RFC 9000,
+              DOI 10.17487/RFC9000, May 2021,
+              <https://www.rfc-editor.org/rfc/rfc9000>.
 
 Authors' Addresses
 
