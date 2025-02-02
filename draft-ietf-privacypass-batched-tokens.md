@@ -22,9 +22,9 @@ author:
     name: Christopher A. Wood
     org: Cloudflare
     email: caw@heapingbits.net
--
+ -
     ins: T. Meunier
-    name Thibault Meunier
+    name: Thibault Meunier
     org: Cloudflare Inc.
     email: ot-ietf@thibault.uk
 
