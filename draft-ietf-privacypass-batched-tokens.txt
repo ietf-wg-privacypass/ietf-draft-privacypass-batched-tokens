@@ -6,6 +6,8 @@ Network Working Group                                          R. Robert
 Internet-Draft                                               Phoenix R&D
 Intended status: Standards Track                              C. A. Wood
 Expires: 6 August 2025                                        Cloudflare
+                                                              T. Meunier
+                                                         Cloudflare Inc.
                                                          2 February 2025
 
 
@@ -802,3 +804,8 @@ Authors' Addresses
    Christopher A. Wood
    Cloudflare
    Email: caw@heapingbits.net
+
+
+   Thibault Meunier
+   Cloudflare Inc.
+   Email: ot-ietf@thibault.uk
