@@ -5,8 +5,8 @@
 Network Working Group                                          R. Robert
 Internet-Draft                                               Phoenix R&D
 Intended status: Standards Track                              C. A. Wood
-Expires: 28 May 2025                                          Cloudflare
-                                                        24 November 2024
+Expires: 6 August 2025                                        Cloudflare
+                                                         2 February 2025
 
 
                     Batched Token Issuance Protocol
@@ -34,11 +34,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 May 2025.
+   This Internet-Draft will expire on 6 August 2025.
 
 Copyright Notice
 
-   Copyright (c) 2024 IETF Trust and the persons identified as the
+   Copyright (c) 2025 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -171,7 +171,7 @@ Table of Contents
 4.  Batched Privately Verifiable Token
 
    This section describes a batched issuance protocol for select token
-   types, including 0x0001 (defined in [RFC9578]) and 0xF91A (defined in
+   types, including 0x0001 (defined in [RFC9578]) and 0x0005 (defined in
    this document).  This variant is more efficient than Arbitary Batch
    Token Issuance defined below.  It does so by requiring the same key
    to be used by all token requests.
@@ -549,7 +549,7 @@ Content-Length: <Length of BatchTokenResponse>
    This document updates the "Token Type" Registry ([AUTHSCHEME]) with
    the following entry:
 
-   *  Value: 0xF91A
+   *  Value: 0x0005 (suggested)
 
    *  Name: VOPRF (ristretto255, SHA-512)
 
