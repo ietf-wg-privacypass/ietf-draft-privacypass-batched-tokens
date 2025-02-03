@@ -30,8 +30,8 @@ author:
 
 --- abstract
 
-This document specifies a variant of the Privacy Pass issuance protocol that
-allows for batched issuance of tokens. This allows clients to request more than
+This document specifies variants of the Privacy Pass issuance protocol that
+allow for batched issuance of tokens. These allow clients to request more than
 one token at a time and for issuers to issue more than one token at a time.
 
 --- middle
@@ -59,7 +59,7 @@ draft-01
 
 # Introduction
 
-This document specifies two Privacy Pass issuance protocols (as defined in
+This document specifies two variants of Privacy Pass issuance protocols (as defined in
 {{!RFC9576=I-D.ietf-privacypass-architecture}}) that allow for batched issuance
 of tokens. This allows clients to request more than one token at a time and for
 issuers to issue more than one token at a time.
@@ -94,22 +94,23 @@ scheme defined in {{!AUTHSCHEME=I-D.ietf-privacypass-auth-scheme}}.
 
 Privacy Pass tokens (as defined in {{RFC9576}} and
 {{!RFC9578=I-D.ietf-privacypass-protocol}}) are unlinkable during issuance and
-redemption. The basic issuance protocols defined in {{RFC9578}} however only
+redemption. The basic issuance protocols defined in {{RFC9578}}, however, only
 allow for a single token to be issued at a time for every challenge. In some
 cases, especially where a large number of clients need to fetch a large number
-of tokens, this may introduce performance bottlenecks. Batched token issuance
-improves upon the basic Privately Verifiable Token issuance protocol in the
-following key ways:
+of tokens, this may introduce performance bottlenecks.
+
+Batched Privately Verifiable Token Issuance {{batched-private}} improves upon 
+the basic Privately Verifiable Token issuance protocol in the following key ways:
 
 1. Issuing multiple tokens at once in response to a single TokenChallenge,
    thereby reducing the size of the proofs required for multiple tokens.
 1. Improving server and client issuance efficiency by amortizing the cost of the
    VOPRF proof generation and verification, respectively.
 
-For all Verifiable Token issuance protocol, it allows for a single TokenRequest
-to be sent that encompasses multiple token requests. This enables the issuance
-of tokens for more than one key in one round trip between the Client and the
-Issuer. The cost remains linear.
+Arbitrary Batched Token Issuance {{batched-arbitrary}} allows for a single
+TokenRequest to be sent that encompasses multiple token requests. This
+enables the issuance of tokens for more than one key in one round trip
+between the Client and the Issuer. The cost of token generation remains linear.
 
 # Presentation Language
 
@@ -154,7 +155,7 @@ struct {
 } StructWithVectors;
 ~~~
 
-# Batched Privately Verifiable Token
+# Batched Privately Verifiable Token Issuance {#batched-private}
 
 This section describes a batched issuance protocol for select token types,
 including 0x0001 (defined in {{RFC9578}}) and 0x0005 (defined in this document).
@@ -409,7 +410,7 @@ struct {
 If the FinalizeBatch function fails, the Client aborts the protocol. Token
 verification works exactly as specified in {{RFC9578}}.
 
-# Arbitrary Batched Token Issuance
+# Arbitrary Batched Token Issuance {#batched-arbitrary}
 
 This section describes an issuance protocol mechanism for issuing multiple
 tokens in one round trip between Client and Issuer. An arbitrary batched token
@@ -417,11 +418,11 @@ request can contain token requests for any token type.
 
 ## Client-to-Issuer Request {#arbitrary-client-to-issuer-request}
 
-The Client first creates all TokenRequest it wants to batch. To do so, the
-client follows protocol describing issuance, such as {{RFC9578, Section 5.1}} or
-{{RFC9578, Section 6.1}}.
+The Client first generates all of the individual TokenRequest structures that
+are intended to be batched together. This request creation follows the protocol
+describing issuance, such as {{RFC9578, Section 5.1}} or {{RFC9578, Section 6.1}}.
 
-The Client then creates a BatchedTokenRequest structured as follows:
+The Client then creates a BatchedTokenRequest structure as follows:
 
 ~~~tls
 struct {
