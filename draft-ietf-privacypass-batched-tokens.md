@@ -99,7 +99,7 @@ allow for a single token to be issued at a time for every challenge. In some
 cases, especially where a large number of clients need to fetch a large number
 of tokens, this may introduce performance bottlenecks.
 
-Batched Privately Verifiable Token Issuance {{batched-private}} improves upon 
+Batched Privately Verifiable Token Issuance {{batched-private}} improves upon
 the basic Privately Verifiable Token issuance protocol in the following key ways:
 
 1. Issuing multiple tokens at once in response to a single TokenChallenge,
