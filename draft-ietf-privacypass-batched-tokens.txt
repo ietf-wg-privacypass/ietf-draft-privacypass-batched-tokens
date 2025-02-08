@@ -5,10 +5,10 @@
 Network Working Group                                          R. Robert
 Internet-Draft                                               Phoenix R&D
 Intended status: Standards Track                              C. A. Wood
-Expires: 6 August 2025                                        Cloudflare
+Expires: 12 August 2025                                       Cloudflare
                                                               T. Meunier
                                                          Cloudflare Inc.
-                                                         2 February 2025
+                                                         8 February 2025
 
 
                     Batched Token Issuance Protocol
@@ -16,8 +16,8 @@ Expires: 6 August 2025                                        Cloudflare
 
 Abstract
 
-   This document specifies a variant of the Privacy Pass issuance
-   protocol that allows for batched issuance of tokens.  This allows
+   This document specifies variants of the Privacy Pass issuance
+   protocol that allow for batched issuance of tokens.  These allow
    clients to request more than one token at a time and for issuers to
    issue more than one token at a time.
 
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 August 2025.
+   This Internet-Draft will expire on 12 August 2025.
 
 Copyright Notice
 
@@ -60,7 +60,7 @@ Table of Contents
    4.  Presentation Language
      4.1.  Optional Value
      4.2.  Variable-Size Vector Length Headers
-   5.  Batched Privately Verifiable Token
+   5.  Batched Privately Verifiable Token Issuance
      5.1.  Client-to-Issuer Request
      5.2.  Issuer-to-Client Response
      5.3.  Finalization
@@ -116,10 +116,10 @@ Table of Contents
 
 2.  Introduction
 
-   This document specifies two Privacy Pass issuance protocols (as
-   defined in [RFC9576]) that allow for batched issuance of tokens.
-   This allows clients to request more than one token at a time and for
-   issuers to issue more than one token at a time.
+   This document specifies two variants of Privacy Pass issuance
+   protocols (as defined in [RFC9576]) that allow for batched issuance
+   of tokens.  This allows clients to request more than one token at a
+   time and for issuers to issue more than one token at a time.
 
    The base Privacy Pass issuance protocol [RFC9578] defines stateless
    anonymous tokens, which can either be publicly verifiable or not.
@@ -152,12 +152,14 @@ Table of Contents
 
    Privacy Pass tokens (as defined in [RFC9576] and [RFC9578]) are
    unlinkable during issuance and redemption.  The basic issuance
-   protocols defined in [RFC9578] however only allow for a single token
-   to be issued at a time for every challenge.  In some cases,
+   protocols defined in [RFC9578], however, only allow for a single
+   token to be issued at a time for every challenge.  In some cases,
    especially where a large number of clients need to fetch a large
    number of tokens, this may introduce performance bottlenecks.
-   Batched token issuance improves upon the basic Privately Verifiable
-   Token issuance protocol in the following key ways:
+
+   Batched Privately Verifiable Token Issuance Section 5 improves upon
+   the basic Privately Verifiable Token issuance protocol in the
+   following key ways:
 
    1.  Issuing multiple tokens at once in response to a single
        TokenChallenge, thereby reducing the size of the proofs required
@@ -167,11 +169,11 @@ Table of Contents
        cost of the VOPRF proof generation and verification,
        respectively.
 
-   For all Verifiable Token issuance protocol, it allows for a single
+   Arbitrary Batched Token Issuance Section 6 allows for a single
    TokenRequest to be sent that encompasses multiple token requests.
    This enables the issuance of tokens for more than one key in one
-   round trip between the Client and the Issuer.  The cost remains
-   linear.
+   round trip between the Client and the Issuer.  The cost of token
+   generation remains linear.
 
 4.  Presentation Language
 
@@ -215,7 +217,7 @@ Table of Contents
        opaque variable<V>;
    } StructWithVectors;
 
-5.  Batched Privately Verifiable Token
+5.  Batched Privately Verifiable Token Issuance
 
    This section describes a batched issuance protocol for select token
    types, including 0x0001 (defined in [RFC9578]) and 0x0005 (defined in
@@ -469,11 +471,12 @@ Content-Length: <Length of BatchTokenResponse>
 
 6.1.  Client-to-Issuer Request
 
-   The Client first creates all TokenRequest it wants to batch.  To do
-   so, the client follows protocol describing issuance, such as
-   [RFC9578], Section 5.1 or [RFC9578], Section 6.1.
+   The Client first generates all of the individual TokenRequest
+   structures that are intended to be batched together.  This request
+   creation follows the protocol describing issuance, such as [RFC9578],
+   Section 5.1 or [RFC9578], Section 6.1.
 
-   The Client then creates a BatchedTokenRequest structured as follows:
+   The Client then creates a BatchedTokenRequest structure as follows:
 
    struct {
       uint16_t token_type;
