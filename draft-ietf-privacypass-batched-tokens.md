@@ -917,7 +917,7 @@ The test vector below lists the following values:
 
 - skS: The Issuer Private Key, serialized using SerializeScalar from
   {{Section 2.1 of OPRF}} and represented as a hexadecimal string.
-- pkS: The Issuer Public Key, serialized according to the encoding in {{iana-token-typee}}.
+- pkS: The Issuer Public Key, serialized according to the encoding in {{iana-token-type}}.
 - token_challenge: A randomly generated TokenChallenge structure, represented
   as a hexadecimal string.
 - nonces: An array of 32-byte client nonces generated according to {{client-to-issuer-request}},
