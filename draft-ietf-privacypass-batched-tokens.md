@@ -222,9 +222,10 @@ The structure fields are defined as follows:
 
 The Client then generates an HTTP POST request to send to the Issuer Request
 URL, with the BatchTokenRequest as the content. The media type for this request
-is "application/private-token-privately-verifiable-batch-request". An example
-request for the Issuer Request URL "https://issuer.example.net/request" is shown
-below.
+MUST be "application/private-token-privately-verifiable-batch-request". If not,
+the Issuer responds with status code 415.
+An example request for the Issuer Request URL
+"https://issuer.example.net/request" is shown below.
 
 ~~~
 POST /request HTTP/1.1
@@ -324,9 +325,11 @@ The structure fields are defined as follows:
   Scalar values, computed as `concat(SerializeScalar(proof[0]),
   SerializeScalar(proof[1]))`, where Ns is as defined in {{OPRF, Section 4}}.
 
-The Issuer generates an HTTP response with status code 200 whose content
+The Issuer MUST generate an HTTP response with status code 200 whose content
 consists of TokenResponse, with the content type set as
-"application/private-token-privately-verifiable-batch-response".
+"application/private-token-privately-verifiable-batch-response". Clients MUST
+ignore the response if the status code is not 200 or if the content type is not
+"application/private-token-arbitrary-batch-response".
 
 ~~~
 HTTP/1.1 200 OK
@@ -456,8 +459,10 @@ The structure fields are defined as follows:
 
 The Client then generates an HTTP POST request to send to the Issuer Request
 URL, with the BatchTokenRequest as the content. The media type for this request
-is "application/private-token-arbitrary-batch-request". An example request for
-the Issuer Request URL "https://issuer.example.net/request" is shown below.
+MUST be "application/private-token-arbitrary-batch-request". If not, the Issuer
+responds with status code 415.
+An example request for the Issuer Request URL
+"https://issuer.example.net/request" is shown below.
 
 ~~~
 POST /request HTTP/1.1
@@ -509,8 +514,10 @@ prefixed with two bytes. OptionalTokenResponse.token_response is a
 length-prefix-encoded TokenResponse, where a length of 0 indicates that the
 Issuer failed or refused to issue the associated TokenRequest.
 
-The Issuer generates an HTTP response with status code 200 whose content
+The Issuer MUST generate an HTTP response with status code 200 whose content
 consists of TokenResponse, with the content type set as
+"application/private-token-arbitrary-batch-response". Clients MUST ignore the
+response if the status code is not 200 or if the content type is not
 "application/private-token-arbitrary-batch-response".
 
 If the Issuer issues some tokens but not all, it MUST return an HTTP 206 to the
@@ -592,7 +599,7 @@ Type name:
 
 Subtype name:
 
-: private-token-request
+: private-token-privately-verifiable-batch-request
 
 Required parameters:
 
@@ -620,7 +627,8 @@ Published specification:
 
 Applications that use this media type:
 
-: Applications that want to issue or facilitate issuance of Privacy Pass tokens,
+: Applications that want to issue or facilitate issuance of Privacy Pass
+  Batched Privately Verifiable tokens as defined in {{batched-private}},
   including Privacy Pass issuer applications themselves.
 
 Fragment identifier considerations:
@@ -665,7 +673,7 @@ Type name:
 
 Subtype name:
 
-: private-token-response
+: private-token-privately-verifiable-batch-response
 
 Required parameters:
 
@@ -693,7 +701,8 @@ Published specification:
 
 Applications that use this media type:
 
-: Applications that want to issue or facilitate issuance of Privacy Pass tokens,
+: Applications that want to issue or facilitate issuance of Privacy Pass
+  Batched Privately Verifiable tokens as defined in {{batched-private}},
   including Privacy Pass issuer applications themselves.
 
 Fragment identifier considerations:
@@ -738,7 +747,7 @@ Type name:
 
 Subtype name:
 
-: private-token-request
+: private-token-arbitrary-batch-request
 
 Required parameters:
 
@@ -766,7 +775,8 @@ Published specification:
 
 Applications that use this media type:
 
-: Applications that want to issue or facilitate issuance of Privacy Pass tokens,
+: Applications that want to issue or facilitate issuance of Privacy Pass
+  Arbitrary Batched tokens as defined in {{batched-arbitrary}},
   including Privacy Pass issuer applications themselves.
 
 Fragment identifier considerations:
@@ -811,7 +821,7 @@ Type name:
 
 Subtype name:
 
-: private-token-response
+: private-token-arbitrary-batch-response
 
 Required parameters:
 
@@ -839,7 +849,8 @@ Published specification:
 
 Applications that use this media type:
 
-: Applications that want to issue or facilitate issuance of Privacy Pass tokens,
+: Applications that want to issue or facilitate issuance of Privacy Pass
+  Arbitrary Batched tokens as defined in {{batched-arbitrary}},
   including Privacy Pass issuer applications themselves.
 
 Fragment identifier considerations:
