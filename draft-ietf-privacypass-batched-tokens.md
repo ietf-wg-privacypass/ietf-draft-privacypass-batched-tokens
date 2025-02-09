@@ -1227,7 +1227,7 @@ The test vector below lists the following values:
     token request message, represented as a hexadecimal string.
   - token: The output Token from the protocol, represented as a hexadecimal
     string.
-  
+
   type 0x0005
   - skS: The Issuer Private Key, serialized using SerializeScalar from
   {{Section 2.1 of OPRF}} and represented as a hexadecimal string.
