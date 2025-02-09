@@ -917,7 +917,7 @@ The test vector below lists the following values:
 
 - skS: The Issuer Private Key, serialized using SerializeScalar from
   {{Section 2.1 of OPRF}} and represented as a hexadecimal string.
-- pkS: The Issuer Public Key, serialized according to the encoding in {{private-token-type}}.
+- pkS: The Issuer Public Key, serialized according to the encoding in {{iana-token-typee}}.
 - token_challenge: A randomly generated TokenChallenge structure, represented
   as a hexadecimal string.
 - nonces: An array of 32-byte client nonces generated according to {{client-to-issuer-request}},
@@ -1202,10 +1202,10 @@ The test vector below lists the following values:
   type 0x0001
   - skS: The Issuer Private Key, serialized using SerializeScalar from
     {{Section 2.1 of OPRF}} and represented as a hexadecimal string.
-  - pkS: The Issuer Public Key, serialized according to the encoding in {{private-token-type}}.
+  - pkS: The Issuer Public Key, serialized according to the encoding in {{RFC9578, Section 8.2.1}}.
   - token_challenge: A randomly generated TokenChallenge structure, represented
     as a hexadecimal string.
-  - nonce: The 32-byte client nonce generated according to {{private-request}},
+  - nonce: The 32-byte client nonce generated according to {{RFC9578, Section 5}},
     represented as a hexadecimal string.
   - blind: The blind used when computing the OPRF blinded message, serialized
     using SerializeScalar from {{Section 2.1 of OPRF}} and represented as a
@@ -1216,10 +1216,10 @@ The test vector below lists the following values:
   type 0x0002
   - skS: The PEM-encoded PKCS#8 RSA Issuer Private Key used for signing tokens,
     represented as a hexadecimal string.
-  - pkS: The Issuer Public Key, serialized according to the encoding in {{public-token-type}}.
+  - pkS: The Issuer Public Key, serialized according to the encoding in {{RFC9578, Section 8.2.2}}.
   - token_challenge: A randomly generated TokenChallenge structure, represented
     as a hexadecimal string.
-  - nonce: The 32-byte client nonce generated according to {{public-request}},
+  - nonce: The 32-byte client nonce generated according to {{RFC9578, Section 6}},
     represented as a hexadecimal string.
   - blind: The blind used when computing the blind RSA blinded message,
     represented as a hexadecimal string.
@@ -1228,10 +1228,10 @@ The test vector below lists the following values:
   - token: The output Token from the protocol, represented as a hexadecimal
     string.
   
-  type 0xf91a
+  type 0x0005
   - skS: The Issuer Private Key, serialized using SerializeScalar from
   {{Section 2.1 of OPRF}} and represented as a hexadecimal string.
-  - pkS: The Issuer Public Key, serialized according to the encoding in {{private-token-type}}.
+  - pkS: The Issuer Public Key, serialized according to the encoding in {{iana-token-type}}.
   - token_challenge: A randomly generated TokenChallenge structure, represented
     as a hexadecimal string.
   - nonces: An array of 32-byte client nonces generated according to {{client-to-issuer-request}},
