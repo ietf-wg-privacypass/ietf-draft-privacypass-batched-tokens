@@ -569,6 +569,7 @@ following entry:
 * Private Metadata: N
 * Nk: 32
 * Nid: 32
+* Change controller: IETF
 * Reference: {{RFC9578, Section 5}}
 * Notes: None
 
