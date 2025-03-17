@@ -60,12 +60,12 @@ draft-01
 # Introduction
 
 This document specifies two variants of Privacy Pass issuance protocols (as defined in
-{{!RFC9576=I-D.ietf-privacypass-architecture}}) that allow for batched issuance
+{{!RFC9576}}) that allow for batched issuance
 of tokens. This allows clients to request more than one token at a time and for
 issuers to issue more than one token at a time.
 
 The base Privacy Pass issuance protocol
-{{!RFC9578=I-D.ietf-privacypass-protocol}} defines stateless anonymous tokens,
+{{!RFC9578}} defines stateless anonymous tokens,
 which can either be publicly verifiable or not. While it is possible to run
 multiple instances of the issuance protocol in parallel, e.g., over a
 multiplexed transport such as HTTP/3 {{?HTTP3=RFC9114}} or by orchestrating
@@ -74,7 +74,7 @@ support. In addition, in some cases, they cannot take advantage of cryptographic
 optimizations.
 
 The first variant of the issuance protocol builds upon the privately verifiable
-issuance protocol in {{RFC9578}} that uses VOPRF {{!OPRF=I-D.irtf-cfrg-voprf}},
+issuance protocol in {{RFC9578}} that uses VOPRF {{!OPRF=RFC9497}},
 and allows for batched issuance of tokens. This allows clients to request more
 than one token at a time and for issuers to issue more than one token at a time.
 In effect, private batched issuance performance scales better than linearly.
@@ -88,12 +88,16 @@ linear.
 
 This batched issuance protocol registers one new token type
 ({{iana-token-type}}), to be used with the PrivateToken HTTP authentication
-scheme defined in {{!AUTHSCHEME=I-D.ietf-privacypass-auth-scheme}}.
+scheme defined in {{!AUTHSCHEME=RFC9577}}.
+
+## Terminology
+
+{::boilerplate bcp14-tagged}
 
 # Motivation
 
 Privacy Pass tokens (as defined in {{RFC9576}} and
-{{!RFC9578=I-D.ietf-privacypass-protocol}}) are unlinkable during issuance and
+{{!RFC9578}}) are unlinkable during issuance and
 redemption. The basic issuance protocols defined in {{RFC9578}}, however, only
 allow for a single token to be issued at a time for every challenge. In some
 cases, especially where a large number of clients need to fetch a large number
