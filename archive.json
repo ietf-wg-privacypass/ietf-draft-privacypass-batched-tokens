@@ -1,0 +1,2566 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2025-03-18T00:36:57.446559+00:00",
+  "repo": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 6,
+      "id": "I_kwDOHtZl1c5zQZ_R",
+      "title": "Adding additional token types.",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/6",
+      "state": "CLOSED",
+      "author": "dvorak42",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "@chris-wood Would it be reasonable to add a token type for P-384 to reflect the default VOPRF type we have in the base draft? (we also need a P-384 batched variant for PST updates to standard). If that's fine, I can send a PR for the type.",
+      "createdAt": "2023-10-09T19:40:56Z",
+      "updatedAt": "2024-03-21T14:14:32Z",
+      "closedAt": "2024-03-21T14:14:32Z",
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I have no objections to this. A PR would be great. \ud83d\udc4d ",
+          "createdAt": "2023-10-09T19:49:01Z",
+          "updatedAt": "2023-10-09T19:49:13Z"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "id": "I_kwDOHtZl1c6FAnZQ",
+      "title": "token_key_id -> truncated_token_key_id?",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/8",
+      "state": "CLOSED",
+      "author": "tfpauly",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The base issuance spec has this for the token request:\r\n```\r\nstruct {\r\n  uint16_t token_type = 0x0001; /* Type VOPRF(P-384, SHA-384) */\r\n  uint8_t truncated_token_key_id;\r\n  uint8_t blinded_msg[Ne];\r\n} TokenRequest;\r\n```\r\n\r\nWhile the batched uses:\r\n```\r\nstruct {\r\n    uint8_t blinded_element[Ne];\r\n} BlindedElement;\r\n\r\nstruct {\r\n   uint16_t token_type = 0xF91A;\r\n   uint8_t token_key_id;\r\n   BlindedElement blinded_elements<0..2^16-1>;\r\n} TokenRequest;\r\n```\r\n\r\nShould the token_key_id field be named truncated_token_key_id to match?",
+      "createdAt": "2024-04-08T15:32:45Z",
+      "updatedAt": "2024-04-08T19:05:10Z",
+      "closedAt": "2024-04-08T19:05:10Z",
+      "comments": [
+        {
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for catching that, I missed that change in the base spec. I think this was a mere disambiguation, `token_key_id` was renamed to `truncated_key_id`, and `key_id` was renamed to `token_key_id`.",
+          "createdAt": "2024-04-08T18:59:02Z",
+          "updatedAt": "2024-04-08T18:59:02Z"
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "id": "I_kwDOHtZl1c6I4Nrf",
+      "title": "Batched Publicly Verifiable Tokens",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/12",
+      "state": "CLOSED",
+      "author": "thibmeu",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The current batched token draft discusses Batched Privately Verifiable Tokens. These tokens benefits from batching because of their underlying cryptographic construction, as well as from a reduced number of HTTP request.\r\n\r\nI think it'd be beneficial to add a similar batching mechanism for Publicly Verifiable Tokens. At a high level, it works could work by defining Token Type `0xF91B` which performs token wrapping.\r\n\r\nTokenRequest can be concatenated as follow\r\n\r\n```\r\nstruct {\r\n  uint16_t token_type;\r\n  TokenRequest token_requests<0..2^16-1>;\r\n} BatchedTokenRequest\r\n```\r\n\r\nThe response is similar\r\n\r\n```\r\nstruct {\r\n  uint16_t token_type;\r\n  TokenResponse token_responses<0..2^16-1>;\r\n} BatchedTokenResponse\r\n```\r\n\r\nThe draft could be restricted the TokenRequest/TokenResponse with type `0x0002`.\r\nI imagine the draft would be restructured to have a layout similar to the existing [Privacy Pass protocol draft 16](https://www.ietf.org/archive/id/draft-ietf-privacypass-protocol-16.html).\r\n\r\nThis work can build on top of #10. I'll share a longer edit based on this.",
+      "createdAt": "2024-05-14T21:23:58Z",
+      "updatedAt": "2024-11-05T18:18:16Z",
+      "closedAt": "2024-11-05T18:18:16Z",
+      "comments": []
+    },
+    {
+      "number": 15,
+      "id": "I_kwDOHtZl1c6McJJe",
+      "title": "Align error responses with RFC 9578",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/15",
+      "state": "CLOSED",
+      "author": "tfpauly",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "RFC 9578 specifies an HTTP 422 response for invalid token types during issuance, while draft-ietf-privacypass-batched-tokens just has a 400 response. We should align this document with the RFC.",
+      "createdAt": "2024-06-17T02:07:31Z",
+      "updatedAt": "2024-11-05T18:30:26Z",
+      "closedAt": "2024-11-05T18:30:26Z",
+      "comments": []
+    },
+    {
+      "number": 20,
+      "id": "I_kwDOHtZl1c6f9BQi",
+      "title": "Test vectors for private batched tokens",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/20",
+      "state": "OPEN",
+      "author": "thibmeu",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The draft should provide test vectors for private batched tokens.\r\n\r\n@chris-wood worked on these some time back, and has added some to the [Go implementation](https://github.com/cloudflare/pat-go/blob/main/tokens/token-test-vectors.json).",
+      "createdAt": "2024-11-22T15:31:37Z",
+      "updatedAt": "2024-11-22T15:31:37Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 21,
+      "id": "I_kwDOHtZl1c6f9D9h",
+      "title": "Test vectors for arbitrary batched tokens",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/21",
+      "state": "OPEN",
+      "author": "thibmeu",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The draft should provide test vector for arbitrary batched tokens. At minimum, it should include batches of size 1 for 0x0001 and 0x0002 which are defined in RFC 9578, as well as a combination of the two.\r\n\r\nGiven this spec defines a new token type 0xF91A, it might be interesting to support it as well.\r\n\r\nI've made a first pass with a [Go implementation](https://github.com/cloudflare/pat-go/blob/thibmeu/batched-tokens/tokens/batched/batched-issuance-test-vectors.json) of arbitrary batched tokens, and associated test vectors.",
+      "createdAt": "2024-11-22T15:34:04Z",
+      "updatedAt": "2024-11-22T15:34:04Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 22,
+      "id": "I_kwDOHtZl1c6gNzqq",
+      "title": "Missing IANA token type",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/22",
+      "state": "CLOSED",
+      "author": "raphaelrobert",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The P384 batched token type (0xF901) was removed by mistake in #10.",
+      "createdAt": "2024-11-24T16:37:03Z",
+      "updatedAt": "2024-11-24T18:18:18Z",
+      "closedAt": "2024-11-24T18:18:18Z",
+      "comments": []
+    },
+    {
+      "number": 23,
+      "id": "I_kwDOHtZl1c6gOBgW",
+      "title": "Change vector encoding to Variable-Size Vector Length Headers",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/23",
+      "state": "CLOSED",
+      "author": "raphaelrobert",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Ref [Variable-Size Vector Length Headers](https://www.rfc-editor.org/rfc/rfc9420.html#name-variable-size-vector-length)",
+      "createdAt": "2024-11-24T16:51:20Z",
+      "updatedAt": "2025-02-02T17:55:07Z",
+      "closedAt": "2025-02-02T17:55:07Z",
+      "comments": []
+    },
+    {
+      "number": 24,
+      "id": "I_kwDOHtZl1c6gOBpH",
+      "title": "Add KAT vectors",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/24",
+      "state": "CLOSED",
+      "author": "raphaelrobert",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Add KAT vectors, at least for the private batched variants.",
+      "createdAt": "2024-11-24T16:52:20Z",
+      "updatedAt": "2024-11-24T17:09:42Z",
+      "closedAt": "2024-11-24T17:09:42Z",
+      "comments": [
+        {
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closed as duplicate.",
+          "createdAt": "2024-11-24T17:09:42Z",
+          "updatedAt": "2024-11-24T17:09:42Z"
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "id": "I_kwDOHtZl1c6gOT1y",
+      "title": "Introduce Optional type for encoding",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/25",
+      "state": "CLOSED",
+      "author": "raphaelrobert",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This should be used for `OptionalTokenResponse`, rather than the zero length prefix.",
+      "createdAt": "2024-11-24T17:36:30Z",
+      "updatedAt": "2025-02-02T17:55:07Z",
+      "closedAt": "2025-02-02T17:55:07Z",
+      "comments": []
+    },
+    {
+      "number": 26,
+      "id": "I_kwDOHtZl1c6gOUSA",
+      "title": "Repeat TokenResponse for arbitrary BatchTokenResponse",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/26",
+      "state": "CLOSED",
+      "author": "raphaelrobert",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Private tokens:\r\n\r\n```c\r\nstruct {\r\n   uint8_t evaluate_msg[Ne];\r\n   uint8_t evaluate_proof[Ns+Ns];\r\n} TokenResponse;\r\n```\r\n\r\nPublic tokens:\r\n\r\n```c\r\nstruct {\r\n  uint8_t blind_sig[Nk];\r\n} TokenResponse;\r\n```",
+      "createdAt": "2024-11-24T17:39:12Z",
+      "updatedAt": "2025-02-02T17:58:17Z",
+      "closedAt": "2025-02-02T17:58:17Z",
+      "comments": []
+    },
+    {
+      "number": 33,
+      "id": "I_kwDOHtZl1c6onDU4",
+      "title": "Add clarifying text for media types",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/33",
+      "state": "OPEN",
+      "author": "tfpauly",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This document defines four new media types, but it seems to be missing some descriptive and normative text.\n\nSection 6.2 mentions:\n\"The Content-Type is application/private-token-arbitrary-batch-request as registered with IANA.\"\n\nThis is a good step, but the equivalent text for the other three types is not there. They are mentioned in examples, and in IANA, but not in the descriptive text.\n\nI think for each, we need to:\n- In the main section that is relevant, mention the media type and link to IANA\n- Add a normative explanation of how to use the media type (\"The Content-Type for this request MUST be...\")\n- Add normative text about how to verify the media type",
+      "createdAt": "2025-02-03T23:56:34Z",
+      "updatedAt": "2025-02-07T16:32:51Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I have opened #34 to address this issue.\n\nOne question though is what do you mean by `Add normative text about how to verity the media type`? Would this be text that goes in the IANA section as to which structure should be parsed when seeing said content type?\nIn this case, is the wording on #34 good enough as it mentions \"as defined in {{section}}\"",
+          "createdAt": "2025-02-07T15:15:19Z",
+          "updatedAt": "2025-02-07T15:15:19Z"
+        },
+        {
+          "author": "tfpauly",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "For `Add normative text about how to verify the media type`, I was thinking that we need to explain \"if you receive a response without the expected type, you MUST ignore the response\" or something like that. What do you do about the received type, essentially.",
+          "createdAt": "2025-02-07T16:32:50Z",
+          "updatedAt": "2025-02-07T16:32:50Z"
+        }
+      ]
+    }
+  ],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOHtZl1c48mORd",
+      "title": "Editorial pass",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/1",
+      "state": "MERGED",
+      "author": "chris-wood",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-08-03T18:03:42Z",
+      "updatedAt": "2022-08-04T15:26:37Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "3a3e899d8993ccb06b839ac4d9fe7ee9dc769c70",
+      "headRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "caw/editorial-pass",
+      "headRefOid": "401e61586e6018aebd9684600f4dd553d28bcff1",
+      "closedAt": "2022-08-04T15:26:37Z",
+      "mergedAt": "2022-08-04T15:26:37Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "c8676af9c1f0fc85bba0745d85881bd78be313ae"
+      },
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks @raphaelrobert :) ",
+          "createdAt": "2022-08-04T13:28:00Z",
+          "updatedAt": "2022-08-04T13:28:00Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c4_PE9t",
+          "commit": {
+            "abbreviatedOid": "9bebab9"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "Thanks for the pass and for improving my sometimes clunky wording! Just a few questions, but otherwise I agree with the changes. ",
+          "createdAt": "2022-08-03T19:46:10Z",
+          "updatedAt": "2022-08-03T19:57:05Z",
+          "comments": [
+            {
+              "originalPosition": 125,
+              "body": "I changed the name here to make it clear that the function differs from the one in the VOPRF spec. Reading the spec again, I see that it states the following:\r\n\r\n> In the description above, inputs to GenerateProof are one-item lists. Using larger lists allows servers to batch the evaluation of multiple elements while producing a single batched DLEQ proof for them.\r\n\r\nI'm now wondering if we need the function at all (also Finalize). On the pro side, it might make sense to be more explicit here. In that case, we should probably mention that this is the same as in the VOPRF spec but for multiple inputs and only spelled out here for convenience.\r\n\r\nLet me know what you think.",
+              "createdAt": "2022-08-03T19:46:10Z",
+              "updatedAt": "2022-08-03T19:57:05Z"
+            },
+            {
+              "originalPosition": 182,
+              "body": "Just a nit, but aren't the tokens supposed to be exactly identical in their structure for all issuance protocols? I know it's just the name of the fields, but technically it makes the struct different.",
+              "createdAt": "2022-08-03T19:47:42Z",
+              "updatedAt": "2022-08-03T19:57:05Z"
+            },
+            {
+              "originalPosition": 175,
+              "body": "```suggestion\r\nto the i-th nonce that was sampled in {{client-to-issuer-request}} and that the client\r\n```",
+              "createdAt": "2022-08-03T19:49:18Z",
+              "updatedAt": "2022-08-03T19:57:05Z"
+            },
+            {
+              "originalPosition": 39,
+              "body": "Not technically your PR, my wording was not very accurate. The efficiency is also improved on the client side because the proof verification is faster. Also, the size of the proof is not linear in the number of requested tokens anymore. ",
+              "createdAt": "2022-08-03T19:53:23Z",
+              "updatedAt": "2022-08-03T19:57:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c4_PvYC",
+          "commit": {
+            "abbreviatedOid": "9bebab9"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-08-03T22:49:48Z",
+          "updatedAt": "2022-08-03T22:49:49Z",
+          "comments": [
+            {
+              "originalPosition": 125,
+              "body": "Right, I read this as a convenience. We've waffled on the batch presentation in the VOPRF draft for a while now. Do you find this presentation awkward? Would it be better if the VOPRF APIs just naturally worked on batches of inputs?",
+              "createdAt": "2022-08-03T22:49:49Z",
+              "updatedAt": "2022-08-03T22:49:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c4_Pvk7",
+          "commit": {
+            "abbreviatedOid": "5455484"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-08-03T22:51:11Z",
+          "updatedAt": "2022-08-03T22:51:11Z",
+          "comments": [
+            {
+              "originalPosition": 182,
+              "body": "Fair point! I reverted this.",
+              "createdAt": "2022-08-03T22:51:11Z",
+              "updatedAt": "2022-08-03T22:51:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c4_Pv9k",
+          "commit": {
+            "abbreviatedOid": "9bebab9"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-08-03T22:53:53Z",
+          "updatedAt": "2022-08-03T22:53:54Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "Yep, fixed!",
+              "createdAt": "2022-08-03T22:53:53Z",
+              "updatedAt": "2022-08-03T22:53:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c4_R1Py",
+          "commit": {
+            "abbreviatedOid": "3fab645"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Thanks for the changes! Just one last nit",
+          "createdAt": "2022-08-04T10:07:11Z",
+          "updatedAt": "2022-08-04T10:07:40Z",
+          "comments": [
+            {
+              "originalPosition": 125,
+              "body": "At the end of the day, all alternatives work. But since you ask, I think I would have a slight preference VOPRF APIs that support batching.\r\n\r\nI think we can still move forward with the PR for now if we include a sentence explaining that this is an alternative representation of BlindEvaluate from VOPRF, spelled out for convenience. If VOPRF changes, we can make a new PR.",
+              "createdAt": "2022-08-04T10:07:11Z",
+              "updatedAt": "2022-08-04T10:07:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c4_TtTW",
+          "commit": {
+            "abbreviatedOid": "401e615"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Awesome, let's get this in!",
+          "createdAt": "2022-08-04T15:26:05Z",
+          "updatedAt": "2022-08-04T15:26:05Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "id": "PR_kwDOHtZl1c49U1G4",
+      "title": "Pick a random codepoint",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/2",
+      "state": "MERGED",
+      "author": "chris-wood",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "`0x0003` conflicts with the [rate limited token type](https://datatracker.ietf.org/doc/html/draft-privacypass-rate-limit-tokens-03#section-11.1).",
+      "createdAt": "2022-08-17T13:49:52Z",
+      "updatedAt": "2022-08-17T15:46:01Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "c8676af9c1f0fc85bba0745d85881bd78be313ae",
+      "headRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "caw/random-value",
+      "headRefOid": "7020981055b0532841206a676ac741ff9deea473",
+      "closedAt": "2022-08-17T15:46:01Z",
+      "mergedAt": "2022-08-17T15:46:01Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "849364540962e2faeb2ac73174bfef28874b87d1"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c5AInQs",
+          "commit": {
+            "abbreviatedOid": "7020981"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-08-17T15:43:22Z",
+          "updatedAt": "2022-08-17T15:43:22Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "PR_kwDOHtZl1c49Vcj5",
+      "title": "Be more flexible about the number of tokens",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/3",
+      "state": "MERGED",
+      "author": "raphaelrobert",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "raphaelrobert"
+      ],
+      "labels": [],
+      "body": "The way blinded/evaluated elements were encoded in token requests/responses was not very flexible since you either had to know `Nr` in advance or deduce it by looking at the size of the whole serialized struct.\r\nThis way the parsing is robust and no prior knowledge of `Nr` is necessary.",
+      "createdAt": "2022-08-17T15:57:43Z",
+      "updatedAt": "2022-11-03T13:48:35Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "849364540962e2faeb2ac73174bfef28874b87d1",
+      "headRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "token_number",
+      "headRefOid": "c6077219af8c5b46f178f6d0a1933591f6f026a7",
+      "closedAt": "2022-11-03T13:48:34Z",
+      "mergedAt": "2022-11-03T13:48:34Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "62e2cca824d370d627ef86273601e055936a0138"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 4,
+      "id": "PR_kwDOHtZl1c5L7k-_",
+      "title": "Formatting nits",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/4",
+      "state": "MERGED",
+      "author": "raphaelrobert",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-03-13T20:14:07Z",
+      "updatedAt": "2023-03-13T20:18:54Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "ffb1ff80eff553ee45be73afcc8a99e88b8fe0c7",
+      "headRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "formatting",
+      "headRefOid": "88f30bdac8815fb39b1ffc8804d8f823e644bdee",
+      "closedAt": "2023-03-13T20:18:54Z",
+      "mergedAt": "2023-03-13T20:18:54Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "aaaea536a570248d173fb6d292261effd2f23f14"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c5PvnU_",
+          "commit": {
+            "abbreviatedOid": "ce0e395"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-03-13T20:16:14Z",
+          "updatedAt": "2023-03-13T20:16:46Z",
+          "comments": [
+            {
+              "originalPosition": 61,
+              "body": "```suggestion\r\nclient_context = SetupVOPRFClient(\"ristretto255-SHA512\", pkI)\r\n```",
+              "createdAt": "2023-03-13T20:16:14Z",
+              "updatedAt": "2023-03-13T20:16:46Z"
+            },
+            {
+              "originalPosition": 67,
+              "body": "```suggestion\r\nHere, \"ristretto255-SHA512\" is the identifier corresponding to the OPRF(ristretto255,\r\n```",
+              "createdAt": "2023-03-13T20:16:26Z",
+              "updatedAt": "2023-03-13T20:16:46Z"
+            },
+            {
+              "originalPosition": 137,
+              "body": "```suggestion\r\nserver_context = SetupVOPRFServer(\"ristretto255-SHA512\", skI, pkI)\r\n```",
+              "createdAt": "2023-03-13T20:16:35Z",
+              "updatedAt": "2023-03-13T20:16:46Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "id": "PR_kwDOHtZl1c5Z7ru2",
+      "title": "Rename draft",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/5",
+      "state": "MERGED",
+      "author": "raphaelrobert",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-09-09T12:31:13Z",
+      "updatedAt": "2023-09-09T12:34:37Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "aaaea536a570248d173fb6d292261effd2f23f14",
+      "headRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "renamed-draft",
+      "headRefOid": "13adb603fe2b250d3ad8471145e79ad262b0cb5d",
+      "closedAt": "2023-09-09T12:34:37Z",
+      "mergedAt": "2023-09-09T12:34:37Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "c2607d6c28597027e20a71444a89c64a3d9ad05d"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 7,
+      "id": "PR_kwDOHtZl1c5qLUGZ",
+      "title": "Add the Batched VOPRF (P-384, SHA-384) variant.",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/7",
+      "state": "MERGED",
+      "author": "dvorak42",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #6.",
+      "createdAt": "2024-03-20T05:27:37Z",
+      "updatedAt": "2024-03-21T14:14:31Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "c2607d6c28597027e20a71444a89c64a3d9ad05d",
+      "headRepository": "dvorak42/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "patch-1",
+      "headRefOid": "244c1bb658354fd48fe578ce6c44730a6b671a37",
+      "closedAt": "2024-03-21T14:14:31Z",
+      "mergedAt": "2024-03-21T14:14:31Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "5511f741ec42f3f9565e50e3f47f70a2ebe3a16b"
+      },
+      "comments": [
+        {
+          "author": "dvorak42",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@raphaelrobert @chris-wood Could one of you review (can't add reviewers for some reason).",
+          "createdAt": "2024-03-20T05:28:58Z",
+          "updatedAt": "2024-03-20T05:28:58Z"
+        },
+        {
+          "author": "dvorak42",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Not sure what the right way of doing it, but tried doing a pass calling out you should use the identifier (from the VOPRF document) and token_type based on the ciphersuite.",
+          "createdAt": "2024-03-21T00:45:09Z",
+          "updatedAt": "2024-03-21T00:45:09Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c50I5_U",
+          "commit": {
+            "abbreviatedOid": "6b26bd2"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Thanks for the PR. I think we need to make some more changes because \"ristretto255-SHA512\" is hard-coded throughout the document and we need more flexibility. Let me know if you want to do that, otherwise I can follow up.",
+          "createdAt": "2024-03-20T10:34:09Z",
+          "updatedAt": "2024-03-20T10:34:09Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHtZl1c50Xoe-",
+          "commit": {
+            "abbreviatedOid": "244c1bb"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thanks, I think this works. For the sake of completeness, I tried to implement this and it seems to work as expected.",
+          "createdAt": "2024-03-21T14:13:59Z",
+          "updatedAt": "2024-03-21T14:13:59Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "id": "PR_kwDOHtZl1c5sDGHd",
+      "title": "Align terminology with base spec",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/9",
+      "state": "MERGED",
+      "author": "raphaelrobert",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixes #8.",
+      "createdAt": "2024-04-08T19:04:26Z",
+      "updatedAt": "2024-04-08T19:05:09Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "5511f741ec42f3f9565e50e3f47f70a2ebe3a16b",
+      "headRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "align-with-base",
+      "headRefOid": "f3edcd59d00273df5570141cc3d469543a7f5388",
+      "closedAt": "2024-04-08T19:05:09Z",
+      "mergedAt": "2024-04-08T19:05:09Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "6c57bcac132d001c662e7db0c59171ba8f737f08"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 10,
+      "id": "PR_kwDOHtZl1c5sQRfQ",
+      "title": "Refactor and use a BatchTokenRequest/Response type",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/10",
+      "state": "MERGED",
+      "author": "chris-wood",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on mailing list discussion and [this PR](https://github.com/ietf-wg-privacypass/base-drafts/pull/508) against the base drafts.\r\n\r\ncc @tfpauly",
+      "createdAt": "2024-04-10T14:30:24Z",
+      "updatedAt": "2024-05-20T21:51:19Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "6c57bcac132d001c662e7db0c59171ba8f737f08",
+      "headRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "caw/batch-token-media-type",
+      "headRefOid": "7ecf8ed4404b2377633e849146c3d2b9bcf7f76c",
+      "closedAt": "2024-05-20T21:51:19Z",
+      "mergedAt": "2024-05-20T21:51:19Z",
+      "mergedBy": "chris-wood",
+      "mergeCommit": {
+        "oid": "973340caa5b2b22e875852aaff242a2fec1bcd97"
+      },
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Do we want to explicitly mention how the media type would be applied to other types, like type 2? Or leave that for another PR?\r\n\r\nI think leave it for another PR.",
+          "createdAt": "2024-05-20T21:51:12Z",
+          "updatedAt": "2024-05-20T21:51:12Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c53MK3U",
+          "commit": {
+            "abbreviatedOid": "55278bd"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thanks, looks good to me. Just a few suggestions to unclog the CI. \r\n\r\nLet's merge this once the [upstream PR](https://github.com/ietf-wg-privacypass/base-drafts/pull/508) is merged.",
+          "createdAt": "2024-04-14T15:06:38Z",
+          "updatedAt": "2024-04-14T15:11:20Z",
+          "comments": [
+            {
+              "originalPosition": 181,
+              "body": "```suggestion\r\n* Reference: {{ISSUANCE, Section 5}}\r\n```",
+              "createdAt": "2024-04-14T15:06:39Z",
+              "updatedAt": "2024-04-14T15:11:20Z"
+            },
+            {
+              "originalPosition": 219,
+              "body": "```suggestion\r\n: see {{security-considerations}}\r\n```",
+              "createdAt": "2024-04-14T15:07:04Z",
+              "updatedAt": "2024-04-14T15:11:20Z"
+            },
+            {
+              "originalPosition": 292,
+              "body": "```suggestion\r\n: see {{security-considerations}}\r\n```",
+              "createdAt": "2024-04-14T15:07:28Z",
+              "updatedAt": "2024-04-14T15:11:20Z"
+            },
+            {
+              "originalPosition": 344,
+              "body": "```suggestion\r\n{: spacing=\"compact\"}\r\n\r\n```",
+              "createdAt": "2024-04-14T15:08:16Z",
+              "updatedAt": "2024-04-14T15:11:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c56ijjB",
+          "commit": {
+            "abbreviatedOid": "d612751"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-14T16:22:24Z",
+          "updatedAt": "2024-05-14T16:22:24Z",
+          "comments": [
+            {
+              "originalPosition": 25,
+              "body": "```suggestion\r\n{{!AUTHSCHEME=I-D.ietf-privacypass-auth-scheme}}.\r\n```",
+              "createdAt": "2024-05-14T16:22:24Z",
+              "updatedAt": "2024-05-14T16:22:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c56ijqO",
+          "commit": {
+            "abbreviatedOid": "ccf2d9a"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-14T16:22:39Z",
+          "updatedAt": "2024-05-14T16:22:39Z",
+          "comments": [
+            {
+              "originalPosition": 175,
+              "body": "```suggestion\r\n```",
+              "createdAt": "2024-05-14T16:22:39Z",
+              "updatedAt": "2024-05-14T16:22:39Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c56wMYg",
+          "commit": {
+            "abbreviatedOid": "7ecf8ed"
+          },
+          "author": "tfpauly",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "Do we want to explicitly mention how the media type would be applied to other types, like type 2? Or leave that for another PR?",
+          "createdAt": "2024-05-16T02:57:04Z",
+          "updatedAt": "2024-05-16T02:57:04Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "id": "PR_kwDOHtZl1c5sVIGA",
+      "title": "Fix typo",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/11",
+      "state": "MERGED",
+      "author": "thibmeu",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Small typo",
+      "createdAt": "2024-04-11T08:11:37Z",
+      "updatedAt": "2024-05-20T21:50:54Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "6c57bcac132d001c662e7db0c59171ba8f737f08",
+      "headRepository": "thibmeu/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "main",
+      "headRefOid": "80a4abc9148a3ba92dc0b001b5ea5a99a2ba55fd",
+      "closedAt": "2024-05-20T21:50:53Z",
+      "mergedAt": "2024-05-20T21:50:53Z",
+      "mergedBy": "chris-wood",
+      "mergeCommit": {
+        "oid": "bb52c3c33b5e7a147a0a93a8b520dd49c6c15ec7"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c57NW0k",
+          "commit": {
+            "abbreviatedOid": "80a4abc"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-20T21:50:48Z",
+          "updatedAt": "2024-05-20T21:50:48Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "id": "PR_kwDOHtZl1c5xqPMz",
+      "title": "Add Arbitrary Batched Verifiable Tokens",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/13",
+      "state": "MERGED",
+      "author": "thibmeu",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Allow TokenRequests to be batched. While this scales linearly, it provides a go to method to batch token request for publicly verifiable, or even rate limit tokens.\r\n\r\nCloses #12 ",
+      "createdAt": "2024-06-06T10:00:32Z",
+      "updatedAt": "2024-11-05T18:18:15Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "d4bde2a37199c01ac43f7834268db53c32d02a8f",
+      "headRepository": "thibmeu/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "add-publicly-batched-tokens",
+      "headRefOid": "b95fd168eb27fd1e5ff1a3d3ebd4485f29b8b517",
+      "closedAt": "2024-11-05T18:18:15Z",
+      "mergedAt": "2024-11-05T18:18:15Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "619c72e5ffef061674d36a7dee007eb417b38ed8"
+      },
+      "comments": [
+        {
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "#16 has been cut. I'll rebase this branch based on the new types and wording. The core of this PR remains unchanged.",
+          "createdAt": "2024-10-18T07:37:42Z",
+          "updatedAt": "2024-10-18T07:37:42Z"
+        },
+        {
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "last change includes items discussed in person:\r\n* Change media type\r\n* Explain what to do with not yet defined token type in arbitrary batched tokens\r\n* Highlight arbitrary batch provides flexibility, while privately verifiable provides efficiency\r\n* Some wording",
+          "createdAt": "2024-11-05T13:41:42Z",
+          "updatedAt": "2024-11-05T13:41:42Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c6ABi9q",
+          "commit": {
+            "abbreviatedOid": "0b58b03"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2024-06-28T12:30:44Z",
+          "updatedAt": "2024-06-28T13:01:11Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "```suggestion\r\nThis document specifies two Privacy Pass issuance protocols (as\r\ndefined in {{!ARCH=I-D.ietf-privacypass-architecture}}) that allow for batched\r\nissuance of tokens. This allows clients to request more than one token at a time\r\n```",
+              "createdAt": "2024-06-28T12:30:44Z",
+              "updatedAt": "2024-06-28T13:01:11Z"
+            },
+            {
+              "originalPosition": 18,
+              "body": "```suggestion\r\nHTTP requests, these ad-hoc solutions vary based on transport protocol support. In\r\naddition, in some cases, they cannot take advantage of cryptographic optimizations.\r\n```",
+              "createdAt": "2024-06-28T12:31:52Z",
+              "updatedAt": "2024-06-28T13:01:11Z"
+            },
+            {
+              "originalPosition": 38,
+              "body": "We shouldn't be defining any new token types in this case; I'll correct this after we merge.",
+              "createdAt": "2024-06-28T12:33:23Z",
+              "updatedAt": "2024-06-28T13:01:11Z"
+            },
+            {
+              "originalPosition": 45,
+              "body": "```suggestion\r\nPrivacy Pass tokens (as defined in {{ARCHITECTURE}} and\r\n```",
+              "createdAt": "2024-06-28T12:34:04Z",
+              "updatedAt": "2024-06-28T13:01:11Z"
+            },
+            {
+              "originalPosition": 47,
+              "body": "```suggestion\r\n{{!ISSUANCE=I-D.ietf-privacypass-protocol}}) are unlinkable during issuance and redemption.\r\nThe basic issuance protocols defined in {{RFC9578}} however only allow for a single\r\n```",
+              "createdAt": "2024-06-28T12:36:00Z",
+              "updatedAt": "2024-06-28T13:01:11Z"
+            },
+            {
+              "originalPosition": 52,
+              "body": "```suggestion\r\nBatched token issuance improves\r\n```",
+              "createdAt": "2024-06-28T12:36:18Z",
+              "updatedAt": "2024-06-28T13:01:11Z"
+            },
+            {
+              "originalPosition": 62,
+              "body": "TODO?",
+              "createdAt": "2024-06-28T12:40:59Z",
+              "updatedAt": "2024-06-28T13:01:11Z"
+            },
+            {
+              "originalPosition": 64,
+              "body": "```suggestion\r\n# Batched Privately Verifiable Token\r\n\r\nThis section describes a batched issuance protocol for select token types, including 0x0001 (defined in {{RFC9578}}) and 0xF91A (defined in this document). \r\n```",
+              "createdAt": "2024-06-28T12:48:35Z",
+              "updatedAt": "2024-06-28T13:01:11Z"
+            },
+            {
+              "originalPosition": 103,
+              "body": "```suggestion\r\n```",
+              "createdAt": "2024-06-28T12:49:07Z",
+              "updatedAt": "2024-06-28T13:01:11Z"
+            },
+            {
+              "originalPosition": 92,
+              "body": "```suggestion\r\n# Arbitrary Batched Token Issuance\r\n\r\nThis section describes an issuance protocol mechanism for issuing multiple tokens in one round trip between Client and Issuer. An arbitrary batched token request can contain token requests for any token type.\r\n```",
+              "createdAt": "2024-06-28T12:50:27Z",
+              "updatedAt": "2024-06-28T13:01:11Z"
+            },
+            {
+              "originalPosition": 103,
+              "body": "Why enforce that all TokenRequests have the same token type?",
+              "createdAt": "2024-06-28T12:50:45Z",
+              "updatedAt": "2024-06-28T13:01:11Z"
+            },
+            {
+              "originalPosition": 114,
+              "body": "```suggestion\r\n```\r\nThis requirement seems overly prohibitive. What's the rationale for it?",
+              "createdAt": "2024-06-28T12:51:09Z",
+              "updatedAt": "2024-06-28T13:01:11Z"
+            },
+            {
+              "originalPosition": 105,
+              "body": "```suggestion\r\n} BatchTokenRequest\r\n```",
+              "createdAt": "2024-06-28T12:51:36Z",
+              "updatedAt": "2024-06-28T13:01:11Z"
+            },
+            {
+              "originalPosition": 136,
+              "body": "```suggestion\r\n```",
+              "createdAt": "2024-06-28T12:51:48Z",
+              "updatedAt": "2024-06-28T13:01:11Z"
+            },
+            {
+              "originalPosition": 138,
+              "body": "```suggestion\r\nIf this condition is not met, the Issuer MUST return an HTTP 400 error\r\n```",
+              "createdAt": "2024-06-28T12:51:58Z",
+              "updatedAt": "2024-06-28T13:01:11Z"
+            },
+            {
+              "originalPosition": 141,
+              "body": "```suggestion\r\n```",
+              "createdAt": "2024-06-28T12:52:18Z",
+              "updatedAt": "2024-06-28T13:01:11Z"
+            },
+            {
+              "originalPosition": 153,
+              "body": "It seems possible for one requests to succeed and some to fail. How can that be expressed here?",
+              "createdAt": "2024-06-28T12:56:16Z",
+              "updatedAt": "2024-06-28T13:01:11Z"
+            },
+            {
+              "originalPosition": 173,
+              "body": "```suggestion\r\n```\r\nThis is basic HTTP semantics, so I don't think we need to say anything special here.",
+              "createdAt": "2024-06-28T12:57:08Z",
+              "updatedAt": "2024-06-28T13:01:11Z"
+            },
+            {
+              "originalPosition": 179,
+              "body": "```suggestion\r\n```\r\nAs above, I think we should remove this constraint.",
+              "createdAt": "2024-06-28T12:57:33Z",
+              "updatedAt": "2024-06-28T13:01:11Z"
+            },
+            {
+              "originalPosition": 185,
+              "body": "FinalizeBatch is for the OPRF-based variants. It won't work for arbitrary tokens. I might rephrase this so that it's something like \"if finalization of any TokenResponses fails, propagate the failure.\"",
+              "createdAt": "2024-06-28T12:59:23Z",
+              "updatedAt": "2024-06-28T13:01:11Z"
+            },
+            {
+              "originalPosition": 200,
+              "body": "How do they impose this limit? I think they should have the ability to skip or ignore token requests if they're too many. ",
+              "createdAt": "2024-06-28T13:01:04Z",
+              "updatedAt": "2024-06-28T13:01:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6AFw2j",
+          "commit": {
+            "abbreviatedOid": "0b58b03"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-28T21:07:54Z",
+          "updatedAt": "2024-06-28T21:07:54Z",
+          "comments": [
+            {
+              "originalPosition": 38,
+              "body": "you're right. thanks!",
+              "createdAt": "2024-06-28T21:07:54Z",
+              "updatedAt": "2024-06-28T21:07:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6AF0Wi",
+          "commit": {
+            "abbreviatedOid": "0b58b03"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-28T21:14:50Z",
+          "updatedAt": "2024-06-28T21:14:50Z",
+          "comments": [
+            {
+              "originalPosition": 103,
+              "body": "[RFC 9576](https://www.rfc-editor.org/rfc/rfc9576#section-3.5-2) specifies that\r\n> The structure and semantics of the TokenRequest and TokenResponse messages depend on the issuance protocol and token type being used\r\n\r\nThis means that while all existing TokenRequest start with `token_type`, it's a convention and might break in future Issuance protocols.\r\n\r\nTherefore the restriction to one token type per batched request, instead of prepending token_type to all TokenRequest. This also seems like a way to fail fast for an issuer, which would know if they can support the batched requests, knowing both the number of request and their type.\r\n",
+              "createdAt": "2024-06-28T21:14:50Z",
+              "updatedAt": "2024-06-28T21:14:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6AF1Xf",
+          "commit": {
+            "abbreviatedOid": "0b58b03"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-28T21:16:51Z",
+          "updatedAt": "2024-06-28T21:16:51Z",
+          "comments": [
+            {
+              "originalPosition": 114,
+              "body": "The deserialisation depends on the token type. This requirement is meant to ensure token request are valid.",
+              "createdAt": "2024-06-28T21:16:51Z",
+              "updatedAt": "2024-06-28T21:16:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6AF1yt",
+          "commit": {
+            "abbreviatedOid": "0b58b03"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-28T21:17:46Z",
+          "updatedAt": "2024-06-28T21:17:46Z",
+          "comments": [
+            {
+              "originalPosition": 136,
+              "body": "see comment above. might be revised depending on the outcome.",
+              "createdAt": "2024-06-28T21:17:46Z",
+              "updatedAt": "2024-06-28T21:17:46Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6AF176",
+          "commit": {
+            "abbreviatedOid": "0b58b03"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-28T21:18:13Z",
+          "updatedAt": "2024-06-28T21:18:14Z",
+          "comments": [
+            {
+              "originalPosition": 103,
+              "body": "That applies to the application/private-token-request media type. But if we use a different media type, as we've done here, that restriction no longer applies.",
+              "createdAt": "2024-06-28T21:18:13Z",
+              "updatedAt": "2024-06-28T21:18:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6AF2Cr",
+          "commit": {
+            "abbreviatedOid": "0b58b03"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-28T21:18:36Z",
+          "updatedAt": "2024-06-28T21:18:37Z",
+          "comments": [
+            {
+              "originalPosition": 114,
+              "body": "I'm suggesting deleting the requirement that each token request in the batch is for the same token type.",
+              "createdAt": "2024-06-28T21:18:36Z",
+              "updatedAt": "2024-06-28T21:18:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6AF2Xr",
+          "commit": {
+            "abbreviatedOid": "0b58b03"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-28T21:19:56Z",
+          "updatedAt": "2024-06-28T21:19:56Z",
+          "comments": [
+            {
+              "originalPosition": 141,
+              "body": "The rational here is an issuer might allow batched token, but only if it's the same cryptographic key for performance and security reason. The spec highlighting this fact makes it clear that's a possibility.",
+              "createdAt": "2024-06-28T21:19:56Z",
+              "updatedAt": "2024-06-28T21:19:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6AF3Gu",
+          "commit": {
+            "abbreviatedOid": "0b58b03"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-28T21:23:13Z",
+          "updatedAt": "2024-06-28T21:23:14Z",
+          "comments": [
+            {
+              "originalPosition": 153,
+              "body": "The proposal here is to fail.\r\n\r\nIf we'd like to support multiple requests, some succeeding, some failing, having the client provide an index for each request seems like a good solution.\r\nThis can be added to `BlindedElement`",
+              "createdAt": "2024-06-28T21:23:13Z",
+              "updatedAt": "2024-06-28T21:23:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6AF5Py",
+          "commit": {
+            "abbreviatedOid": "0b58b03"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-28T21:33:13Z",
+          "updatedAt": "2024-06-28T21:33:13Z",
+          "comments": [
+            {
+              "originalPosition": 103,
+              "body": "Would restricting this new issuance protocol to TokenRequest that use `{ uint16_t token_type, ... }` be a possibility? It limits the future TokenRequest, if they want to use Arbitrary Batching.",
+              "createdAt": "2024-06-28T21:33:13Z",
+              "updatedAt": "2024-06-28T21:33:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6AF6rZ",
+          "commit": {
+            "abbreviatedOid": "0b58b03"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-28T21:39:55Z",
+          "updatedAt": "2024-06-28T21:39:55Z",
+          "comments": [
+            {
+              "originalPosition": 114,
+              "body": "I'll remove this requirement while adding the ability to fail on specific requests",
+              "createdAt": "2024-06-28T21:39:55Z",
+              "updatedAt": "2024-06-28T21:39:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6AF_61",
+          "commit": {
+            "abbreviatedOid": "0b58b03"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-28T22:07:28Z",
+          "updatedAt": "2024-06-28T22:07:28Z",
+          "comments": [
+            {
+              "originalPosition": 200,
+              "body": "I've updated this line to mention Issuer might skip token requests",
+              "createdAt": "2024-06-28T22:07:28Z",
+              "updatedAt": "2024-06-28T22:07:28Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6AF_96",
+          "commit": {
+            "abbreviatedOid": "0b58b03"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-28T22:07:43Z",
+          "updatedAt": "2024-06-28T22:07:44Z",
+          "comments": [
+            {
+              "originalPosition": 185,
+              "body": "updated the phrasing here.",
+              "createdAt": "2024-06-28T22:07:43Z",
+              "updatedAt": "2024-06-28T22:07:44Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6AF__d",
+          "commit": {
+            "abbreviatedOid": "0b58b03"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-28T22:07:51Z",
+          "updatedAt": "2024-06-28T22:07:51Z",
+          "comments": [
+            {
+              "originalPosition": 179,
+              "body": "removed",
+              "createdAt": "2024-06-28T22:07:51Z",
+              "updatedAt": "2024-06-28T22:07:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6AGAFw",
+          "commit": {
+            "abbreviatedOid": "0b58b03"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-28T22:08:27Z",
+          "updatedAt": "2024-06-28T22:08:28Z",
+          "comments": [
+            {
+              "originalPosition": 153,
+              "body": "I've updated the data structure so that I define a `TokenRequest` with `token_type` and an opaque element",
+              "createdAt": "2024-06-28T22:08:27Z",
+              "updatedAt": "2024-06-28T22:08:28Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6AGAOV",
+          "commit": {
+            "abbreviatedOid": "0b58b03"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-28T22:09:08Z",
+          "updatedAt": "2024-06-28T22:09:08Z",
+          "comments": [
+            {
+              "originalPosition": 141,
+              "body": "removed",
+              "createdAt": "2024-06-28T22:09:08Z",
+              "updatedAt": "2024-06-28T22:09:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6AGAj0",
+          "commit": {
+            "abbreviatedOid": "0b58b03"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-28T22:11:10Z",
+          "updatedAt": "2024-06-28T22:11:10Z",
+          "comments": [
+            {
+              "originalPosition": 153,
+              "body": "for a first pass, this has been updated as follow:\r\n\r\nissuer reads token_requests as they arrive. if the i-th fails or is not supports, they return a zero-sized element.\r\n\r\nin addition, token_request have token_type as their first element. this is enforced by the issuer.",
+              "createdAt": "2024-06-28T22:11:10Z",
+              "updatedAt": "2024-06-28T22:11:10Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6AGAm8",
+          "commit": {
+            "abbreviatedOid": "0b58b03"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-28T22:11:28Z",
+          "updatedAt": "2024-06-28T22:11:28Z",
+          "comments": [
+            {
+              "originalPosition": 136,
+              "body": "removed",
+              "createdAt": "2024-06-28T22:11:28Z",
+              "updatedAt": "2024-06-28T22:11:28Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6AGAuN",
+          "commit": {
+            "abbreviatedOid": "0b58b03"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-28T22:12:12Z",
+          "updatedAt": "2024-06-28T22:12:12Z",
+          "comments": [
+            {
+              "originalPosition": 103,
+              "body": "the proposal has been updated to reflect the comment just above.",
+              "createdAt": "2024-06-28T22:12:12Z",
+              "updatedAt": "2024-06-28T22:12:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6AGAwg",
+          "commit": {
+            "abbreviatedOid": "0b58b03"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-28T22:12:27Z",
+          "updatedAt": "2024-06-28T22:12:27Z",
+          "comments": [
+            {
+              "originalPosition": 62,
+              "body": "missed this one. updated.",
+              "createdAt": "2024-06-28T22:12:27Z",
+              "updatedAt": "2024-06-28T22:12:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6A_wo9",
+          "commit": {
+            "abbreviatedOid": "fb1a615"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2024-07-08T19:22:57Z",
+          "updatedAt": "2024-07-08T19:33:30Z",
+          "comments": [
+            {
+              "originalPosition": 125,
+              "body": "```suggestion\r\nstruct {\r\n   uint16_t token_type;\r\n   select (token_type) {\r\n      case (0x0001): /* Type VOPRF(P-384, SHA-384), RFC 9578 */\r\n         uint8_t truncated_token_key_id;\r\n         uint8_t blinded_msg[Ne];\r\n      case (0x0002): /* Type Blind RSA (2048-bit), RFC 9578 */\r\n         uint8_t truncated_token_key_id;\r\n         uint8_t blinded_msg[Nk];\r\n   }\r\n} TokenRequest;\r\n```\r\nThis isn't quite right. I think we just need to say that `TokenRequest` is simply prefixed by a uint16 value indicating the type, and that the rest of the structure follows based on that type.",
+              "createdAt": "2024-07-08T19:22:57Z",
+              "updatedAt": "2024-07-08T19:33:30Z"
+            },
+            {
+              "originalPosition": 162,
+              "body": "```suggestion\r\nThe Issuer then tries to deserialize the first 2 bytes of the i-th element\r\n```",
+              "createdAt": "2024-07-08T19:29:59Z",
+              "updatedAt": "2024-07-08T19:33:30Z"
+            },
+            {
+              "originalPosition": 172,
+              "body": "I think you'll need some syntax changes to support this. How about the following?\r\n\r\n```suggestion\r\nstruct {\r\n  TokenResponse token_response<0..2^16-1>; /* Defined by token_type */ \r\n} InnerTokenResponse;\r\n\r\nstruct {\r\n  InnerTokenResponse token_responses<0..2^16-1>;\r\n} BatchTokenResponse\r\n```\r\n\r\nYou'd also need to say that a length of 0 for `token_response` indicates it's empty (skipped), where a non-empty length means it's not skipped.",
+              "createdAt": "2024-07-08T19:33:23Z",
+              "updatedAt": "2024-07-08T19:33:30Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6BAXac",
+          "commit": {
+            "abbreviatedOid": "fb1a615"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-07-08T20:35:57Z",
+          "updatedAt": "2024-07-08T20:35:57Z",
+          "comments": [
+            {
+              "originalPosition": 125,
+              "body": "I've added this as an example. I have the impression the `opaque` structure better capture the general case, and the applicability to current and future token types",
+              "createdAt": "2024-07-08T20:35:57Z",
+              "updatedAt": "2024-07-08T20:35:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6BAXdN",
+          "commit": {
+            "abbreviatedOid": "fb1a615"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-07-08T20:36:05Z",
+          "updatedAt": "2024-07-08T20:36:05Z",
+          "comments": [
+            {
+              "originalPosition": 162,
+              "body": "updated",
+              "createdAt": "2024-07-08T20:36:05Z",
+              "updatedAt": "2024-07-08T20:36:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6BAYE_",
+          "commit": {
+            "abbreviatedOid": "fb1a615"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-07-08T20:37:50Z",
+          "updatedAt": "2024-07-08T20:37:50Z",
+          "comments": [
+            {
+              "originalPosition": 172,
+              "body": "i've updated the wording around skip. it was included below, but not clear. I've moved it to the structure definition.\r\n\r\nI've used your definition for `InnerTokenRequest`, but without `<0..2^16-1>`, the it is not an array. Maybe we could use opaque again here, but the comment make this clear.",
+              "createdAt": "2024-07-08T20:37:50Z",
+              "updatedAt": "2024-07-08T20:37:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6BT3mU",
+          "commit": {
+            "abbreviatedOid": "6274b03"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-07-10T15:06:41Z",
+          "updatedAt": "2024-07-10T15:06:42Z",
+          "comments": [
+            {
+              "originalPosition": 125,
+              "body": "`opaque token_request<0..2^16-1>;` means that the field `token_request` is length-prefix-encoded with two bytes, which is not how TokenRequest messages are structured. So it wasn't a matter of clarity, it just didn't match what's in the actual spec.",
+              "createdAt": "2024-07-10T15:06:41Z",
+              "updatedAt": "2024-07-10T15:06:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6BT4mS",
+          "commit": {
+            "abbreviatedOid": "6274b03"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-07-10T15:08:24Z",
+          "updatedAt": "2024-07-10T15:08:24Z",
+          "comments": [
+            {
+              "originalPosition": 187,
+              "body": "This isn't right. We need to have a length prefix to indicate if the field actually exists or not.",
+              "createdAt": "2024-07-10T15:08:24Z",
+              "updatedAt": "2024-07-10T15:08:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6BUE5i",
+          "commit": {
+            "abbreviatedOid": "6274b03"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-07-10T15:29:05Z",
+          "updatedAt": "2024-07-10T15:29:05Z",
+          "comments": [
+            {
+              "originalPosition": 187,
+              "body": "updated. the text was correct but convoluted, I've updated it as well",
+              "createdAt": "2024-07-10T15:29:05Z",
+              "updatedAt": "2024-07-10T15:29:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6BeJBh",
+          "commit": {
+            "abbreviatedOid": "596dcfe"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Couple more things.",
+          "createdAt": "2024-07-11T15:03:05Z",
+          "updatedAt": "2024-07-11T15:07:19Z",
+          "comments": [
+            {
+              "originalPosition": 157,
+              "body": "```suggestion\r\n```",
+              "createdAt": "2024-07-11T15:03:05Z",
+              "updatedAt": "2024-07-11T15:07:19Z"
+            },
+            {
+              "originalPosition": 195,
+              "body": "```suggestion\r\n  TokenResponse token_response<0..2^16-1>; /* Defined by token_type */\r\n} OptionalTokenResponse;\r\n\r\nstruct {\r\n  OptionalTokenResponse token_responses<0..2^16-1>;\r\n```",
+              "createdAt": "2024-07-11T15:03:33Z",
+              "updatedAt": "2024-07-11T15:07:19Z"
+            },
+            {
+              "originalPosition": 208,
+              "body": "```suggestion\r\nBatchTokenResponse.token_responses is a vector of OptionalTokenResponses, length\r\nprefixed with two bytes. OptionalTokenResponse.token_response is a length-prefix-encoded\r\nTokenResponse, where a length of 0 indicates that the Issuer failed or refused to issue the\r\nassociated TokenRequest.\r\n```",
+              "createdAt": "2024-07-11T15:05:09Z",
+              "updatedAt": "2024-07-11T15:07:19Z"
+            },
+            {
+              "originalPosition": 231,
+              "body": "```suggestion\r\n```",
+              "createdAt": "2024-07-11T15:06:15Z",
+              "updatedAt": "2024-07-11T15:07:19Z"
+            },
+            {
+              "originalPosition": 235,
+              "body": "```suggestion\r\nThe Client finalizes each deserialized TokenResponse using the matching TokenRequest according\r\nto the corresponding finalization procedure defined by the token type.\r\n```",
+              "createdAt": "2024-07-11T15:07:09Z",
+              "updatedAt": "2024-07-11T15:07:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6P-F_B",
+          "commit": {
+            "abbreviatedOid": "32b3a09"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-11-05T11:56:38Z",
+          "updatedAt": "2024-11-05T11:56:39Z",
+          "comments": [
+            {
+              "originalPosition": 41,
+              "body": "```suggestion\r\nThis batched issuance protocol registers one new token type ({{iana-token-type}}),\r\n```",
+              "createdAt": "2024-11-05T11:56:38Z",
+              "updatedAt": "2024-11-05T11:56:39Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6P-G48",
+          "commit": {
+            "abbreviatedOid": "111f0db"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Thanks, I'm requesting some changes as discussed",
+          "createdAt": "2024-11-05T11:58:29Z",
+          "updatedAt": "2024-11-05T12:32:35Z",
+          "comments": [
+            {
+              "originalPosition": 38,
+              "body": "```suggestion\r\ntime. This variant has no other effect than batching requests and responses and the issuance performance remains linear.\r\n```",
+              "createdAt": "2024-11-05T11:58:29Z",
+              "updatedAt": "2024-11-05T12:32:36Z"
+            },
+            {
+              "originalPosition": 66,
+              "body": "This is also true for the arbitrary batched issuance variant with private tokens",
+              "createdAt": "2024-11-05T12:00:07Z",
+              "updatedAt": "2024-11-05T12:32:36Z"
+            },
+            {
+              "originalPosition": 71,
+              "body": "We need to note that this variant is primarily meant to be more efficient, it comes at the cost of losing the flexibility to choose a different truncated_token_key_id for every token.",
+              "createdAt": "2024-11-05T12:05:18Z",
+              "updatedAt": "2024-11-05T12:32:36Z"
+            },
+            {
+              "originalPosition": 131,
+              "body": "It would be good to explain how this would work for token types that are not yet defined",
+              "createdAt": "2024-11-05T12:08:03Z",
+              "updatedAt": "2024-11-05T12:32:36Z"
+            },
+            {
+              "originalPosition": 153,
+              "body": "As discussed offline, we need 4 media types: \r\n\r\n - private-token-privately-verifiable-batch-{request|response}\r\n - private-token-arbitrary-batch-{request|response}",
+              "createdAt": "2024-11-05T12:27:18Z",
+              "updatedAt": "2024-11-05T12:32:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6QBxw5",
+          "commit": {
+            "abbreviatedOid": "b95fd16"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thanks for making the changes!",
+          "createdAt": "2024-11-05T18:17:47Z",
+          "updatedAt": "2024-11-05T18:17:47Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "id": "PR_kwDOHtZl1c5xzCxH",
+      "title": "Fix idnits for artworks",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/14",
+      "state": "MERGED",
+      "author": "thibmeu",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Some artworks lines are longer than 72 characters. Running `make check` complains.\r\nThis commit addresses these warnings.",
+      "createdAt": "2024-06-07T13:16:37Z",
+      "updatedAt": "2024-06-28T12:33:42Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "973340caa5b2b22e875852aaff242a2fec1bcd97",
+      "headRepository": "thibmeu/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "fix-idnits",
+      "headRefOid": "3fe28a383d632b52aa5fc9c74f03a53a69aeade1",
+      "closedAt": "2024-06-28T12:33:42Z",
+      "mergedAt": "2024-06-28T12:33:42Z",
+      "mergedBy": "chris-wood",
+      "mergeCommit": {
+        "oid": "d4bde2a37199c01ac43f7834268db53c32d02a8f"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c6ABkhN",
+          "commit": {
+            "abbreviatedOid": "3fe28a3"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-28T12:33:37Z",
+          "updatedAt": "2024-06-28T12:33:37Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "id": "PR_kwDOHtZl1c5-dEF-",
+      "title": "draft-02",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/16",
+      "state": "MERGED",
+      "author": "raphaelrobert",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-10-13T17:43:36Z",
+      "updatedAt": "2024-10-19T17:14:22Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "d4bde2a37199c01ac43f7834268db53c32d02a8f",
+      "headRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "draft-02",
+      "headRefOid": "65b370974758dae365de6bce0e08d615cf274bef",
+      "closedAt": "2024-10-19T17:14:22Z",
+      "mergedAt": "2024-10-19T17:14:21Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "0d7e8ee7b3842b89c1a7d94897bb83440cb6b1c1"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 17,
+      "id": "PR_kwDOHtZl1c6A9yR2",
+      "title": "Align error code with RFC9578",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/17",
+      "state": "MERGED",
+      "author": "raphaelrobert",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixes #15.",
+      "createdAt": "2024-11-05T18:27:24Z",
+      "updatedAt": "2024-11-05T18:30:25Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "619c72e5ffef061674d36a7dee007eb417b38ed8",
+      "headRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "error-type-422",
+      "headRefOid": "bbd8f89ab181efe9600bcc09c38a8b609faf1061",
+      "closedAt": "2024-11-05T18:30:25Z",
+      "mergedAt": "2024-11-05T18:30:25Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "edc279d97a18d665549207d3b7a7027e34bce686"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 18,
+      "id": "PR_kwDOHtZl1c6A93Fz",
+      "title": "Formatting & changelog",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/18",
+      "state": "MERGED",
+      "author": "raphaelrobert",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Harmonizing line length & adding draft-03 changelog.",
+      "createdAt": "2024-11-05T18:40:52Z",
+      "updatedAt": "2024-11-05T18:45:43Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "edc279d97a18d665549207d3b7a7027e34bce686",
+      "headRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "editorial-formatting",
+      "headRefOid": "e343a453d50113fe0b200e3f4a7f66c01654aa2a",
+      "closedAt": "2024-11-05T18:45:43Z",
+      "mergedAt": "2024-11-05T18:45:43Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "71800bf8dfdb606be5e268308169051cccf85d4c"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 19,
+      "id": "PR_kwDOHtZl1c6Co6p2",
+      "title": "Fix Arbitrary batched tokens structures description",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/19",
+      "state": "MERGED",
+      "author": "thibmeu",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The description of arbitrary batched tokens structures did not satisfy with standard tls serialisation, and was ocnfusing.\r\n\r\nThis commit addresses:\r\n\r\n* token_requests array is prefixed with the length of its underlying byte array. The previous spec refered to the number of TokenRequest, which is incorrect.\r\n* token_requests array is an array of TokenRequest. It's only when serialized that it contains serialized TokenRequest. The wording has been updated.\r\n* TokenRequest serialization is not redefined. Its moved to a note instead of a struct definition.",
+      "createdAt": "2024-11-21T09:43:53Z",
+      "updatedAt": "2024-11-24T17:08:12Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "71800bf8dfdb606be5e268308169051cccf85d4c",
+      "headRepository": "thibmeu/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "fix-arbitrary-token-structure-description",
+      "headRefOid": "8dc7e43058138c74e941c8859b67baf40854f260",
+      "closedAt": "2024-11-24T17:08:12Z",
+      "mergedAt": "2024-11-24T17:08:12Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "983a8a55580f150220ad67d20720e743ca9ab362"
+      },
+      "comments": [
+        {
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Build error seems to be because I'm using a forked repository instead of the main one.",
+          "createdAt": "2024-11-21T09:47:49Z",
+          "updatedAt": "2024-11-21T09:47:49Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c6SbvfL",
+          "commit": {
+            "abbreviatedOid": "9f707fd"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Good catch on the incorrect encoding, I missed that one.",
+          "createdAt": "2024-11-24T16:10:47Z",
+          "updatedAt": "2024-11-24T16:21:44Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "```suggestion\r\n- TokenRequest's \"token_type\" is a 2-octet integer. TokenRequest MUST always start\r\n```",
+              "createdAt": "2024-11-24T16:10:47Z",
+              "updatedAt": "2024-11-24T16:21:44Z"
+            },
+            {
+              "originalPosition": 15,
+              "body": "\"prefixed\" makes it sound like it's not part of the `struct` itself",
+              "createdAt": "2024-11-24T16:11:15Z",
+              "updatedAt": "2024-11-24T16:21:44Z"
+            },
+            {
+              "originalPosition": 20,
+              "body": "```suggestion\r\n  A TokenRequest with a token type not defined in {{RFC9578}} MAY be used but\r\n  MUST always start with a 2-octet token_type.\r\n```",
+              "createdAt": "2024-11-24T16:13:46Z",
+              "updatedAt": "2024-11-24T16:21:44Z"
+            },
+            {
+              "originalPosition": 31,
+              "body": "I'd remove this paragraph for now. Instead, there should be a section about TLS encoding elsewhere that applies to all structs with vectors.\r\nAs mentioned at IETF121, I think we should use [Variable-Size Vector Length Headers](https://www.rfc-editor.org/rfc/rfc9420.html#name-variable-size-vector-length).\r\nI can follow up with a separate PR.",
+              "createdAt": "2024-11-24T16:20:44Z",
+              "updatedAt": "2024-11-24T16:21:44Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6Sbxjy",
+          "commit": {
+            "abbreviatedOid": "9f707fd"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-11-24T17:00:09Z",
+          "updatedAt": "2024-11-24T17:00:09Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "having a dedicated paragraph about all struct would be good.\r\nthe structure uses fixed array as these were the ones used in the already written batched private tokens.\r\nhaving variable tokens would work as well. the upside is to allow for more tokens (2^30 instead of 2^16), and save 1 byte when there are less than 2^6 tokens. the downside is it's harder to bound the possible privacy leak (especially with arbitrary batched tokens).\r\n\r\nremoving it for now",
+              "createdAt": "2024-11-24T17:00:09Z",
+              "updatedAt": "2024-11-24T17:00:09Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6SbxlD",
+          "commit": {
+            "abbreviatedOid": "9f707fd"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-11-24T17:00:34Z",
+          "updatedAt": "2024-11-24T17:00:34Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "```suggestion\r\n```",
+              "createdAt": "2024-11-24T17:00:34Z",
+              "updatedAt": "2024-11-24T17:00:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6Sbx49",
+          "commit": {
+            "abbreviatedOid": "8dc7e43"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thanks for making the changes",
+          "createdAt": "2024-11-24T17:08:01Z",
+          "updatedAt": "2024-11-24T17:08:01Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "id": "PR_kwDOHtZl1c6C8iG1",
+      "title": "IANA token type value",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/27",
+      "state": "MERGED",
+      "author": "raphaelrobert",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Aligns the token type value for VORPF (ristretto255) with RFC9578 and draft-ietf-privacypass-rate-limit-tokens and marks it as suggested.",
+      "createdAt": "2024-11-24T18:18:05Z",
+      "updatedAt": "2025-02-02T17:54:00Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "983a8a55580f150220ad67d20720e743ca9ab362",
+      "headRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "iana-token-type",
+      "headRefOid": "fd633b50f3e9c6bb147ac5d788ee605503c6e30d",
+      "closedAt": "2025-02-02T17:54:00Z",
+      "mergedAt": "2025-02-02T17:54:00Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "48c89288c069d141db554ddd401c19a3cccc367e"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c6SfcE2",
+          "commit": {
+            "abbreviatedOid": "fd633b5"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "looks good. to be clearer: `0x0005` is the continuation of both RFC9578 and [rate limit tokens](https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-rate-limit-tokens-06#name-token-type), which are both under work by the working group.",
+          "createdAt": "2024-11-25T08:52:52Z",
+          "updatedAt": "2024-11-25T08:52:52Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 28,
+      "id": "PR_kwDOHtZl1c6C8lSQ",
+      "title": "Introduce TLS/QUIC presentation language",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/28",
+      "state": "MERGED",
+      "author": "raphaelrobert",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixes #23.\r\nFixes #25.",
+      "createdAt": "2024-11-24T18:49:30Z",
+      "updatedAt": "2025-02-02T17:55:06Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "983a8a55580f150220ad67d20720e743ca9ab362",
+      "headRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "presentation-language",
+      "headRefOid": "8499f66ece814cd9a93a1a3df8e897529eb9d68f",
+      "closedAt": "2025-02-02T17:55:06Z",
+      "mergedAt": "2025-02-02T17:55:06Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "f4700fd994484ae8d004f3844df7722636e84633"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c6SfiGn",
+          "commit": {
+            "abbreviatedOid": "8499f66"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-11-25T09:02:07Z",
+          "updatedAt": "2024-11-25T09:02:07Z",
+          "comments": [
+            {
+              "originalPosition": 87,
+              "body": "to confirm my understanding here:\r\nif an issuer does not issue `resp = token_responses[i]`, it means resp is encoded as two bytes:\r\n1. first octet is `0x1` for the length of `resp`\r\n2. second octet is `0x0` because the option is null\r\n\r\nI wonder if there is a way to limit this to only one byte `0x0` for an empty object.",
+              "createdAt": "2024-11-25T09:02:07Z",
+              "updatedAt": "2024-11-25T09:02:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6ShhvK",
+          "commit": {
+            "abbreviatedOid": "8499f66"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-11-25T12:10:34Z",
+          "updatedAt": "2024-11-25T12:10:34Z",
+          "comments": [
+            {
+              "originalPosition": 87,
+              "body": "If `token_responses[i]` is empty, it is just encoded as `0x00`.\r\nIf it is non-empty, it is encoded as `0x01` followed by its regular encoding.\r\n\r\nIn other words, step 1 from above is not needed.\r\n\r\nThis is also what MLS uses and therefore some implementations already support this optional encoding.",
+              "createdAt": "2024-11-25T12:10:34Z",
+              "updatedAt": "2024-11-25T12:10:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6ShmZU",
+          "commit": {
+            "abbreviatedOid": "8499f66"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-11-25T12:19:20Z",
+          "updatedAt": "2024-11-25T12:19:20Z",
+          "comments": [
+            {
+              "originalPosition": 87,
+              "body": "what I'm referring to is each element of `token_responses` array is prefixed by its length. Therefore, even if the empty option is `0x00`, it's an element of length `0x01`.\r\n\r\nI think what we want is an array where the length prefix denotes the presence of the object. A length of `0x00` means the option is `None`. A length greater than 0 means the option is `Some`.",
+              "createdAt": "2024-11-25T12:19:20Z",
+              "updatedAt": "2024-11-25T12:19:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6SiKZD",
+          "commit": {
+            "abbreviatedOid": "8499f66"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-11-25T13:23:51Z",
+          "updatedAt": "2024-11-25T13:23:51Z",
+          "comments": [
+            {
+              "originalPosition": 87,
+              "body": "> what I'm referring to is each element of token_responses array is prefixed by its length.\r\n\r\nIt's the other way around, each element is now prefixed by the option value (`0x00` or `0x01`) and only then prefixed by the length of the array (in case the option value is `0x01`).",
+              "createdAt": "2024-11-25T13:23:51Z",
+              "updatedAt": "2024-11-25T13:23:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6SiQkp",
+          "commit": {
+            "abbreviatedOid": "8499f66"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-11-25T13:33:40Z",
+          "updatedAt": "2024-11-25T13:33:40Z",
+          "comments": [
+            {
+              "originalPosition": 87,
+              "body": "taking a new look at [RFC8446](https://datatracker.ietf.org/doc/html/rfc8446) again, this was an issue from my side. I thought TLS vectors always prefixed elements of the sequence with their length. The RFC defines the opposite: vectors are not prefixed with their length.",
+              "createdAt": "2024-11-25T13:33:40Z",
+              "updatedAt": "2024-11-25T13:34:30Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6SiRTc",
+          "commit": {
+            "abbreviatedOid": "8499f66"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-11-25T13:34:58Z",
+          "updatedAt": "2024-11-25T13:34:58Z",
+          "comments": [
+            {
+              "originalPosition": 87,
+              "body": "Ok to resolve. I don't have these permissions on the repository",
+              "createdAt": "2024-11-25T13:34:58Z",
+              "updatedAt": "2024-11-25T13:34:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6SiRZP",
+          "commit": {
+            "abbreviatedOid": "8499f66"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-11-25T13:35:07Z",
+          "updatedAt": "2024-11-25T13:35:07Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "id": "PR_kwDOHtZl1c6C8lst",
+      "title": "Explicit token response",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/29",
+      "state": "MERGED",
+      "author": "raphaelrobert",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixes #26.",
+      "createdAt": "2024-11-24T18:53:34Z",
+      "updatedAt": "2025-02-02T17:58:16Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "f4700fd994484ae8d004f3844df7722636e84633",
+      "headRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "explicit-token-response",
+      "headRefOid": "ad8b26d43acec70306a5df6ec3cb7baa5c47356b",
+      "closedAt": "2025-02-02T17:58:16Z",
+      "mergedAt": "2025-02-02T17:58:16Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "11fc91efab08f9652cc071574cb1e03233f8efc8"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c6SfisO",
+          "commit": {
+            "abbreviatedOid": "4dbd0aa"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "lgtm. thanks!",
+          "createdAt": "2024-11-25T09:02:48Z",
+          "updatedAt": "2024-11-25T09:02:48Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "id": "PR_kwDOHtZl1c6F08M1",
+      "title": "Add Thibault as a co-author",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/30",
+      "state": "MERGED",
+      "author": "raphaelrobert",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-12-19T18:09:53Z",
+      "updatedAt": "2025-02-02T18:44:30Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "983a8a55580f150220ad67d20720e743ca9ab362",
+      "headRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "add-thibault-as-coauthor",
+      "headRefOid": "ef186dee5ddcb2ff3575fcb146ac96aa7a1934be",
+      "closedAt": "2025-02-02T18:44:29Z",
+      "mergedAt": "2025-02-02T18:44:29Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "40b665bd5e8a57f267d060ca6b054a8d5e2d6c21"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c6V9RTI",
+          "commit": {
+            "abbreviatedOid": "bd9bff6"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "Thanks!",
+          "createdAt": "2024-12-19T18:12:48Z",
+          "updatedAt": "2024-12-19T18:12:48Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 31,
+      "id": "PR_kwDOHtZl1c6JFR8J",
+      "title": "Add test vectors for batched privately verifiable tokens and arbitrary",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/31",
+      "state": "OPEN",
+      "author": "thibmeu",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Tests vectors are constructed from [a Go implementation](https://github.com/cloudflare/pat-go/).\r\n\r\nThis has be to updated if #27 is merged, as it updates the token type from 0xf91a to 0x0005.\r\n\r\nCloses #20 and #21.\r\n\r\ncc @raphaelrobert ",
+      "createdAt": "2025-01-27T13:02:55Z",
+      "updatedAt": "2025-03-02T18:07:38Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "fa9a71a9dbb0a20ce079a7afeb7f7d808c57a257",
+      "headRepository": "thibmeu/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "add-test-vectors",
+      "headRefOid": "78056840aa6672f1c9db8862ab413448f45d12ce",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The draft has been updated, namely on the token type which hsas moved from 0xF91A to 0x0005. This PR has to be updated.\r\n\r\nIn addition, CI has to be fixed.",
+          "createdAt": "2025-02-07T15:16:21Z",
+          "updatedAt": "2025-02-07T15:16:21Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 32,
+      "id": "PR_kwDOHtZl1c6J60jT",
+      "title": "Editorial pass on batched tokens",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/32",
+      "state": "MERGED",
+      "author": "tfpauly",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-03T23:53:35Z",
+      "updatedAt": "2025-02-08T10:49:04Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "40b665bd5e8a57f267d060ca6b054a8d5e2d6c21",
+      "headRepository": "tfpauly/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "patch-1",
+      "headRefOid": "bf5be5352dcafff07397b534ca38557683b80046",
+      "closedAt": "2025-02-08T10:49:04Z",
+      "mergedAt": "2025-02-08T10:49:04Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "fa9a71a9dbb0a20ce079a7afeb7f7d808c57a257"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c6azGQP",
+          "commit": {
+            "abbreviatedOid": "e1e86c6"
+          },
+          "author": null,
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-02-05T22:04:13Z",
+          "updatedAt": "2025-02-05T22:06:29Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6bF7aO",
+          "commit": {
+            "abbreviatedOid": "e1e86c6"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "Only one comment on possible conflict with #34. I'd say we keep this update and I'll update my PR once this one is merged.\r\n\r\nI don't have merge permissions, so approving but deferring to @chris-wood or @raphaelrobert for merging",
+          "createdAt": "2025-02-07T15:17:35Z",
+          "updatedAt": "2025-02-07T15:19:22Z",
+          "comments": [
+            {
+              "originalPosition": 66,
+              "body": "note: this is also introduced in #34",
+              "createdAt": "2025-02-07T15:17:35Z",
+              "updatedAt": "2025-02-07T15:19:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6bLOwq",
+          "commit": {
+            "abbreviatedOid": "e1e86c6"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thanks @tfpauly!",
+          "createdAt": "2025-02-08T10:36:21Z",
+          "updatedAt": "2025-02-08T10:36:21Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6bLOx4",
+          "commit": {
+            "abbreviatedOid": "e1e86c6"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-08T10:36:58Z",
+          "updatedAt": "2025-02-08T10:36:58Z",
+          "comments": [
+            {
+              "originalPosition": 66,
+              "body": "I guess it's only fair to re-align #34 in that case",
+              "createdAt": "2025-02-08T10:36:58Z",
+              "updatedAt": "2025-02-08T10:36:58Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "id": "PR_kwDOHtZl1c6KbqIF",
+      "title": "Add clarification for media type",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/34",
+      "state": "OPEN",
+      "author": "thibmeu",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "All media types declared with IANA registered the same subtype. This commit addresses it.\r\n\r\nIn addition, this commit makes the Content-Type for request and responses normative with `MUST be`.\r\n\r\nCloses #33",
+      "createdAt": "2025-02-07T15:12:47Z",
+      "updatedAt": "2025-03-17T04:22:13Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "fa9a71a9dbb0a20ce079a7afeb7f7d808c57a257",
+      "headRepository": "thibmeu/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "carifying-media-types",
+      "headRefOid": "b2b46a9784e7217997d03a82b8e41f1566b1cc4f",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Last few commits added:\r\n* rebase on mail\r\n* text for client to ignore unrecognised content type from the issuer and for issuer to return `415` for request with an unrecognised content type.",
+          "createdAt": "2025-02-09T15:10:34Z",
+          "updatedAt": "2025-02-09T15:10:34Z"
+        },
+        {
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@tfpauly Could you kindly check that this is what you had in mind?",
+          "createdAt": "2025-03-17T04:22:13Z",
+          "updatedAt": "2025-03-17T04:22:13Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 35,
+      "id": "PR_kwDOHtZl1c6OcIu0",
+      "title": "Update draft-ietf-privacypass-batched-tokens.md",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/35",
+      "state": "MERGED",
+      "author": "jsalowey",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "added terminology section and fixed up some references",
+      "createdAt": "2025-03-13T03:56:39Z",
+      "updatedAt": "2025-03-17T04:09:14Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "fa9a71a9dbb0a20ce079a7afeb7f7d808c57a257",
+      "headRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "jsalowey-idnits",
+      "headRefOid": "e24297f3aa0c40da69549f1203da0d58bc32095a",
+      "closedAt": "2025-03-17T04:09:14Z",
+      "mergedAt": "2025-03-17T04:09:14Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "3db088d267780930b0401ed8c1da760ef99a19af"
+      },
+      "comments": [
+        {
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Thanks for the change. It looks ok. Fix for the CI and macro part of the #36 PR against your branch.",
+          "createdAt": "2025-03-13T07:51:47Z",
+          "updatedAt": "2025-03-13T07:51:47Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c6gR_eu",
+          "commit": {
+            "abbreviatedOid": "e24297f"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-03-17T04:09:04Z",
+          "updatedAt": "2025-03-17T04:09:04Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "id": "PR_kwDOHtZl1c6OdgU1",
+      "title": "Fixing build for Jsalowey idnits",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/36",
+      "state": "MERGED",
+      "author": "thibmeu",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "@jsalowey\r\nThis PR should fix your build for #35. I have run `make update-ci` locally.\r\n\r\nIn addition, I've removed the BCP-14 inlining in favor of a macro `{::boilerplate bcp14-tagged}` which is part of the new draft template.\r\n\r\nI don't have write permission on the repository, therefore suggesting the change via a PR.",
+      "createdAt": "2025-03-13T07:50:40Z",
+      "updatedAt": "2025-03-17T04:07:56Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "jsalowey-idnits",
+      "baseRefOid": "852d3f229d7680aeef12aadd592849e3df8e4931",
+      "headRepository": "thibmeu/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "jsalowey-idnits",
+      "headRefOid": "2eb5063e6bdaf9b84dee8b132c4f0ed6a798fc19",
+      "closedAt": "2025-03-17T04:07:55Z",
+      "mergedAt": "2025-03-17T04:07:55Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "e24297f3aa0c40da69549f1203da0d58bc32095a"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c6gR_OY",
+          "commit": {
+            "abbreviatedOid": "2eb5063"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-03-17T04:07:45Z",
+          "updatedAt": "2025-03-17T04:07:45Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 37,
+      "id": "PR_kwDOHtZl1c6Opnr-",
+      "title": "Address comments from IANA early review",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/37",
+      "state": "OPEN",
+      "author": "thibmeu",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Add a IETF as the change controller for the newly registered token type 0x0005.\r\n\r\nThis has been prompted by IANA early review of the draft.\r\n\r\nThis change matches [RFC 9578](https://www.rfc-editor.org/rfc/rfc9578.html#section-8.2.1) model.",
+      "createdAt": "2025-03-14T10:12:11Z",
+      "updatedAt": "2025-03-17T08:04:02Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "3db088d267780930b0401ed8c1da760ef99a19af",
+      "headRepository": "thibmeu/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "fix-iana-review",
+      "headRefOid": "1621eef489709fe968f6715c896bf5f2f3a71df6",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think the change is meant to be for the media types, like e.g. [here](https://github.com/ietf-wg-privacypass/base-drafts/blob/main/draft-ietf-privacypass-protocol.md?plain=1#L899)",
+          "createdAt": "2025-03-17T04:21:00Z",
+          "updatedAt": "2025-03-17T04:21:00Z"
+        },
+        {
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Media types already have a change controller in [the current draft](https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/blob/main/draft-ietf-privacypass-batched-tokens.md?plain=1#L659).\r\n\r\n[RFC 9578](https://datatracker.ietf.org/doc/html/rfc9578#name-token-type-voprfp-384-sha-3) has a change controller for token types, which seem to be the only one missing, therefore this PR. This is not reflected in the base-draft github somehow.",
+          "createdAt": "2025-03-17T08:01:11Z",
+          "updatedAt": "2025-03-17T08:01:11Z"
+        }
+      ],
+      "reviews": []
+    }
+  ]
+}
