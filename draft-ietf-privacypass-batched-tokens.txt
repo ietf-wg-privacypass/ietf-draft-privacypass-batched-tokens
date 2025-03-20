@@ -5,10 +5,10 @@
 Network Working Group                                          R. Robert
 Internet-Draft                                               Phoenix R&D
 Intended status: Standards Track                              C. A. Wood
-Expires: 18 September 2025                                    Cloudflare
+Expires: 21 September 2025                                    Cloudflare
                                                               T. Meunier
                                                          Cloudflare Inc.
-                                                           17 March 2025
+                                                           20 March 2025
 
 
                     Batched Token Issuance Protocol
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 September 2025.
+   This Internet-Draft will expire on 21 September 2025.
 
 Copyright Notice
 
@@ -639,6 +639,8 @@ Content-Length: <Length of BatchTokenResponse>
    *  Nk: 32
 
    *  Nid: 32
+
+   *  Change controller: IETF
 
    *  Reference: [RFC9578], Section 5
 
