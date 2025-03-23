@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-20T00:36:33.951632+00:00",
+  "timestamp": "2025-03-23T00:40:31.947214+00:00",
   "repo": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
   "labels": [
     {
@@ -2526,24 +2526,26 @@
       "id": "PR_kwDOHtZl1c6Opnr-",
       "title": "Address comments from IANA early review",
       "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/37",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "thibmeu",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Add a IETF as the change controller for the newly registered token type 0x0005.\r\n\r\nThis has been prompted by IANA early review of the draft.\r\n\r\nThis change matches [RFC 9578](https://www.rfc-editor.org/rfc/rfc9578.html#section-8.2.1) model.",
       "createdAt": "2025-03-14T10:12:11Z",
-      "updatedAt": "2025-03-17T08:04:02Z",
+      "updatedAt": "2025-03-20T04:53:47Z",
       "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
       "baseRefName": "main",
       "baseRefOid": "3db088d267780930b0401ed8c1da760ef99a19af",
       "headRepository": "thibmeu/ietf-draft-privacypass-batched-tokens",
       "headRefName": "fix-iana-review",
       "headRefOid": "1621eef489709fe968f6715c896bf5f2f3a71df6",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-03-20T04:53:47Z",
+      "mergedAt": "2025-03-20T04:53:47Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "a57162707cca9a65858a31e29a314e324f345992"
+      },
       "comments": [
         {
           "author": "raphaelrobert",
@@ -2560,7 +2562,21 @@
           "updatedAt": "2025-03-17T08:01:11Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c6hAOIJ",
+          "commit": {
+            "abbreviatedOid": "1621eef"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-03-20T04:53:39Z",
+          "updatedAt": "2025-03-20T04:53:39Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
