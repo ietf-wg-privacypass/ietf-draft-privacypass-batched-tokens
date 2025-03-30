@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-27T00:37:26.504039+00:00",
+  "timestamp": "2025-03-30T00:41:16.462933+00:00",
   "repo": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
   "labels": [
     {
@@ -2271,13 +2271,13 @@
       "labels": [],
       "body": "Tests vectors are constructed from [a Go implementation](https://github.com/cloudflare/pat-go/).\r\n\r\nThis has be to updated if #27 is merged, as it updates the token type from 0xf91a to 0x0005.\r\n\r\nCloses #20 and #21.\r\n\r\ncc @raphaelrobert ",
       "createdAt": "2025-01-27T13:02:55Z",
-      "updatedAt": "2025-03-02T18:07:38Z",
+      "updatedAt": "2025-03-28T05:00:10Z",
       "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
       "baseRefName": "main",
-      "baseRefOid": "fa9a71a9dbb0a20ce079a7afeb7f7d808c57a257",
+      "baseRefOid": "a57162707cca9a65858a31e29a314e324f345992",
       "headRepository": "thibmeu/ietf-draft-privacypass-batched-tokens",
       "headRefName": "add-test-vectors",
-      "headRefOid": "78056840aa6672f1c9db8862ab413448f45d12ce",
+      "headRefOid": "b7ad078a7152d76cf2e127c2fe79d233be05ed57",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -2289,6 +2289,13 @@
           "body": "The draft has been updated, namely on the token type which hsas moved from 0xF91A to 0x0005. This PR has to be updated.\r\n\r\nIn addition, CI has to be fixed.",
           "createdAt": "2025-02-07T15:16:21Z",
           "updatedAt": "2025-02-07T15:16:21Z"
+        },
+        {
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@raphaelrobert removed test vectors 6 and 7, and I have also updated the description of arbitrary batched tokens accordingly.",
+          "createdAt": "2025-03-28T05:00:08Z",
+          "updatedAt": "2025-03-28T05:00:08Z"
         }
       ],
       "reviews": []
