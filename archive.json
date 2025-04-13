@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-01T00:43:26.701292+00:00",
+  "timestamp": "2025-04-13T02:05:16.821212+00:00",
   "repo": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
   "labels": [
     {
@@ -2540,7 +2540,7 @@
       "labels": [],
       "body": "Add a IETF as the change controller for the newly registered token type 0x0005.\r\n\r\nThis has been prompted by IANA early review of the draft.\r\n\r\nThis change matches [RFC 9578](https://www.rfc-editor.org/rfc/rfc9578.html#section-8.2.1) model.",
       "createdAt": "2025-03-14T10:12:11Z",
-      "updatedAt": "2025-03-20T04:53:47Z",
+      "updatedAt": "2025-04-11T07:52:48Z",
       "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
       "baseRefName": "main",
       "baseRefOid": "3db088d267780930b0401ed8c1da760ef99a19af",
