@@ -1811,17 +1811,21 @@ Issuer failed or refused to issue the associated TokenRequest.<a href="#section-
 <p id="section-6.2-7">The Issuer generates an HTTP response with status code 200 whose content
 consists of TokenResponse, with the content type set as
 "application/private-token-arbitrary-batch-response".<a href="#section-6.2-7" class="pilcrow">¶</a></p>
-<p id="section-6.2-8">If the Issuer issues some tokens but not all, it <span class="bcp14">MUST</span> return an HTTP 206 to the
-client and continue processing further requests.<a href="#section-6.2-8" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-6.2-9">
+<div class="alignLeft art-text artwork" id="section-6.2-8">
 <pre>
 HTTP/1.1 200 OK
 Content-Type: application/private-token-arbitrary-batch-response
 Content-Length: &lt;Length of BatchTokenResponse&gt;
 
 &lt;Bytes containing the BatchTokenResponse&gt;
-</pre><a href="#section-6.2-9" class="pilcrow">¶</a>
+</pre><a href="#section-6.2-8" class="pilcrow">¶</a>
 </div>
+<p id="section-6.2-9">If the Issuer issues some but not all tokens, it <span class="bcp14">MUST</span> return an HTTP 206 error
+to the client and continue processing subsequent requests.
+For instance, an Issuer <span class="bcp14">MAY</span> return an HTTP 206 error if requests for tokens of
+the same token type refer to more than one <code>truncated_token_key_id</code>.<a href="#section-6.2-9" class="pilcrow">¶</a></p>
+<p id="section-6.2-10">If the Issuer decides not to issue any tokens, it <span class="bcp14">MUST</span> return an HTTP 400 to the
+client.<a href="#section-6.2-10" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="arbitrary-finalization">
