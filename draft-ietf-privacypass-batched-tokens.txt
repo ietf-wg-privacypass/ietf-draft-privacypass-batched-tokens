@@ -566,11 +566,11 @@ Content-Length: <Length of BatchTokenResponse>
      OptionalTokenResponse token_responses<V>;
    } BatchTokenResponse
 
-   BatchTokenResponse.token_responses is a vector of
-   OptionalTokenResponses, length prefixed with two bytes.
-   OptionalTokenResponse.token_response is a length-prefix-encoded
-   TokenResponse, where a length of 0 indicates that the Issuer failed
-   or refused to issue the associated TokenRequest.
+   BatchTokenResponse.token_responses is a variable-size vector of
+   OptionalTokenResponses.  OptionalTokenResponse.token_response is an
+   optional TokenResponse (as specified in Section 4.1) , where an
+   absence of TokenResponse indicates that the Issuer failed or refused
+   to issue the associated TokenRequest.
 
    The Issuer generates an HTTP response with status code 200 whose
    content consists of TokenResponse, with the content type set as

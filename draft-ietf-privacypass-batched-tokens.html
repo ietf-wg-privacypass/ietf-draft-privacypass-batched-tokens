@@ -1804,10 +1804,10 @@ struct {
 } BatchTokenResponse
 </pre><a href="#section-6.2-5" class="pilcrow">¶</a>
 </div>
-<p id="section-6.2-6">BatchTokenResponse.token_responses is a vector of OptionalTokenResponses, length
-prefixed with two bytes. OptionalTokenResponse.token_response is a
-length-prefix-encoded TokenResponse, where a length of 0 indicates that the
-Issuer failed or refused to issue the associated TokenRequest.<a href="#section-6.2-6" class="pilcrow">¶</a></p>
+<p id="section-6.2-6">BatchTokenResponse.token_responses is a variable-size vector of
+OptionalTokenResponses. OptionalTokenResponse.token_response is an
+optional TokenResponse (as specified in <a href="#optional-value" class="auto internal xref">Section 4.1</a>) , where an absence of TokenResponse indicates
+that the Issuer failed or refused to issue the associated TokenRequest.<a href="#section-6.2-6" class="pilcrow">¶</a></p>
 <p id="section-6.2-7">The Issuer generates an HTTP response with status code 200 whose content
 consists of TokenResponse, with the content type set as
 "application/private-token-arbitrary-batch-response".<a href="#section-6.2-7" class="pilcrow">¶</a></p>
