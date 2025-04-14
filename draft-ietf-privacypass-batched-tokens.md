@@ -525,13 +525,12 @@ Content-Length: <Length of BatchTokenResponse>
 <Bytes containing the BatchTokenResponse>
 ~~~
 
-If the Issuer issues some tokens but not all, it MUST return an HTTP 206 to the
-client and continue processing further requests.
-For instance, an Issuer MAY return an HTTP 206 if all tokens do not refer to the
-same cryptographic material, such as `truncated_token_key_id` for token type
-0x0001 or token type 0x0002.
+If the Issuer issues some but not all tokens, it MUST return an HTTP 206 error
+to the client and continue processing subsequent requests.
+For instance, an Issuer MAY return an HTTP 206 error if requests for tokens of 
+the same token type refer to more than one `truncated_token_key_id`.
 
-If the Issuer does not issue any tokens, it MUST return an HTTP 400 to the
+If the Issuer decides not to issue any tokens, it MUST return an HTTP 400 to the
 client.
 
 
