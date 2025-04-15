@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-13T02:05:16.821212+00:00",
+  "timestamp": "2025-04-15T00:39:18.361926+00:00",
   "repo": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
   "labels": [
     {
@@ -280,6 +280,38 @@
           "updatedAt": "2025-02-07T16:32:50Z"
         }
       ]
+    },
+    {
+      "number": 38,
+      "id": "I_kwDOHtZl1c6yWGzJ",
+      "title": "Consider prefixing `OptionalTokenResponse` with variable integer instead of 2-byte integer within `BatchedTokenResponse`",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/38",
+      "state": "OPEN",
+      "author": "thibmeu",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The current draft prefixes `OptionalTokenResponse` with a 2-byte integer.\n\nTo be consistent with the draft, we could consider p;refixing them with 2-MSB varint instead.",
+      "createdAt": "2025-04-14T07:26:30Z",
+      "updatedAt": "2025-04-14T07:26:30Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 39,
+      "id": "I_kwDOHtZl1c6yWHs1",
+      "title": "Add a precision that the Issuer MAY require all truncated_token_key_id to be the same",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/39",
+      "state": "CLOSED",
+      "author": "thibmeu",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This is already supported by the draft, but not clear.\n\nAdd a sentence clarifying that adding constraint on truncated_token_key_id is acceptable from an issuer perspective.",
+      "createdAt": "2025-04-14T07:28:06Z",
+      "updatedAt": "2025-04-14T12:01:54Z",
+      "closedAt": "2025-04-14T12:01:54Z",
+      "comments": []
     }
   ],
   "pulls": [
@@ -2271,13 +2303,13 @@
       "labels": [],
       "body": "Tests vectors are constructed from [a Go implementation](https://github.com/cloudflare/pat-go/).\r\n\r\nThis has be to updated if #27 is merged, as it updates the token type from 0xf91a to 0x0005.\r\n\r\nCloses #20 and #21.\r\n\r\ncc @raphaelrobert ",
       "createdAt": "2025-01-27T13:02:55Z",
-      "updatedAt": "2025-03-28T05:00:10Z",
+      "updatedAt": "2025-04-14T12:04:19Z",
       "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
       "baseRefName": "main",
       "baseRefOid": "a57162707cca9a65858a31e29a314e324f345992",
       "headRepository": "thibmeu/ietf-draft-privacypass-batched-tokens",
       "headRefName": "add-test-vectors",
-      "headRefOid": "b7ad078a7152d76cf2e127c2fe79d233be05ed57",
+      "headRefOid": "ccf6b94488ee7f019a671806cc35592ea0a798a6",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -2296,6 +2328,13 @@
           "body": "@raphaelrobert removed test vectors 6 and 7, and I have also updated the description of arbitrary batched tokens accordingly.",
           "createdAt": "2025-03-28T05:00:08Z",
           "updatedAt": "2025-03-28T05:00:08Z"
+        },
+        {
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Discussing with @raphaelrobert, the proposed test vectors do not match the working draft. The size of each element part of the batched token requests MUST be a 2-MSB varint.",
+          "createdAt": "2025-04-14T07:05:10Z",
+          "updatedAt": "2025-04-14T07:05:10Z"
         }
       ],
       "reviews": []
@@ -2581,6 +2620,194 @@
           "body": "",
           "createdAt": "2025-03-20T04:53:39Z",
           "updatedAt": "2025-03-20T04:53:39Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 40,
+      "id": "PR_kwDOHtZl1c6ScIQY",
+      "title": "Add precision on issuer not processing certain batched token requests",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/40",
+      "state": "MERGED",
+      "author": "thibmeu",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #39\r\n\r\ncc @raphaelrobert ",
+      "createdAt": "2025-04-14T07:35:27Z",
+      "updatedAt": "2025-04-14T12:01:53Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "a57162707cca9a65858a31e29a314e324f345992",
+      "headRepository": "thibmeu/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "fix-39",
+      "headRefOid": "e6915ed18fd8de6476d269c395c71a4e214260fe",
+      "closedAt": "2025-04-14T12:01:53Z",
+      "mergedAt": "2025-04-14T12:01:53Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "0b70889f72e072901a826cac574c7b27d129a7da"
+      },
+      "comments": [
+        {
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I approved, but it looks like the linting is broken. Can you run the linter on the branch?",
+          "createdAt": "2025-04-14T10:24:47Z",
+          "updatedAt": "2025-04-14T10:24:47Z"
+        },
+        {
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Lint fixed",
+          "createdAt": "2025-04-14T11:10:15Z",
+          "updatedAt": "2025-04-14T11:10:15Z"
+        },
+        {
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@raphaelrobert note that I cannot merge given I'm not a repo collaborator, so you'll have to do it when you can",
+          "createdAt": "2025-04-14T11:22:21Z",
+          "updatedAt": "2025-04-14T11:22:21Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c6kvPDz",
+          "commit": {
+            "abbreviatedOid": "82a5428"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Thanks, just some rewording.",
+          "createdAt": "2025-04-14T10:11:50Z",
+          "updatedAt": "2025-04-14T10:12:07Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "```suggestion\r\nIf the Issuer issues some but not all tokens, it MUST return an HTTP 206 error\r\nto the client and continue processing subsequent requests.\r\nFor instance, an Issuer MAY return an HTTP 206 error if requests for tokens of \r\nthe same token type refer to more than one `truncated_token_key_id`.\r\n\r\nIf the Issuer decides not to issue any tokens, it MUST return an HTTP 400 to the\r\nclient.\r\n```",
+              "createdAt": "2025-04-14T10:11:50Z",
+              "updatedAt": "2025-04-14T10:12:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6kvVsV",
+          "commit": {
+            "abbreviatedOid": "127bc8b"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-04-14T10:23:37Z",
+          "updatedAt": "2025-04-14T10:23:37Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 41,
+      "id": "PR_kwDOHtZl1c6Scqfu",
+      "title": "Updates the prose for OptionalTokenResponse",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/41",
+      "state": "MERGED",
+      "author": "thibmeu",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Optional value is defined in the draft. OptionalTokenResponse should use it.",
+      "createdAt": "2025-04-14T08:38:08Z",
+      "updatedAt": "2025-04-14T12:02:33Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "79f63deb52da1a47674fb08c20f51141bb90c2db",
+      "headRepository": "thibmeu/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "fix-38",
+      "headRefOid": "adf88ab1262ef03c9377d33baf6a72ae08cb369c",
+      "closedAt": "2025-04-14T12:02:33Z",
+      "mergedAt": "2025-04-14T12:02:33Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "6932a3670eb25429b2351e4cb04a58779f6850d5"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c6kvU-u",
+          "commit": {
+            "abbreviatedOid": "8708996"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Thanks, just a nit",
+          "createdAt": "2025-04-14T10:22:21Z",
+          "updatedAt": "2025-04-14T10:23:09Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "```suggestion\r\noptional TokenResponse (as specified in {{optional-value}}) , where an absence of TokenResponse indicates\r\n```",
+              "createdAt": "2025-04-14T10:22:21Z",
+              "updatedAt": "2025-04-14T10:23:09Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6kwPox",
+          "commit": {
+            "abbreviatedOid": "adf88ab"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-04-14T12:02:27Z",
+          "updatedAt": "2025-04-14T12:02:27Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 42,
+      "id": "PR_kwDOHtZl1c6Scqjy",
+      "title": "Prefix `OptionalTokenResponse` with `uint16_t token_type`",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/42",
+      "state": "MERGED",
+      "author": "thibmeu",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "At the moment, decoding `OptionalTokenResponse` requires to know the token_type.\r\n\r\nThis change adds it within the structure, similar to TokenRequest",
+      "createdAt": "2025-04-14T08:38:15Z",
+      "updatedAt": "2025-04-14T10:16:50Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "a57162707cca9a65858a31e29a314e324f345992",
+      "headRepository": "thibmeu/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "prefix-optional-token-response-with-token-type",
+      "headRefOid": "6458460bd0a9619fac4eb9fcc627df593e66634e",
+      "closedAt": "2025-04-14T10:16:50Z",
+      "mergedAt": "2025-04-14T10:16:50Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "79f63deb52da1a47674fb08c20f51141bb90c2db"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c6kvR0u",
+          "commit": {
+            "abbreviatedOid": "6458460"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-04-14T10:16:38Z",
+          "updatedAt": "2025-04-14T10:16:38Z",
           "comments": []
         }
       ]
