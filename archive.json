@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-17T00:38:17.040281+00:00",
+  "timestamp": "2025-05-04T00:44:11.814308+00:00",
   "repo": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
   "labels": [
     {
@@ -311,6 +311,38 @@
       "createdAt": "2025-04-14T07:28:06Z",
       "updatedAt": "2025-04-14T12:01:54Z",
       "closedAt": "2025-04-14T12:01:54Z",
+      "comments": []
+    },
+    {
+      "number": 43,
+      "id": "I_kwDOHtZl1c61DUhs",
+      "title": "Revisit naming",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/43",
+      "state": "OPEN",
+      "author": "raphaelrobert",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Batched tokens (initially the only issuance protocol described in this draft) and arbitrary batched tokens (the new addition) sound pretty similar. This might be confusing for people. Synonyms for either or both could be: bundled, pooled, aggregated.",
+      "createdAt": "2025-05-03T18:21:38Z",
+      "updatedAt": "2025-05-03T18:21:38Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 44,
+      "id": "I_kwDOHtZl1c61DVa3",
+      "title": "Potential lack of generality for arbitrary tokens",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/44",
+      "state": "OPEN",
+      "author": "raphaelrobert",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "In #42, we prefixed the token responses with the token type so we can easily tell them apart. This way we could reuse the original `TokenRequest` corresponding to the token type.\nThe token request however does not work like that. Right now it is only defined for token type 0x0001 and 0x0002 in the draft and it is essentially a deconstructed `TokenRequest` from the base draft. As opposed to the token responses, it is undefined how this could work for other types that are not specified. Moreover, it imposes two restrictions for other types:\n - The respective `TokenRequest` must start with the `TokenType`\n - Other types must define how the issuance works for the arbitrary tokens issuance protocol\n\nI think we should align the request with the response and prefix the original `TokenRequest` with the token type. The only downside I can see is that the token type is effectively repeated in the serialization, but I think that's tolerable.",
+      "createdAt": "2025-05-03T18:30:11Z",
+      "updatedAt": "2025-05-03T18:30:11Z",
+      "closedAt": null,
       "comments": []
     }
   ],
