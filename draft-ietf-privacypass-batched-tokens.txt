@@ -5,10 +5,10 @@
 Network Working Group                                          R. Robert
 Internet-Draft                                               Phoenix R&D
 Intended status: Standards Track                              C. A. Wood
-Expires: 16 October 2025                                      Cloudflare
+Expires: 12 November 2025                                     Cloudflare
                                                               T. Meunier
                                                          Cloudflare Inc.
-                                                           14 April 2025
+                                                             11 May 2025
 
 
                     Batched Token Issuance Protocol
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 16 October 2025.
+   This Internet-Draft will expire on 12 November 2025.
 
 Copyright Notice
 
@@ -292,9 +292,10 @@ Table of Contents
 
    The Client then generates an HTTP POST request to send to the Issuer
    Request URL, with the BatchTokenRequest as the content.  The media
-   type for this request is "application/private-token-privately-
-   verifiable-batch-request".  An example request for the Issuer Request
-   URL "https://issuer.example.net/request" is shown below.
+   type for this request MUST be "application/private-token-privately-
+   verifiable-batch-request".  If not, the Issuer responds with status
+   code 415.  An example request for the Issuer Request URL
+   "https://issuer.example.net/request" is shown below.
 
 POST /request HTTP/1.1
 Host: issuer.example.net
@@ -393,9 +394,12 @@ Content-Length: <Length of BatchTokenRequest>
       concat(SerializeScalar(proof[0]), SerializeScalar(proof[1])),
       where Ns is as defined in [OPRF], Section 4.
 
-   The Issuer generates an HTTP response with status code 200 whose
+   The Issuer MUST generate an HTTP response with status code 200 whose
    content consists of TokenResponse, with the content type set as
    "application/private-token-privately-verifiable-batch-response".
+   Clients MUST ignore the response if the status code is not 200 or if
+   the content type is not "application/private-token-arbitrary-batch-
+   response".
 
 HTTP/1.1 200 OK
 Content-Type: application/private-token-privately-verifiable-batch-response
@@ -518,8 +522,9 @@ Content-Length: <Length of BatchTokenResponse>
 
    The Client then generates an HTTP POST request to send to the Issuer
    Request URL, with the BatchTokenRequest as the content.  The media
-   type for this request is "application/private-token-arbitrary-batch-
-   request".  An example request for the Issuer Request URL
+   type for this request MUST be "application/private-token-arbitrary-
+   batch-request".  If not, the Issuer responds with status code 415.
+   An example request for the Issuer Request URL
    "https://issuer.example.net/request" is shown below.
 
    POST /request HTTP/1.1
@@ -572,9 +577,11 @@ Content-Length: <Length of BatchTokenResponse>
    absence of TokenResponse indicates that the Issuer failed or refused
    to issue the associated TokenRequest.
 
-   The Issuer generates an HTTP response with status code 200 whose
+   The Issuer MUST generate an HTTP response with status code 200 whose
    content consists of TokenResponse, with the content type set as
-   "application/private-token-arbitrary-batch-response".
+   "application/private-token-arbitrary-batch-response".  Clients MUST
+   ignore the response if the status code is not 200 or if the content
+   type is not "application/private-token-arbitrary-batch-response".
 
    HTTP/1.1 200 OK
    Content-Type: application/private-token-arbitrary-batch-response
@@ -673,7 +680,7 @@ Content-Length: <Length of BatchTokenResponse>
         media type
 
    Type name:  application
-   Subtype name:  private-token-request
+   Subtype name:  private-token-privately-verifiable-batch-request
    Required parameters:  N/A
    Optional parameters:  N/A
    Encoding considerations:  "binary"
@@ -681,8 +688,9 @@ Content-Length: <Length of BatchTokenResponse>
    Interoperability considerations:  N/A
    Published specification:  this specification
    Applications that use this media type:  Applications that want to
-      issue or facilitate issuance of Privacy Pass tokens, including
-      Privacy Pass issuer applications themselves.
+      issue or facilitate issuance of Privacy Pass Batched Privately
+      Verifiable tokens as defined in Section 5, including Privacy Pass
+      issuer applications themselves.
    Fragment identifier considerations:  N/A
    Additional information:  Magic number(s):  N/A
                             Deprecated alias names for this type:  N/A
@@ -699,7 +707,7 @@ Content-Length: <Length of BatchTokenResponse>
         media type
 
    Type name:  application
-   Subtype name:  private-token-response
+   Subtype name:  private-token-privately-verifiable-batch-response
    Required parameters:  N/A
    Optional parameters:  N/A
    Encoding considerations:  "binary"
@@ -707,8 +715,9 @@ Content-Length: <Length of BatchTokenResponse>
    Interoperability considerations:  N/A
    Published specification:  this specification
    Applications that use this media type:  Applications that want to
-      issue or facilitate issuance of Privacy Pass tokens, including
-      Privacy Pass issuer applications themselves.
+      issue or facilitate issuance of Privacy Pass Batched Privately
+      Verifiable tokens as defined in Section 5, including Privacy Pass
+      issuer applications themselves.
    Fragment identifier considerations:  N/A
    Additional information:  Magic number(s):  N/A
                             Deprecated alias names for this type:  N/A
@@ -724,7 +733,7 @@ Content-Length: <Length of BatchTokenResponse>
 8.2.3.  "application/private-token-arbitrary-batch-request" media type
 
    Type name:  application
-   Subtype name:  private-token-request
+   Subtype name:  private-token-arbitrary-batch-request
    Required parameters:  N/A
    Optional parameters:  N/A
    Encoding considerations:  "binary"
@@ -732,8 +741,9 @@ Content-Length: <Length of BatchTokenResponse>
    Interoperability considerations:  N/A
    Published specification:  this specification
    Applications that use this media type:  Applications that want to
-      issue or facilitate issuance of Privacy Pass tokens, including
-      Privacy Pass issuer applications themselves.
+      issue or facilitate issuance of Privacy Pass Arbitrary Batched
+      tokens as defined in Section 6, including Privacy Pass issuer
+      applications themselves.
    Fragment identifier considerations:  N/A
    Additional information:  Magic number(s):  N/A
                             Deprecated alias names for this type:  N/A
@@ -749,7 +759,7 @@ Content-Length: <Length of BatchTokenResponse>
 8.2.4.  "application/private-token-arbitrary-batch-response" media type
 
    Type name:  application
-   Subtype name:  private-token-response
+   Subtype name:  private-token-arbitrary-batch-response
    Required parameters:  N/A
    Optional parameters:  N/A
    Encoding considerations:  "binary"
@@ -757,8 +767,9 @@ Content-Length: <Length of BatchTokenResponse>
    Interoperability considerations:  N/A
    Published specification:  this specification
    Applications that use this media type:  Applications that want to
-      issue or facilitate issuance of Privacy Pass tokens, including
-      Privacy Pass issuer applications themselves.
+      issue or facilitate issuance of Privacy Pass Arbitrary Batched
+      tokens as defined in Section 6, including Privacy Pass issuer
+      applications themselves.
    Fragment identifier considerations:  N/A
    Additional information:  Magic number(s):  N/A
                             Deprecated alias names for this type:  N/A

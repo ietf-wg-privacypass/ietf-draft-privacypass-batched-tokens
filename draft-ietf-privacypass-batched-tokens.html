@@ -18,7 +18,7 @@ one token at a time and for issuers to issue more than one token at a time.
 <meta content="draft-ietf-privacypass-batched-tokens-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.28.1
-    Python 3.12.9
+    Python 3.12.10
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
@@ -1048,11 +1048,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Batched Tokens</td>
-<td class="right">April 2025</td>
+<td class="right">May 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Robert, et al.</td>
-<td class="center">Expires 16 October 2025</td>
+<td class="center">Expires 12 November 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1065,12 +1065,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-privacypass-batched-tokens-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-04-14" class="published">14 April 2025</time>
+<time datetime="2025-05-11" class="published">11 May 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-10-16">16 October 2025</time></dd>
+<dd class="expires"><time datetime="2025-11-12">12 November 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1114,7 +1114,7 @@ one token at a time and for issuers to issue more than one token at a time.<a hr
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 16 October 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 12 November 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1490,9 +1490,10 @@ is as defined in <span>[<a href="#OPRF" class="cite xref">OPRF</a>], <a href="ht
         </ul>
 <p id="section-5.1-13">The Client then generates an HTTP POST request to send to the Issuer Request
 URL, with the BatchTokenRequest as the content. The media type for this request
-is "application/private-token-privately-verifiable-batch-request". An example
-request for the Issuer Request URL "https://issuer.example.net/request" is shown
-below.<a href="#section-5.1-13" class="pilcrow">¶</a></p>
+<span class="bcp14">MUST</span> be "application/private-token-privately-verifiable-batch-request". If not,
+the Issuer responds with status code 415.
+An example request for the Issuer Request URL
+"https://issuer.example.net/request" is shown below.<a href="#section-5.1-13" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.1-14">
 <pre>
 POST /request HTTP/1.1
@@ -1603,9 +1604,11 @@ Scalar values, computed as <code>concat(SerializeScalar(proof[0]),
 SerializeScalar(proof[1]))</code>, where Ns is as defined in <span>[<a href="#OPRF" class="cite xref">OPRF</a>], <a href="https://rfc-editor.org/rfc/rfc9497#section-4" class="relref">Section 4</a></span>.<a href="#section-5.2-12.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.2-13">The Issuer generates an HTTP response with status code 200 whose content
+<p id="section-5.2-13">The Issuer <span class="bcp14">MUST</span> generate an HTTP response with status code 200 whose content
 consists of TokenResponse, with the content type set as
-"application/private-token-privately-verifiable-batch-response".<a href="#section-5.2-13" class="pilcrow">¶</a></p>
+"application/private-token-privately-verifiable-batch-response". Clients <span class="bcp14">MUST</span>
+ignore the response if the status code is not 200 or if the content type is not
+"application/private-token-arbitrary-batch-response".<a href="#section-5.2-13" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.2-14">
 <pre>
 HTTP/1.1 200 OK
@@ -1749,8 +1752,10 @@ A TokenRequest with a token type not defined in <span>[<a href="#RFC9578" class=
         </ul>
 <p id="section-6.1-6">The Client then generates an HTTP POST request to send to the Issuer Request
 URL, with the BatchTokenRequest as the content. The media type for this request
-is "application/private-token-arbitrary-batch-request". An example request for
-the Issuer Request URL "https://issuer.example.net/request" is shown below.<a href="#section-6.1-6" class="pilcrow">¶</a></p>
+<span class="bcp14">MUST</span> be "application/private-token-arbitrary-batch-request". If not, the Issuer
+responds with status code 415.
+An example request for the Issuer Request URL
+"https://issuer.example.net/request" is shown below.<a href="#section-6.1-6" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6.1-7">
 <pre>
 POST /request HTTP/1.1
@@ -1808,8 +1813,10 @@ struct {
 OptionalTokenResponses. OptionalTokenResponse.token_response is an
 optional TokenResponse (as specified in <a href="#optional-value" class="auto internal xref">Section 4.1</a>) , where an absence of TokenResponse indicates
 that the Issuer failed or refused to issue the associated TokenRequest.<a href="#section-6.2-6" class="pilcrow">¶</a></p>
-<p id="section-6.2-7">The Issuer generates an HTTP response with status code 200 whose content
+<p id="section-6.2-7">The Issuer <span class="bcp14">MUST</span> generate an HTTP response with status code 200 whose content
 consists of TokenResponse, with the content type set as
+"application/private-token-arbitrary-batch-response". Clients <span class="bcp14">MUST</span> ignore the
+response if the status code is not 200 or if the content type is not
 "application/private-token-arbitrary-batch-response".<a href="#section-6.2-7" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6.2-8">
 <pre>
@@ -1960,7 +1967,7 @@ this RFC.<a href="#section-8.2-3" class="pilcrow">¶</a></p>
             <dd class="break"></dd>
 <dt id="section-8.2.1-1.3">Subtype name:</dt>
             <dd style="margin-left: 1.5em" id="section-8.2.1-1.4">
-              <p id="section-8.2.1-1.4.1">private-token-request<a href="#section-8.2.1-1.4.1" class="pilcrow">¶</a></p>
+              <p id="section-8.2.1-1.4.1">private-token-privately-verifiable-batch-request<a href="#section-8.2.1-1.4.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
 <dt id="section-8.2.1-1.5">Required parameters:</dt>
@@ -1995,7 +2002,8 @@ this RFC.<a href="#section-8.2-3" class="pilcrow">¶</a></p>
             <dd class="break"></dd>
 <dt id="section-8.2.1-1.17">Applications that use this media type:</dt>
             <dd style="margin-left: 1.5em" id="section-8.2.1-1.18">
-              <p id="section-8.2.1-1.18.1">Applications that want to issue or facilitate issuance of Privacy Pass tokens,
+              <p id="section-8.2.1-1.18.1">Applications that want to issue or facilitate issuance of Privacy Pass
+Batched Privately Verifiable tokens as defined in <a href="#batched-private" class="auto internal xref">Section 5</a>,
 including Privacy Pass issuer applications themselves.<a href="#section-8.2.1-1.18.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
@@ -2067,7 +2075,7 @@ including Privacy Pass issuer applications themselves.<a href="#section-8.2.1-1.
             <dd class="break"></dd>
 <dt id="section-8.2.2-1.3">Subtype name:</dt>
             <dd style="margin-left: 1.5em" id="section-8.2.2-1.4">
-              <p id="section-8.2.2-1.4.1">private-token-response<a href="#section-8.2.2-1.4.1" class="pilcrow">¶</a></p>
+              <p id="section-8.2.2-1.4.1">private-token-privately-verifiable-batch-response<a href="#section-8.2.2-1.4.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
 <dt id="section-8.2.2-1.5">Required parameters:</dt>
@@ -2102,7 +2110,8 @@ including Privacy Pass issuer applications themselves.<a href="#section-8.2.1-1.
             <dd class="break"></dd>
 <dt id="section-8.2.2-1.17">Applications that use this media type:</dt>
             <dd style="margin-left: 1.5em" id="section-8.2.2-1.18">
-              <p id="section-8.2.2-1.18.1">Applications that want to issue or facilitate issuance of Privacy Pass tokens,
+              <p id="section-8.2.2-1.18.1">Applications that want to issue or facilitate issuance of Privacy Pass
+Batched Privately Verifiable tokens as defined in <a href="#batched-private" class="auto internal xref">Section 5</a>,
 including Privacy Pass issuer applications themselves.<a href="#section-8.2.2-1.18.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
@@ -2174,7 +2183,7 @@ including Privacy Pass issuer applications themselves.<a href="#section-8.2.2-1.
             <dd class="break"></dd>
 <dt id="section-8.2.3-1.3">Subtype name:</dt>
             <dd style="margin-left: 1.5em" id="section-8.2.3-1.4">
-              <p id="section-8.2.3-1.4.1">private-token-request<a href="#section-8.2.3-1.4.1" class="pilcrow">¶</a></p>
+              <p id="section-8.2.3-1.4.1">private-token-arbitrary-batch-request<a href="#section-8.2.3-1.4.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
 <dt id="section-8.2.3-1.5">Required parameters:</dt>
@@ -2209,7 +2218,8 @@ including Privacy Pass issuer applications themselves.<a href="#section-8.2.2-1.
             <dd class="break"></dd>
 <dt id="section-8.2.3-1.17">Applications that use this media type:</dt>
             <dd style="margin-left: 1.5em" id="section-8.2.3-1.18">
-              <p id="section-8.2.3-1.18.1">Applications that want to issue or facilitate issuance of Privacy Pass tokens,
+              <p id="section-8.2.3-1.18.1">Applications that want to issue or facilitate issuance of Privacy Pass
+Arbitrary Batched tokens as defined in <a href="#batched-arbitrary" class="auto internal xref">Section 6</a>,
 including Privacy Pass issuer applications themselves.<a href="#section-8.2.3-1.18.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
@@ -2281,7 +2291,7 @@ including Privacy Pass issuer applications themselves.<a href="#section-8.2.3-1.
             <dd class="break"></dd>
 <dt id="section-8.2.4-1.3">Subtype name:</dt>
             <dd style="margin-left: 1.5em" id="section-8.2.4-1.4">
-              <p id="section-8.2.4-1.4.1">private-token-response<a href="#section-8.2.4-1.4.1" class="pilcrow">¶</a></p>
+              <p id="section-8.2.4-1.4.1">private-token-arbitrary-batch-response<a href="#section-8.2.4-1.4.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
 <dt id="section-8.2.4-1.5">Required parameters:</dt>
@@ -2316,7 +2326,8 @@ including Privacy Pass issuer applications themselves.<a href="#section-8.2.3-1.
             <dd class="break"></dd>
 <dt id="section-8.2.4-1.17">Applications that use this media type:</dt>
             <dd style="margin-left: 1.5em" id="section-8.2.4-1.18">
-              <p id="section-8.2.4-1.18.1">Applications that want to issue or facilitate issuance of Privacy Pass tokens,
+              <p id="section-8.2.4-1.18.1">Applications that want to issue or facilitate issuance of Privacy Pass
+Arbitrary Batched tokens as defined in <a href="#batched-arbitrary" class="auto internal xref">Section 6</a>,
 including Privacy Pass issuer applications themselves.<a href="#section-8.2.4-1.18.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
