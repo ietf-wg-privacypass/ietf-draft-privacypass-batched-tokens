@@ -5,10 +5,10 @@
 Network Working Group                                          R. Robert
 Internet-Draft                                               Phoenix R&D
 Intended status: Standards Track                              C. A. Wood
-Expires: 12 November 2025                                     Cloudflare
+Expires: 13 November 2025                                     Cloudflare
                                                               T. Meunier
                                                          Cloudflare Inc.
-                                                             11 May 2025
+                                                             12 May 2025
 
 
                     Batched Token Issuance Protocol
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 November 2025.
+   This Internet-Draft will expire on 13 November 2025.
 
 Copyright Notice
 
@@ -175,7 +175,7 @@ Table of Contents
    especially where a large number of clients need to fetch a large
    number of tokens, this may introduce performance bottlenecks.
 
-   Amortzed Privately Verifiable Token Issuance Section 5 improves upon
+   Amortized Privately Verifiable Token Issuance Section 5 improves upon
    the basic Privately Verifiable Token issuance protocol in the
    following key ways:
 
