@@ -109,7 +109,7 @@ during issuance and redemption. The basic issuance protocols defined in
 every challenge. In some cases, especially where a large number of clients need
 to fetch a large number of tokens, this may introduce performance bottlenecks.
 
-Amortzed Privately Verifiable Token Issuance {{amortized-batch}} improves upon
+Amortized Privately Verifiable Token Issuance {{amortized-batch}} improves upon
 the basic Privately Verifiable Token issuance protocol in the following key ways:
 
 1. Issuing multiple tokens at once in response to a single TokenChallenge,
