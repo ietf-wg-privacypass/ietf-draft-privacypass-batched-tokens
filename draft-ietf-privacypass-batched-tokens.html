@@ -9,7 +9,7 @@
 <meta content="Christopher A. Wood" name="author">
 <meta content="Thibault Meunier" name="author">
 <meta content="
-       This document specifies variants of the Privacy Pass issuance protocol that
+       This document specifies two variants of the Privacy Pass issuance protocol that
 allow for batched issuance of tokens. These allow clients to request more than
 one token at a time and for issuers to issue more than one token at a time. 
     " name="description">
@@ -1052,7 +1052,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Robert, et al.</td>
-<td class="center">Expires 12 November 2025</td>
+<td class="center">Expires 13 November 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1065,12 +1065,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-privacypass-batched-tokens-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-05-11" class="published">11 May 2025</time>
+<time datetime="2025-05-12" class="published">12 May 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-11-12">12 November 2025</time></dd>
+<dd class="expires"><time datetime="2025-11-13">13 November 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1091,7 +1091,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">Batched Token Issuance Protocol</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document specifies variants of the Privacy Pass issuance protocol that
+<p id="section-abstract-1">This document specifies two variants of the Privacy Pass issuance protocol that
 allow for batched issuance of tokens. These allow clients to request more than
 one token at a time and for issuers to issue more than one token at a time.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
@@ -1114,7 +1114,7 @@ one token at a time and for issuers to issue more than one token at a time.<a hr
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 12 November 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 13 November 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1169,7 +1169,7 @@ one token at a time and for issuers to issue more than one token at a time.<a hr
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-batched-privately-verifiabl" class="internal xref">Batched Privately Verifiable Token Issuance</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-amortized-privately-verifia" class="internal xref">Amortized Privately Verifiable Token Batch Issuance</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
                 <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-client-to-issuer-request" class="internal xref">Client-to-Issuer Request</a></p>
@@ -1183,7 +1183,7 @@ one token at a time and for issuers to issue more than one token at a time.<a hr
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-arbitrary-batched-token-iss" class="internal xref">Arbitrary Batched Token Issuance</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-generic-token-batch-issuanc" class="internal xref">Generic Token Batch Issuance</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
                 <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-client-to-issuer-request-2" class="internal xref">Client-to-Issuer Request</a></p>
@@ -1200,10 +1200,10 @@ one token at a time and for issuers to issue more than one token at a time.<a hr
             <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-security-considerations" class="internal xref">Security considerations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
-                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-batched-privately-verifiable" class="internal xref">Batched Privately Verifiable Tokens</a></p>
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-amortized-privately-verifiab" class="internal xref">Amortized Privately Verifiable Token Batch Issuance</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
-                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-arbitrary-batched-verifiabl" class="internal xref">Arbitrary Batched Verifiable Tokens</a></p>
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-generic-token-batch-issuance" class="internal xref">Generic Token Batch Issuance</a></p>
 </li>
             </ul>
 </li>
@@ -1217,16 +1217,16 @@ one token at a time and for issuers to issue more than one token at a time.<a hr
                 <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-media-types" class="internal xref">Media Types</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2.2.1">
-                    <p id="section-toc.1-1.8.2.2.2.1.1"><a href="#section-8.2.1" class="auto internal xref">8.2.1</a>.  <a href="#name-application-private-token-p" class="internal xref">"application/private-token-privately-verifiable-batch-request" media type</a></p>
+                    <p id="section-toc.1-1.8.2.2.2.1.1"><a href="#section-8.2.1" class="auto internal xref">8.2.1</a>.  <a href="#name-application-private-token-a" class="internal xref">"application/private-token-amortized-batch-request" media type</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2.2.2">
-                    <p id="section-toc.1-1.8.2.2.2.2.1"><a href="#section-8.2.2" class="auto internal xref">8.2.2</a>.  <a href="#name-application-private-token-pr" class="internal xref">"application/private-token-privately-verifiable-batch-response" media type</a></p>
+                    <p id="section-toc.1-1.8.2.2.2.2.1"><a href="#section-8.2.2" class="auto internal xref">8.2.2</a>.  <a href="#name-application-private-token-am" class="internal xref">"application/private-token-amortized-batch-response" media type</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2.2.3">
-                    <p id="section-toc.1-1.8.2.2.2.3.1"><a href="#section-8.2.3" class="auto internal xref">8.2.3</a>.  <a href="#name-application-private-token-a" class="internal xref">"application/private-token-arbitrary-batch-request" media type</a></p>
+                    <p id="section-toc.1-1.8.2.2.2.3.1"><a href="#section-8.2.3" class="auto internal xref">8.2.3</a>.  <a href="#name-application-private-token-g" class="internal xref">"application/private-token-generic-batch-request" media type</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2.2.4">
-                    <p id="section-toc.1-1.8.2.2.2.4.1"><a href="#section-8.2.4" class="auto internal xref">8.2.4</a>.  <a href="#name-application-private-token-ar" class="internal xref">"application/private-token-arbitrary-batch-response" media type</a></p>
+                    <p id="section-toc.1-1.8.2.2.2.4.1"><a href="#section-8.2.4" class="auto internal xref">8.2.4</a>.  <a href="#name-application-private-token-ge" class="internal xref">"application/private-token-generic-batch-response" media type</a></p>
 </li>
                 </ul>
 </li>
@@ -1256,35 +1256,47 @@ one token at a time and for issuers to issue more than one token at a time.<a hr
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-change-log" class="section-name selfRef">Change Log:</a>
       </h2>
 <p id="section-1-1">RFC EDITOR PLEASE DELETE THIS SECTION.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">draft-03<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-2">draft-04<a href="#section-1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1-3.1">
-          <p id="section-1-3.1.1">Arbitrary token types<a href="#section-1-3.1.1" class="pilcrow">¶</a></p>
+          <p id="section-1-3.1.1">Rename the issuance variants<a href="#section-1-3.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-1-3.2">
-          <p id="section-1-3.2.1">Error code 400 aligned with RFC9578 and replaced by error code 422<a href="#section-1-3.2.1" class="pilcrow">¶</a></p>
+          <p id="section-1-3.2.1">Clarify media types<a href="#section-1-3.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-1-3.3">
+          <p id="section-1-3.3.1">Make generic issuance more generic byt prefixing requests &amp; responses with token type<a href="#section-1-3.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-1-4">draft-02<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-4">draft-03<a href="#section-1-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1-5.1">
-          <p id="section-1-5.1.1">Renaming TokenRequest to BatchTokenRequest and TokenResponse to
-BatchTokenResponse<a href="#section-1-5.1.1" class="pilcrow">¶</a></p>
+          <p id="section-1-5.1.1">Arbitrary token types<a href="#section-1-5.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-1-5.2">
-          <p id="section-1-5.2.1">IANA: Media types for BatchTokenRequest and BatchTokenResponse<a href="#section-1-5.2.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="section-1-5.3">
-          <p id="section-1-5.3.1">IANA: Expand Token Type registry entry<a href="#section-1-5.3.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="section-1-5.4">
-          <p id="section-1-5.4.1">Various editorial fixes<a href="#section-1-5.4.1" class="pilcrow">¶</a></p>
+          <p id="section-1-5.2.1">Error code 400 aligned with RFC9578 and replaced by error code 422<a href="#section-1-5.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-1-6">draft-01<a href="#section-1-6" class="pilcrow">¶</a></p>
+<p id="section-1-6">draft-02<a href="#section-1-6" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1-7.1">
-          <p id="section-1-7.1.1">Initial WG document version<a href="#section-1-7.1.1" class="pilcrow">¶</a></p>
+          <p id="section-1-7.1.1">Renaming TokenRequest to BatchTokenRequest and TokenResponse to
+BatchTokenResponse<a href="#section-1-7.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-1-7.2">
+          <p id="section-1-7.2.1">IANA: Media types for BatchTokenRequest and BatchTokenResponse<a href="#section-1-7.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-1-7.3">
+          <p id="section-1-7.3.1">IANA: Expand Token Type registry entry<a href="#section-1-7.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-1-7.4">
+          <p id="section-1-7.4.1">Various editorial fixes<a href="#section-1-7.4.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-1-8">draft-01<a href="#section-1-8" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1-9.1">
+          <p id="section-1-9.1.1">Initial WG document version<a href="#section-1-9.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>
@@ -1294,32 +1306,33 @@ BatchTokenResponse<a href="#section-1-5.1.1" class="pilcrow">¶</a></p>
       <h2 id="name-introduction">
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-2-1">This document specifies two variants of Privacy Pass issuance protocols (as defined in
-<span>[<a href="#RFC9576" class="cite xref">RFC9576</a>]</span>) that allow for batched issuance
-of tokens. This allows clients to request more than one token at a time and for
-issuers to issue more than one token at a time.<a href="#section-2-1" class="pilcrow">¶</a></p>
-<p id="section-2-2">The base Privacy Pass issuance protocol
-<span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span> defines stateless anonymous tokens,
-which can either be publicly verifiable or not. While it is possible to run
-multiple instances of the issuance protocol in parallel, e.g., over a
+<p id="section-2-1">This document specifies two variants of Privacy Pass issuance protocols (as
+defined in <span>[<a href="#RFC9576" class="cite xref">RFC9576</a>]</span>) that allow for batched issuance of tokens. This allows
+clients to request more than one token at a time and for issuers to issue more
+than one token at a time.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">The base Privacy Pass issuance protocol <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span> defines stateless anonymous
+tokens, which can either be publicly verifiable or not. While it is possible to
+run multiple instances of the issuance protocol in parallel, e.g., over a
 multiplexed transport such as HTTP/3 <span>[<a href="#HTTP3" class="cite xref">HTTP3</a>]</span> or by orchestrating
 multiple HTTP requests, these ad-hoc solutions vary based on transport protocol
 support. In addition, in some cases, they cannot take advantage of cryptographic
 optimizations.<a href="#section-2-2" class="pilcrow">¶</a></p>
 <p id="section-2-3">The first variant of the issuance protocol builds upon the privately verifiable
-issuance protocol in <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span> that uses VOPRF <span>[<a href="#OPRF" class="cite xref">OPRF</a>]</span>,
-and allows for batched issuance of tokens. This allows clients to request more
-than one token at a time and for issuers to issue more than one token at a time.
-In effect, private batched issuance performance scales better than linearly.<a href="#section-2-3" class="pilcrow">¶</a></p>
+issuance protocol in <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span> that uses VOPRF <span>[<a href="#OPRF" class="cite xref">OPRF</a>]</span>, and allows
+for batched issuance of tokens and amortizes the cost of zero knowledge proofs.
+This allows clients to request more than one token at a time and for issuers to
+issue more than one token at a time. In effect, private batched issuance
+performance scales better than linearly.<a href="#section-2-3" class="pilcrow">¶</a></p>
 <p id="section-2-4">The second variant of the issuance protocol introduces a new Client-Issuer
-communication method, which allows for batched issuance of arbitrary token
+communication method, which allows for batched issuance of generic token
 types. This allows clients to request more than one token at a time and for
 issuers to issue more than one token at a time. This variant has no other effect
 than batching requests and responses and the issuance performance remains
 linear.<a href="#section-2-4" class="pilcrow">¶</a></p>
-<p id="section-2-5">This batched issuance protocol registers one new token type
-(<a href="#iana-token-type" class="auto internal xref">Section 8.1</a>), to be used with the PrivateToken HTTP authentication
-scheme defined in <span>[<a href="#AUTHSCHEME" class="cite xref">AUTHSCHEME</a>]</span>.<a href="#section-2-5" class="pilcrow">¶</a></p>
+<p id="section-2-5">This document registers a new token type (<a href="#iana-token-type" class="auto internal xref">Section 8.1</a>) that can either
+be used with the Privately Verifiable Issuance Protocol as defined in
+<span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span>, or with the Amortized Privately Verifiable Batch Issuance Protocol
+defined below.<a href="#section-2-5" class="pilcrow">¶</a></p>
 <div id="terminology">
 <section id="section-2.1">
         <h3 id="name-terminology">
@@ -1338,13 +1351,12 @@ appear in all capitals, as shown here.<a href="#section-2.1-1" class="pilcrow">�
       <h2 id="name-motivation">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-motivation" class="section-name selfRef">Motivation</a>
       </h2>
-<p id="section-3-1">Privacy Pass tokens (as defined in <span>[<a href="#RFC9576" class="cite xref">RFC9576</a>]</span> and
-<span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span>) are unlinkable during issuance and
-redemption. The basic issuance protocols defined in <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span>, however, only
-allow for a single token to be issued at a time for every challenge. In some
-cases, especially where a large number of clients need to fetch a large number
-of tokens, this may introduce performance bottlenecks.<a href="#section-3-1" class="pilcrow">¶</a></p>
-<p id="section-3-2">Batched Privately Verifiable Token Issuance <a href="#batched-private" class="auto internal xref">Section 5</a> improves upon
+<p id="section-3-1">Privacy Pass tokens (as defined in <span>[<a href="#RFC9576" class="cite xref">RFC9576</a>]</span> and <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span>) are unlinkable
+during issuance and redemption. The basic issuance protocols defined in
+<span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span>, however, only allow for a single token to be issued at a time for
+every challenge. In some cases, especially where a large number of clients need
+to fetch a large number of tokens, this may introduce performance bottlenecks.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">Amortized Privately Verifiable Token Issuance <a href="#amortized-batch" class="auto internal xref">Section 5</a> improves upon
 the basic Privately Verifiable Token issuance protocol in the following key ways:<a href="#section-3-2" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-3-3">
 <li id="section-3-3.1">
@@ -1356,10 +1368,17 @@ thereby reducing the size of the proofs required for multiple tokens.<a href="#s
 VOPRF proof generation and verification, respectively.<a href="#section-3-3.2.1" class="pilcrow">¶</a></p>
 </li>
       </ol>
-<p id="section-3-4">Arbitrary Batched Token Issuance <a href="#batched-arbitrary" class="auto internal xref">Section 6</a> allows for a single
-TokenRequest to be sent that encompasses multiple token requests. This
-enables the issuance of tokens for more than one key in one round trip
-between the Client and the Issuer. The cost of token generation remains linear.<a href="#section-3-4" class="pilcrow">¶</a></p>
+<p id="section-3-4">Generic Token Batch Issuance <a href="#generic-batch" class="auto internal xref">Section 6</a> allows for a single
+GenericBatchTokenRequest to be sent that encompasses multiple token requests.
+This improves upon the basic issuance protocols defined in <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span> in the following key ways:<a href="#section-3-4" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-3-5">
+<li id="section-3-5.1">
+          <p id="section-3-5.1.1">Issuing multiple tokens at once of the same type with different keys.<a href="#section-3-5.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-3-5.2">
+          <p id="section-3-5.2.1">Issuing multiple tokens at once of different types.<a href="#section-3-5.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ol>
 </section>
 </div>
 <div id="presentation-language">
@@ -1418,14 +1437,14 @@ struct {
 </div>
 </section>
 </div>
-<div id="batched-private">
+<div id="amortized-batch">
 <section id="section-5">
-      <h2 id="name-batched-privately-verifiabl">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-batched-privately-verifiabl" class="section-name selfRef">Batched Privately Verifiable Token Issuance</a>
+      <h2 id="name-amortized-privately-verifia">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-amortized-privately-verifia" class="section-name selfRef">Amortized Privately Verifiable Token Batch Issuance</a>
       </h2>
 <p id="section-5-1">This section describes a batched issuance protocol for select token types,
 including 0x0001 (defined in <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span>) and 0x0005 (defined in this document).
-This variant is more efficient than Arbitary Batch Token Issuance defined below.
+This variant is more efficient than Generic Token Batch Issuance defined below.
 It does so by requiring the same key to be used by all token requests.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <div id="client-to-issuer-request">
 <section id="section-5.1">
@@ -1469,7 +1488,7 @@ struct {
    uint16_t token_type;
    uint8_t truncated_token_key_id;
    BlindedElement blinded_elements&lt;V&gt;;
-} BatchTokenRequest;
+} AmortizedBatchTokenRequest;
 </pre><a href="#section-5.1-10" class="pilcrow">¶</a>
 </div>
 <p id="section-5.1-11">The structure fields are defined as follows:<a href="#section-5.1-11" class="pilcrow">¶</a></p>
@@ -1489,20 +1508,19 @@ is as defined in <span>[<a href="#OPRF" class="cite xref">OPRF</a>], <a href="ht
 </li>
         </ul>
 <p id="section-5.1-13">The Client then generates an HTTP POST request to send to the Issuer Request
-URL, with the BatchTokenRequest as the content. The media type for this request
-<span class="bcp14">MUST</span> be "application/private-token-privately-verifiable-batch-request". If not,
-the Issuer responds with status code 415.
-An example request for the Issuer Request URL
-"https://issuer.example.net/request" is shown below.<a href="#section-5.1-13" class="pilcrow">¶</a></p>
+URL, with the AmortizedBatchTokenRequest as the content. The media type for this
+request <span class="bcp14">MUST</span> be "application/private-token-amortized-batch-request". If not, the
+Issuer responds with status code 415. An example request for the Issuer Request
+URL "https://issuer.example.net/request" is shown below.<a href="#section-5.1-13" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.1-14">
 <pre>
 POST /request HTTP/1.1
 Host: issuer.example.net
-Accept: application/private-token-privately-verifiable-batch-response
-Content-Type: application/private-token-privately-verifiable-batch-request
-Content-Length: &lt;Length of BatchTokenRequest&gt;
+Accept: application/private-token-amortized-batch-response
+Content-Type: application/private-token-amortized-batch-request
+Content-Length: &lt;Length of AmortizedBatchTokenRequest&gt;
 
-&lt;Bytes containing the BatchTokenRequest&gt;
+&lt;Bytes containing the AmortizedBatchTokenRequest&gt;
 </pre><a href="#section-5.1-14" class="pilcrow">¶</a>
 </div>
 </section>
@@ -1517,27 +1535,29 @@ described in <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>], <a href="
 <p id="section-5.2-2">Upon receipt of the request, the Issuer validates the following conditions:<a href="#section-5.2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2-3.1">
-            <p id="section-5.2-3.1.1">The BatchTokenRequest contains a supported token_type equal to one of the
-batched token types defined in this document.<a href="#section-5.2-3.1.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-3.1.1">The AmortizedBatchTokenRequest contains a supported token_type of the
+privatley verifiable token kind.<a href="#section-5.2-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.2-3.2">
-            <p id="section-5.2-3.2.1">The BatchTokenRequest.truncated_token_key_id corresponds to a key ID of a
-Public Key owned by the issuer.<a href="#section-5.2-3.2.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-3.2.1">The AmortizedBatchTokenRequest.truncated_token_key_id corresponds to a key ID
+of a Public Key owned by the issuer.<a href="#section-5.2-3.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.2-3.3">
-            <p id="section-5.2-3.3.1">Nr, as determined based on the size of BatchTokenRequest.blinded_elements, is
-less than or equal to the number of tokens that the issuer can issue in a
-single batch.<a href="#section-5.2-3.3.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-3.3.1">Nr, as determined based on the size of
+AmortizedBatchTokenRequest.blinded_elements, is less than or equal to the
+number of tokens that the issuer can issue in a single batch.<a href="#section-5.2-3.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-5.2-4">If any of these conditions is not met, the Issuer <span class="bcp14">MUST</span> return an HTTP 422
 (Unprocessable Content) error to the client.<a href="#section-5.2-4" class="pilcrow">¶</a></p>
 <p id="section-5.2-5">The Issuer then tries to deseralize the i-th element of
-BatchTokenRequest.blinded_elements using DeserializeElement from <span><a href="https://rfc-editor.org/rfc/rfc9497#section-2.1" class="relref">Section 2.1</a> of [<a href="#OPRF" class="cite xref">OPRF</a>]</span>, yielding <code>blinded_element_i</code> of type <code>Element</code>. If this fails for any
-of the BatchTokenRequest.blinded_elements values, the Issuer <span class="bcp14">MUST</span> return an HTTP
-422 (Unprocessable Content) error to the client. Otherwise, if the Issuer is
-willing to produce a token to the Client, the issuer forms a list of <code>Element</code>
-values, denoted <code>blinded_elements</code>, and computes a blinded response as follows:<a href="#section-5.2-5" class="pilcrow">¶</a></p>
+AmortizedBatchTokenRequest.blinded_elements using DeserializeElement from
+<span><a href="https://rfc-editor.org/rfc/rfc9497#section-2.1" class="relref">Section 2.1</a> of [<a href="#OPRF" class="cite xref">OPRF</a>]</span>, yielding <code>blinded_element_i</code> of type <code>Element</code>. If this
+fails for any of the AmortizedBatchTokenRequest.blinded_elements values, the
+Issuer <span class="bcp14">MUST</span> return an HTTP 422 (Unprocessable Content) error to the client.
+Otherwise, if the Issuer is willing to produce a token to the Client, the issuer
+forms a list of <code>Element</code> values, denoted <code>blinded_elements</code>, and computes a
+blinded response as follows:<a href="#section-5.2-5" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.2-6">
 <pre>
 server_context = SetupVOPRFServer(ciphersuiteID, skI, pkI)
@@ -1578,7 +1598,7 @@ def BlindEvaluateBatch(blindedElements):
   return evaluatedElements, proof
 </pre><a href="#section-5.2-8" class="pilcrow">¶</a>
 </div>
-<p id="section-5.2-9">The Issuer then creates a BatchTokenResponse structured as follows:<a href="#section-5.2-9" class="pilcrow">¶</a></p>
+<p id="section-5.2-9">The Issuer then creates a AmortizedBatchTokenResponse structured as follows:<a href="#section-5.2-9" class="pilcrow">¶</a></p>
 <div class="lang-tls sourcecode" id="section-5.2-10">
 <pre>
 struct {
@@ -1588,7 +1608,7 @@ struct {
 struct {
    EvaluatedElement evaluated_elements&lt;V&gt;;
    uint8_t evaluated_proof[Ns + Ns];
-} BatchTokenResponse;
+} AmortizedBatchTokenResponse;
 </pre><a href="#section-5.2-10" class="pilcrow">¶</a>
 </div>
 <p id="section-5.2-11">The structure fields are defined as follows:<a href="#section-5.2-11" class="pilcrow">¶</a></p>
@@ -1605,17 +1625,17 @@ SerializeScalar(proof[1]))</code>, where Ns is as defined in <span>[<a href="#OP
 </li>
         </ul>
 <p id="section-5.2-13">The Issuer <span class="bcp14">MUST</span> generate an HTTP response with status code 200 whose content
-consists of TokenResponse, with the content type set as
-"application/private-token-privately-verifiable-batch-response". Clients <span class="bcp14">MUST</span>
-ignore the response if the status code is not 200 or if the content type is not
-"application/private-token-arbitrary-batch-response".<a href="#section-5.2-13" class="pilcrow">¶</a></p>
+consists of AmortizedBatchTokenResponse, with the content type set as
+"application/private-token-amorrized-batch-response". Clients <span class="bcp14">MUST</span> ignore the
+response if the status code is not 200 or if the content type is not
+"application/private-token-amortized-batch-response".<a href="#section-5.2-13" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.2-14">
 <pre>
 HTTP/1.1 200 OK
-Content-Type: application/private-token-privately-verifiable-batch-response
-Content-Length: &lt;Length of BatchTokenResponse&gt;
+Content-Type: application/private-token-amortized-batch-response
+Content-Length: &lt;Length of AmortizedBatchTokenResponse&gt;
 
-&lt;Bytes containing the BatchTokenResponse&gt;
+&lt;Bytes containing the AmortizedBatchTokenResponse&gt;
 </pre><a href="#section-5.2-14" class="pilcrow">¶</a>
 </div>
 </section>
@@ -1626,10 +1646,10 @@ Content-Length: &lt;Length of BatchTokenResponse&gt;
 <a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-finalization" class="section-name selfRef">Finalization</a>
         </h3>
 <p id="section-5.3-1">Upon receipt, the Client handles the response and, if successful, deserializes
-the body values TokenResponse.evaluate_response and
-TokenResponse.evaluate_proof, yielding <code>evaluated_elements</code> and <code>proof</code>. If
-deserialization of either value fails, the Client aborts the protocol.
-Otherwise, the Client processes the response as follows:<a href="#section-5.3-1" class="pilcrow">¶</a></p>
+the body values AmortizedBatchTokenResponse.evaluate_response and
+AmortizedBatchTokenResponse.evaluate_proof, yielding <code>evaluated_elements</code> and
+<code>proof</code>. If deserialization of either value fails, the Client aborts the
+protocol. Otherwise, the Client processes the response as follows:<a href="#section-5.3-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.3-2">
 <pre>
 authenticator_values = client_context.FinalizeBatch(token_input, blind,
@@ -1700,15 +1720,15 @@ verification works exactly as specified in <span>[<a href="#RFC9578" class="cite
 </div>
 </section>
 </div>
-<div id="batched-arbitrary">
+<div id="generic-batch">
 <section id="section-6">
-      <h2 id="name-arbitrary-batched-token-iss">
-<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-arbitrary-batched-token-iss" class="section-name selfRef">Arbitrary Batched Token Issuance</a>
+      <h2 id="name-generic-token-batch-issuanc">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-generic-token-batch-issuanc" class="section-name selfRef">Generic Token Batch Issuance</a>
       </h2>
 <p id="section-6-1">This section describes an issuance protocol mechanism for issuing multiple
-tokens in one round trip between Client and Issuer. An arbitrary batched token
+tokens in one round trip between Client and Issuer. An generic batch token
 request can contain token requests for any token type.<a href="#section-6-1" class="pilcrow">¶</a></p>
-<div id="arbitrary-client-to-issuer-request">
+<div id="generic-client-to-issuer-request">
 <section id="section-6.1">
         <h3 id="name-client-to-issuer-request-2">
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-client-to-issuer-request-2" class="section-name selfRef">Client-to-Issuer Request</a>
@@ -1716,60 +1736,57 @@ request can contain token requests for any token type.<a href="#section-6-1" cla
 <p id="section-6.1-1">The Client first generates all of the individual TokenRequest structures that
 are intended to be batched together. This request creation follows the protocol
 describing issuance, such as <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>], <a href="https://rfc-editor.org/rfc/rfc9578#section-5.1" class="relref">Section 5.1</a></span> or <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>], <a href="https://rfc-editor.org/rfc/rfc9578#section-6.1" class="relref">Section 6.1</a></span>.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
-<p id="section-6.1-2">The Client then creates a BatchedTokenRequest structure as follows:<a href="#section-6.1-2" class="pilcrow">¶</a></p>
+<p id="section-6.1-2">The Client then creates a GenericBatchedTokenRequest structure as follows:<a href="#section-6.1-2" class="pilcrow">¶</a></p>
 <div class="lang-tls sourcecode" id="section-6.1-3">
 <pre>
 struct {
    uint16_t token_type;
    select (token_type) {
       case (0x0001): /* Type VOPRF(P-384, SHA-384), RFC 9578 */
-         uint8_t truncated_token_key_id;
-         uint8_t blinded_msg[Ne];
+         TokenRequest token_request;
       case (0x0002): /* Type Blind RSA (2048-bit), RFC 9578 */
-         uint8_t truncated_token_key_id;
-         uint8_t blinded_msg[Nk];
+          TokenRequest token_request;
+      case (0x0005): /* Type VOPRF(ristretto255, SHA-512), RFC 9578 */
+          TokenRequest token_request;
    }
-} TokenRequest;
+} GenericTokenRequest;
 
 struct {
-  TokenRequest token_requests&lt;V&gt;;
-} BatchTokenRequest
+  GenericTokenRequest generic_token_requests&lt;V&gt;;
+} GenericBatchTokenRequest
 </pre><a href="#section-6.1-3" class="pilcrow">¶</a>
 </div>
 <p id="section-6.1-4">The structure fields are defined as follows:<a href="#section-6.1-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.1-5.1">
-            <p id="section-6.1-5.1.1">TokenRequest's "token_type" is a 2-octet integer. TokenRequest <span class="bcp14">MUST</span> always start
-with a uint16 "token_type" indicating the token type. The rest of the
-structure follows based on that type, within the inner opaque token_request
-attribute. The above definition corresponds to TokenRequest from <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span>.
-A TokenRequest with a token type not defined in <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span> <span class="bcp14">MAY</span> be used but
-<span class="bcp14">MUST</span> always start with a 2-octet token_type.<a href="#section-6.1-5.1.1" class="pilcrow">¶</a></p>
+            <p id="section-6.1-5.1.1">GenericBatchTokenRequest's "token_type" is a 2-octet integer. The rest of the
+structure follows with the TokenRequest based on that type. A TokenRequest
+with a token type not defined in <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span> <span class="bcp14">MAY</span>.<a href="#section-6.1-5.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.1-5.2">
-            <p id="section-6.1-5.2.1">"token_requests" is an array of TokenRequest satisfying the above constraint.<a href="#section-6.1-5.2.1" class="pilcrow">¶</a></p>
+            <p id="section-6.1-5.2.1">"token_requests" is an array of GenericTokenRequest satisfying the above
+constraint.<a href="#section-6.1-5.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-6.1-6">The Client then generates an HTTP POST request to send to the Issuer Request
-URL, with the BatchTokenRequest as the content. The media type for this request
-<span class="bcp14">MUST</span> be "application/private-token-arbitrary-batch-request". If not, the Issuer
-responds with status code 415.
-An example request for the Issuer Request URL
-"https://issuer.example.net/request" is shown below.<a href="#section-6.1-6" class="pilcrow">¶</a></p>
+URL, with the GenericBatchTokenRequest as the content. The media type for this
+request <span class="bcp14">MUST</span> be "application/private-token-generic-batch-request". If not, the
+Issuer responds with status code 415. An example request for the Issuer Request
+URL "https://issuer.example.net/request" is shown below.<a href="#section-6.1-6" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6.1-7">
 <pre>
 POST /request HTTP/1.1
 Host: issuer.example.net
-Accept: application/private-token-arbitrary-batch-response
-Content-Type: application/private-token-arbitrary-batch-request
-Content-Length: &lt;Length of BatchTokenRequest&gt;
+Accept: application/private-token-generic-batch-response
+Content-Type: application/private-token-generic-batch-request
+Content-Length: &lt;Length of GenericBatchTokenRequest&gt;
 
-&lt;Bytes containing the BatchTokenRequest&gt;
+&lt;Bytes containing the GenericBatchTokenRequest&gt;
 </pre><a href="#section-6.1-7" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
-<div id="arbitrary-issuer-to-client-response">
+<div id="generic-issuer-to-client-response">
 <section id="section-6.2">
         <h3 id="name-issuer-to-client-response-2">
 <a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-issuer-to-client-response-2" class="section-name selfRef">Issuer-to-Client Response</a>
@@ -1777,16 +1794,16 @@ Content-Length: &lt;Length of BatchTokenRequest&gt;
 <p id="section-6.2-1">Upon receipt of the request, the Issuer validates the following conditions:<a href="#section-6.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.2-2.1">
-            <p id="section-6.2-2.1.1">The Content-Type is application/private-token-arbitrary-batch-request as
+            <p id="section-6.2-2.1.1">The Content-Type is application/private-token-generic-batch-request as
 registered with IANA.<a href="#section-6.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-6.2-3">If this condition is not met, the Issuer <span class="bcp14">MUST</span> return an HTTP 422 (Unprocessable
 Content) error to the client.<a href="#section-6.2-3" class="pilcrow">¶</a></p>
 <p id="section-6.2-4">The Issuer then tries to deserialize the first 2 bytes of the i-th element of
-BatchTokenRequest.token_requests. If this is not a token type registered with
-IANA, the Issuer <span class="bcp14">MUST</span> return an HTTP 422 (Unprocessable Content) error to the
-client. The issuer creates a BatchTokenResponse structured as follows:<a href="#section-6.2-4" class="pilcrow">¶</a></p>
+GenericBatchTokenRequest.token_requests. If this is not a token type registered
+with IANA, the Issuer <span class="bcp14">MUST</span> return an HTTP 422 (Unprocessable Content) error to
+the client. The issuer creates a GenericBatchTokenResponse structured as follows:<a href="#section-6.2-4" class="pilcrow">¶</a></p>
 <div class="lang-tls sourcecode" id="section-6.2-5">
 <pre>
 struct {
@@ -1806,25 +1823,26 @@ struct {
 
 struct {
   OptionalTokenResponse token_responses&lt;V&gt;;
-} BatchTokenResponse
+} GenericBatchTokenResponse
 </pre><a href="#section-6.2-5" class="pilcrow">¶</a>
 </div>
-<p id="section-6.2-6">BatchTokenResponse.token_responses is a variable-size vector of
-OptionalTokenResponses. OptionalTokenResponse.token_response is an
-optional TokenResponse (as specified in <a href="#optional-value" class="auto internal xref">Section 4.1</a>) , where an absence of TokenResponse indicates
-that the Issuer failed or refused to issue the associated TokenRequest.<a href="#section-6.2-6" class="pilcrow">¶</a></p>
+<p id="section-6.2-6">GenericBatchTokenResponse.token_responses is a variable-size vector of
+OptionalTokenResponses. OptionalTokenResponse.token_response is an optional
+TokenResponse (as specified in <a href="#optional-value" class="auto internal xref">Section 4.1</a>) , where an absence of
+TokenResponse indicates that the Issuer failed or refused to issue the
+associated TokenRequest.<a href="#section-6.2-6" class="pilcrow">¶</a></p>
 <p id="section-6.2-7">The Issuer <span class="bcp14">MUST</span> generate an HTTP response with status code 200 whose content
 consists of TokenResponse, with the content type set as
-"application/private-token-arbitrary-batch-response". Clients <span class="bcp14">MUST</span> ignore the
+"application/private-token-generic-batch-response". Clients <span class="bcp14">MUST</span> ignore the
 response if the status code is not 200 or if the content type is not
-"application/private-token-arbitrary-batch-response".<a href="#section-6.2-7" class="pilcrow">¶</a></p>
+"application/private-token-generic-batch-response".<a href="#section-6.2-7" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6.2-8">
 <pre>
 HTTP/1.1 200 OK
-Content-Type: application/private-token-arbitrary-batch-response
-Content-Length: &lt;Length of BatchTokenResponse&gt;
+Content-Type: application/private-token-generic-batch-response
+Content-Length: &lt;Length of GenericBatchTokenResponse&gt;
 
-&lt;Bytes containing the BatchTokenResponse&gt;
+&lt;Bytes containing the GenericBatchTokenResponse&gt;
 </pre><a href="#section-6.2-8" class="pilcrow">¶</a>
 </div>
 <p id="section-6.2-9">If the Issuer issues some but not all tokens, it <span class="bcp14">MUST</span> return an HTTP 206 error
@@ -1835,14 +1853,14 @@ the same token type refer to more than one <code>truncated_token_key_id</code>.<
 client.<a href="#section-6.2-10" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="arbitrary-finalization">
+<div id="generic-finalization">
 <section id="section-6.3">
         <h3 id="name-finalization-2">
 <a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-finalization-2" class="section-name selfRef">Finalization</a>
         </h3>
 <p id="section-6.3-1">The Client tries to deserialize the i-th element of
-BatchTokenResponse.token_responses using the protocol associated to
-BatchTokenRequest.token_type. If the element has a size of 0, the Client <span class="bcp14">MUST</span>
+GenericBatchTokenResponse.token_responses using the protocol associated to
+GenericBatchTokenRequest.token_type. If the element has a size of 0, the Client <span class="bcp14">MUST</span>
 ignore this token, and continue processing the next token. The Client finalizes
 each deserialized TokenResponse using the matching TokenRequest according to the
 corresponding finalization procedure defined by the token type.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
@@ -1855,20 +1873,20 @@ corresponding finalization procedure defined by the token type.<a href="#section
       <h2 id="name-security-considerations">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-security-considerations" class="section-name selfRef">Security considerations</a>
       </h2>
-<div id="batched-privately-verifiable-tokens">
+<div id="amortized-privately-verifiable-token-batch-issuance">
 <section id="section-7.1">
-        <h3 id="name-batched-privately-verifiable">
-<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-batched-privately-verifiable" class="section-name selfRef">Batched Privately Verifiable Tokens</a>
+        <h3 id="name-amortized-privately-verifiab">
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-amortized-privately-verifiab" class="section-name selfRef">Amortized Privately Verifiable Token Batch Issuance</a>
         </h3>
 <p id="section-7.1-1">Implementors <span class="bcp14">SHOULD</span> be aware of the security considerations described in <span>[<a href="#OPRF" class="cite xref">OPRF</a>], <a href="https://rfc-editor.org/rfc/rfc9497#section-6.2.3" class="relref">Section 6.2.3</a></span> and implement mitigation mechanisms. Application can mitigate
 this issue by limiting the number of clients and limiting the number of token
 requests per client per key.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="arbitrary-batched-verifiable-tokens">
+<div id="generic-token-batch-issuance">
 <section id="section-7.2">
-        <h3 id="name-arbitrary-batched-verifiabl">
-<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-arbitrary-batched-verifiabl" class="section-name selfRef">Arbitrary Batched Verifiable Tokens</a>
+        <h3 id="name-generic-token-batch-issuance">
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-generic-token-batch-issuance" class="section-name selfRef">Generic Token Batch Issuance</a>
         </h3>
 <p id="section-7.2-1">Implementors <span class="bcp14">SHOULD</span> be aware of the inherent linear cost of this token type. An
 Issuer <span class="bcp14">MAY</span> ignore TokenRequest if the number of tokens per request past a limit.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
@@ -1940,24 +1958,24 @@ following entry:<a href="#section-8.1-1" class="pilcrow">¶</a></p>
 <p id="section-8.2-1">The following entries should be added to the IANA "media types" registry:<a href="#section-8.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-8.2-2.1">
-            <p id="section-8.2-2.1.1">"application/private-token-privately-verifiable-batch-request"<a href="#section-8.2-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-8.2-2.1.1">"application/private-token-amortized-batch-request"<a href="#section-8.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-8.2-2.2">
-            <p id="section-8.2-2.2.1">"application/private-token-privately-verifiable-batch-response"<a href="#section-8.2-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-8.2-2.2.1">"application/private-token-amortized-batch-response"<a href="#section-8.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-8.2-2.3">
-            <p id="section-8.2-2.3.1">"application/private-token-arbitrary-batch-request"<a href="#section-8.2-2.3.1" class="pilcrow">¶</a></p>
+            <p id="section-8.2-2.3.1">"application/private-token-generic-batch-request"<a href="#section-8.2-2.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-8.2-2.4">
-            <p id="section-8.2-2.4.1">"application/private-token-arbitrary-batch-response"<a href="#section-8.2-2.4.1" class="pilcrow">¶</a></p>
+            <p id="section-8.2-2.4.1">"application/private-token-generic-batch-response"<a href="#section-8.2-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-8.2-3">The templates for these entries are listed below and the reference should be
 this RFC.<a href="#section-8.2-3" class="pilcrow">¶</a></p>
-<div id="applicationprivate-token-privately-verifiable-batch-request-media-type">
+<div id="applicationprivate-token-amortized-batch-request-media-type">
 <section id="section-8.2.1">
-          <h4 id="name-application-private-token-p">
-<a href="#section-8.2.1" class="section-number selfRef">8.2.1. </a><a href="#name-application-private-token-p" class="section-name selfRef">"application/private-token-privately-verifiable-batch-request" media type</a>
+          <h4 id="name-application-private-token-a">
+<a href="#section-8.2.1" class="section-number selfRef">8.2.1. </a><a href="#name-application-private-token-a" class="section-name selfRef">"application/private-token-amortized-batch-request" media type</a>
           </h4>
 <span class="break"></span><dl class="dlCompact dlParallel" id="section-8.2.1-1">
             <dt id="section-8.2.1-1.1">Type name:</dt>
@@ -1967,7 +1985,7 @@ this RFC.<a href="#section-8.2-3" class="pilcrow">¶</a></p>
             <dd class="break"></dd>
 <dt id="section-8.2.1-1.3">Subtype name:</dt>
             <dd style="margin-left: 1.5em" id="section-8.2.1-1.4">
-              <p id="section-8.2.1-1.4.1">private-token-privately-verifiable-batch-request<a href="#section-8.2.1-1.4.1" class="pilcrow">¶</a></p>
+              <p id="section-8.2.1-1.4.1">private-token-amortized-batch-request<a href="#section-8.2.1-1.4.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
 <dt id="section-8.2.1-1.5">Required parameters:</dt>
@@ -2003,7 +2021,7 @@ this RFC.<a href="#section-8.2-3" class="pilcrow">¶</a></p>
 <dt id="section-8.2.1-1.17">Applications that use this media type:</dt>
             <dd style="margin-left: 1.5em" id="section-8.2.1-1.18">
               <p id="section-8.2.1-1.18.1">Applications that want to issue or facilitate issuance of Privacy Pass
-Batched Privately Verifiable tokens as defined in <a href="#batched-private" class="auto internal xref">Section 5</a>,
+Amortized Privately Verifiable tokens as defined in <a href="#amortized-batch" class="auto internal xref">Section 5</a>,
 including Privacy Pass issuer applications themselves.<a href="#section-8.2.1-1.18.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
@@ -2062,10 +2080,10 @@ including Privacy Pass issuer applications themselves.<a href="#section-8.2.1-1.
 </dl>
 </section>
 </div>
-<div id="applicationprivate-token-privately-verifiable-batch-response-media-type">
+<div id="applicationprivate-token-amortized-batch-response-media-type">
 <section id="section-8.2.2">
-          <h4 id="name-application-private-token-pr">
-<a href="#section-8.2.2" class="section-number selfRef">8.2.2. </a><a href="#name-application-private-token-pr" class="section-name selfRef">"application/private-token-privately-verifiable-batch-response" media type</a>
+          <h4 id="name-application-private-token-am">
+<a href="#section-8.2.2" class="section-number selfRef">8.2.2. </a><a href="#name-application-private-token-am" class="section-name selfRef">"application/private-token-amortized-batch-response" media type</a>
           </h4>
 <span class="break"></span><dl class="dlCompact dlParallel" id="section-8.2.2-1">
             <dt id="section-8.2.2-1.1">Type name:</dt>
@@ -2075,7 +2093,7 @@ including Privacy Pass issuer applications themselves.<a href="#section-8.2.1-1.
             <dd class="break"></dd>
 <dt id="section-8.2.2-1.3">Subtype name:</dt>
             <dd style="margin-left: 1.5em" id="section-8.2.2-1.4">
-              <p id="section-8.2.2-1.4.1">private-token-privately-verifiable-batch-response<a href="#section-8.2.2-1.4.1" class="pilcrow">¶</a></p>
+              <p id="section-8.2.2-1.4.1">private-token-amortized-batch-response<a href="#section-8.2.2-1.4.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
 <dt id="section-8.2.2-1.5">Required parameters:</dt>
@@ -2111,7 +2129,7 @@ including Privacy Pass issuer applications themselves.<a href="#section-8.2.1-1.
 <dt id="section-8.2.2-1.17">Applications that use this media type:</dt>
             <dd style="margin-left: 1.5em" id="section-8.2.2-1.18">
               <p id="section-8.2.2-1.18.1">Applications that want to issue or facilitate issuance of Privacy Pass
-Batched Privately Verifiable tokens as defined in <a href="#batched-private" class="auto internal xref">Section 5</a>,
+Amortized Privately Verifiable tokens as defined in <a href="#amortized-batch" class="auto internal xref">Section 5</a>,
 including Privacy Pass issuer applications themselves.<a href="#section-8.2.2-1.18.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
@@ -2170,10 +2188,10 @@ including Privacy Pass issuer applications themselves.<a href="#section-8.2.2-1.
 </dl>
 </section>
 </div>
-<div id="applicationprivate-token-arbitrary-batch-request-media-type">
+<div id="applicationprivate-token-generic-batch-request-media-type">
 <section id="section-8.2.3">
-          <h4 id="name-application-private-token-a">
-<a href="#section-8.2.3" class="section-number selfRef">8.2.3. </a><a href="#name-application-private-token-a" class="section-name selfRef">"application/private-token-arbitrary-batch-request" media type</a>
+          <h4 id="name-application-private-token-g">
+<a href="#section-8.2.3" class="section-number selfRef">8.2.3. </a><a href="#name-application-private-token-g" class="section-name selfRef">"application/private-token-generic-batch-request" media type</a>
           </h4>
 <span class="break"></span><dl class="dlCompact dlParallel" id="section-8.2.3-1">
             <dt id="section-8.2.3-1.1">Type name:</dt>
@@ -2183,7 +2201,7 @@ including Privacy Pass issuer applications themselves.<a href="#section-8.2.2-1.
             <dd class="break"></dd>
 <dt id="section-8.2.3-1.3">Subtype name:</dt>
             <dd style="margin-left: 1.5em" id="section-8.2.3-1.4">
-              <p id="section-8.2.3-1.4.1">private-token-arbitrary-batch-request<a href="#section-8.2.3-1.4.1" class="pilcrow">¶</a></p>
+              <p id="section-8.2.3-1.4.1">private-token-generic-batch-request<a href="#section-8.2.3-1.4.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
 <dt id="section-8.2.3-1.5">Required parameters:</dt>
@@ -2219,7 +2237,7 @@ including Privacy Pass issuer applications themselves.<a href="#section-8.2.2-1.
 <dt id="section-8.2.3-1.17">Applications that use this media type:</dt>
             <dd style="margin-left: 1.5em" id="section-8.2.3-1.18">
               <p id="section-8.2.3-1.18.1">Applications that want to issue or facilitate issuance of Privacy Pass
-Arbitrary Batched tokens as defined in <a href="#batched-arbitrary" class="auto internal xref">Section 6</a>,
+Generic tokens as defined in <a href="#generic-batch" class="auto internal xref">Section 6</a>,
 including Privacy Pass issuer applications themselves.<a href="#section-8.2.3-1.18.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
@@ -2278,10 +2296,10 @@ including Privacy Pass issuer applications themselves.<a href="#section-8.2.3-1.
 </dl>
 </section>
 </div>
-<div id="applicationprivate-token-arbitrary-batch-response-media-type">
+<div id="applicationprivate-token-generic-batch-response-media-type">
 <section id="section-8.2.4">
-          <h4 id="name-application-private-token-ar">
-<a href="#section-8.2.4" class="section-number selfRef">8.2.4. </a><a href="#name-application-private-token-ar" class="section-name selfRef">"application/private-token-arbitrary-batch-response" media type</a>
+          <h4 id="name-application-private-token-ge">
+<a href="#section-8.2.4" class="section-number selfRef">8.2.4. </a><a href="#name-application-private-token-ge" class="section-name selfRef">"application/private-token-generic-batch-response" media type</a>
           </h4>
 <span class="break"></span><dl class="dlCompact dlParallel" id="section-8.2.4-1">
             <dt id="section-8.2.4-1.1">Type name:</dt>
@@ -2291,7 +2309,7 @@ including Privacy Pass issuer applications themselves.<a href="#section-8.2.3-1.
             <dd class="break"></dd>
 <dt id="section-8.2.4-1.3">Subtype name:</dt>
             <dd style="margin-left: 1.5em" id="section-8.2.4-1.4">
-              <p id="section-8.2.4-1.4.1">private-token-arbitrary-batch-response<a href="#section-8.2.4-1.4.1" class="pilcrow">¶</a></p>
+              <p id="section-8.2.4-1.4.1">private-token-generic-batch-response<a href="#section-8.2.4-1.4.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
 <dt id="section-8.2.4-1.5">Required parameters:</dt>
@@ -2327,7 +2345,7 @@ including Privacy Pass issuer applications themselves.<a href="#section-8.2.3-1.
 <dt id="section-8.2.4-1.17">Applications that use this media type:</dt>
             <dd style="margin-left: 1.5em" id="section-8.2.4-1.18">
               <p id="section-8.2.4-1.18.1">Applications that want to issue or facilitate issuance of Privacy Pass
-Arbitrary Batched tokens as defined in <a href="#batched-arbitrary" class="auto internal xref">Section 6</a>,
+Generic tokens as defined in <a href="#generic-batch" class="auto internal xref">Section 6</a>,
 including Privacy Pass issuer applications themselves.<a href="#section-8.2.4-1.18.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
