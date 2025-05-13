@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-04T00:44:11.814308+00:00",
+  "timestamp": "2025-05-13T00:40:24.060406+00:00",
   "repo": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
   "labels": [
     {
@@ -133,7 +133,7 @@
     {
       "number": 20,
       "id": "I_kwDOHtZl1c6f9BQi",
-      "title": "Test vectors for private batched tokens",
+      "title": "Test vectors for amortized tokens",
       "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/20",
       "state": "OPEN",
       "author": "thibmeu",
@@ -142,14 +142,14 @@
       "labels": [],
       "body": "The draft should provide test vectors for private batched tokens.\r\n\r\n@chris-wood worked on these some time back, and has added some to the [Go implementation](https://github.com/cloudflare/pat-go/blob/main/tokens/token-test-vectors.json).",
       "createdAt": "2024-11-22T15:31:37Z",
-      "updatedAt": "2024-11-22T15:31:37Z",
+      "updatedAt": "2025-05-12T12:56:47Z",
       "closedAt": null,
       "comments": []
     },
     {
       "number": 21,
       "id": "I_kwDOHtZl1c6f9D9h",
-      "title": "Test vectors for arbitrary batched tokens",
+      "title": "Test vectors for generic tokens",
       "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/21",
       "state": "OPEN",
       "author": "thibmeu",
@@ -158,7 +158,7 @@
       "labels": [],
       "body": "The draft should provide test vector for arbitrary batched tokens. At minimum, it should include batches of size 1 for 0x0001 and 0x0002 which are defined in RFC 9578, as well as a combination of the two.\r\n\r\nGiven this spec defines a new token type 0xF91A, it might be interesting to support it as well.\r\n\r\nI've made a first pass with a [Go implementation](https://github.com/cloudflare/pat-go/blob/thibmeu/batched-tokens/tokens/batched/batched-issuance-test-vectors.json) of arbitrary batched tokens, and associated test vectors.",
       "createdAt": "2024-11-22T15:34:04Z",
-      "updatedAt": "2024-11-22T15:34:04Z",
+      "updatedAt": "2025-05-12T12:58:32Z",
       "closedAt": null,
       "comments": []
     },
@@ -255,15 +255,15 @@
       "id": "I_kwDOHtZl1c6onDU4",
       "title": "Add clarifying text for media types",
       "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/33",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "tfpauly",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "This document defines four new media types, but it seems to be missing some descriptive and normative text.\n\nSection 6.2 mentions:\n\"The Content-Type is application/private-token-arbitrary-batch-request as registered with IANA.\"\n\nThis is a good step, but the equivalent text for the other three types is not there. They are mentioned in examples, and in IANA, but not in the descriptive text.\n\nI think for each, we need to:\n- In the main section that is relevant, mention the media type and link to IANA\n- Add a normative explanation of how to use the media type (\"The Content-Type for this request MUST be...\")\n- Add normative text about how to verify the media type",
       "createdAt": "2025-02-03T23:56:34Z",
-      "updatedAt": "2025-02-07T16:32:51Z",
-      "closedAt": null,
+      "updatedAt": "2025-05-11T15:06:16Z",
+      "closedAt": "2025-05-11T15:06:16Z",
       "comments": [
         {
           "author": "thibmeu",
@@ -286,16 +286,24 @@
       "id": "I_kwDOHtZl1c6yWGzJ",
       "title": "Consider prefixing `OptionalTokenResponse` with variable integer instead of 2-byte integer within `BatchedTokenResponse`",
       "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/38",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thibmeu",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "The current draft prefixes `OptionalTokenResponse` with a 2-byte integer.\n\nTo be consistent with the draft, we could consider p;refixing them with 2-MSB varint instead.",
       "createdAt": "2025-04-14T07:26:30Z",
-      "updatedAt": "2025-04-14T07:26:30Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2025-05-11T14:58:43Z",
+      "closedAt": "2025-05-11T14:58:42Z",
+      "comments": [
+        {
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I this is obsolete now.",
+          "createdAt": "2025-05-11T14:58:42Z",
+          "updatedAt": "2025-05-11T14:58:42Z"
+        }
+      ]
     },
     {
       "number": 39,
@@ -318,15 +326,15 @@
       "id": "I_kwDOHtZl1c61DUhs",
       "title": "Revisit naming",
       "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/43",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "raphaelrobert",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Batched tokens (initially the only issuance protocol described in this draft) and arbitrary batched tokens (the new addition) sound pretty similar. This might be confusing for people. Synonyms for either or both could be: bundled, pooled, aggregated.",
       "createdAt": "2025-05-03T18:21:38Z",
-      "updatedAt": "2025-05-03T18:21:38Z",
-      "closedAt": null,
+      "updatedAt": "2025-05-12T12:56:10Z",
+      "closedAt": "2025-05-12T12:56:10Z",
       "comments": []
     },
     {
@@ -334,15 +342,15 @@
       "id": "I_kwDOHtZl1c61DVa3",
       "title": "Potential lack of generality for arbitrary tokens",
       "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/44",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "raphaelrobert",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "In #42, we prefixed the token responses with the token type so we can easily tell them apart. This way we could reuse the original `TokenRequest` corresponding to the token type.\nThe token request however does not work like that. Right now it is only defined for token type 0x0001 and 0x0002 in the draft and it is essentially a deconstructed `TokenRequest` from the base draft. As opposed to the token responses, it is undefined how this could work for other types that are not specified. Moreover, it imposes two restrictions for other types:\n - The respective `TokenRequest` must start with the `TokenType`\n - Other types must define how the issuance works for the arbitrary tokens issuance protocol\n\nI think we should align the request with the response and prefix the original `TokenRequest` with the token type. The only downside I can see is that the token type is effectively repeated in the serialization, but I think that's tolerable.",
       "createdAt": "2025-05-03T18:30:11Z",
-      "updatedAt": "2025-05-03T18:30:11Z",
-      "closedAt": null,
+      "updatedAt": "2025-05-12T12:56:10Z",
+      "closedAt": "2025-05-12T12:56:10Z",
       "comments": []
     }
   ],
@@ -2471,24 +2479,26 @@
       "id": "PR_kwDOHtZl1c6KbqIF",
       "title": "Add clarification for media type",
       "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/34",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "thibmeu",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "All media types declared with IANA registered the same subtype. This commit addresses it.\r\n\r\nIn addition, this commit makes the Content-Type for request and responses normative with `MUST be`.\r\n\r\nCloses #33",
       "createdAt": "2025-02-07T15:12:47Z",
-      "updatedAt": "2025-03-17T04:22:13Z",
+      "updatedAt": "2025-05-11T15:06:15Z",
       "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
       "baseRefName": "main",
       "baseRefOid": "fa9a71a9dbb0a20ce079a7afeb7f7d808c57a257",
       "headRepository": "thibmeu/ietf-draft-privacypass-batched-tokens",
       "headRefName": "carifying-media-types",
       "headRefOid": "b2b46a9784e7217997d03a82b8e41f1566b1cc4f",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-05-11T15:06:15Z",
+      "mergedAt": "2025-05-11T15:06:15Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "0011682ce5500e1c6825b77b6d03871ad10c2771"
+      },
       "comments": [
         {
           "author": "thibmeu",
@@ -2840,6 +2850,68 @@
           "body": "",
           "createdAt": "2025-04-14T10:16:38Z",
           "updatedAt": "2025-04-14T10:16:38Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 45,
+      "id": "PR_kwDOHtZl1c6VvUGz",
+      "title": "Rename protocols",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/45",
+      "state": "MERGED",
+      "author": "raphaelrobert",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixes #43, #44.",
+      "createdAt": "2025-05-11T16:32:17Z",
+      "updatedAt": "2025-05-12T12:56:09Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "0011682ce5500e1c6825b77b6d03871ad10c2771",
+      "headRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "rename-protocols",
+      "headRefOid": "ddd370b41836584a72509c7e497b54b9d947d51e",
+      "closedAt": "2025-05-12T12:56:09Z",
+      "mergedAt": "2025-05-12T12:56:09Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "249dc63d1969841d9115fc1665cc2fcfb06c6779"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c6o2ttN",
+          "commit": {
+            "abbreviatedOid": "b10ba63"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "PR look good. Generic sounds more \"generic\" than arbitrary.\r\n\r\nAmortized also avoid the issue of batched privated vs private batched which generic issuance could do",
+          "createdAt": "2025-05-12T11:41:17Z",
+          "updatedAt": "2025-05-12T11:44:34Z",
+          "comments": [
+            {
+              "originalPosition": 93,
+              "body": "```suggestion\r\nAmortized Privately Verifiable Token Issuance {{amortized-batch}} improves upon\r\n```",
+              "createdAt": "2025-05-12T11:41:17Z",
+              "updatedAt": "2025-05-12T11:44:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6o3fNL",
+          "commit": {
+            "abbreviatedOid": "ddd370b"
+          },
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "All good",
+          "createdAt": "2025-05-12T12:54:57Z",
+          "updatedAt": "2025-05-12T12:54:57Z",
           "comments": []
         }
       ]
