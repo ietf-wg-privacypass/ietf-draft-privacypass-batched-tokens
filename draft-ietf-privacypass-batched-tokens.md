@@ -1616,9 +1616,9 @@ The test vector below lists the following values:
     string.
 
 - token_request: The BatchedTokenRequest message constructed according to
-  {{arbitrary-client-to-issuer-request}}, represented as a hexadecimal string.
+  {{generic-client-to-issuer-request}}, represented as a hexadecimal string.
 - token_response: The BatchedTokenResponse message constructed according to
-  {{arbitrary-issuer-to-client-response}}, represented as a hexadecimal string.
+  {{generic-issuer-to-client-response}}, represented as a hexadecimal string.
 
 
 Note to implementers:
