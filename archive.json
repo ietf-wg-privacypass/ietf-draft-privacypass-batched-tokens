@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-13T00:40:24.060406+00:00",
+  "timestamp": "2025-07-01T00:48:50.506646+00:00",
   "repo": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
   "labels": [
     {
@@ -2343,13 +2343,13 @@
       "labels": [],
       "body": "Tests vectors are constructed from [a Go implementation](https://github.com/cloudflare/pat-go/).\r\n\r\nThis has be to updated if #27 is merged, as it updates the token type from 0xf91a to 0x0005.\r\n\r\nCloses #20 and #21.\r\n\r\ncc @raphaelrobert ",
       "createdAt": "2025-01-27T13:02:55Z",
-      "updatedAt": "2025-04-14T12:04:19Z",
+      "updatedAt": "2025-06-29T19:03:50Z",
       "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
       "baseRefName": "main",
-      "baseRefOid": "a57162707cca9a65858a31e29a314e324f345992",
+      "baseRefOid": "249dc63d1969841d9115fc1665cc2fcfb06c6779",
       "headRepository": "thibmeu/ietf-draft-privacypass-batched-tokens",
       "headRefName": "add-test-vectors",
-      "headRefOid": "ccf6b94488ee7f019a671806cc35592ea0a798a6",
+      "headRefOid": "d4db6634199362f347f9803cf8d1677596e1349d",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -2375,6 +2375,13 @@
           "body": "Discussing with @raphaelrobert, the proposed test vectors do not match the working draft. The size of each element part of the batched token requests MUST be a 2-MSB varint.",
           "createdAt": "2025-04-14T07:05:10Z",
           "updatedAt": "2025-04-14T07:05:10Z"
+        },
+        {
+          "author": "thibmeu",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Last push does:\r\n\r\n* Rebase the PR on main branch\r\n* Rename test titles to Amortised and Generic\r\n* Add Rust test vectors from @raphaelrobert [list](https://github.com/raphaelrobert/privacypass/wiki/Interop)",
+          "createdAt": "2025-06-29T19:02:13Z",
+          "updatedAt": "2025-06-29T19:02:13Z"
         }
       ],
       "reviews": []
