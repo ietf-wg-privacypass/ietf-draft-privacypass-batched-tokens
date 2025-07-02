@@ -1563,7 +1563,7 @@ tokens:
 ~~~
 
 
-## Issuance Protocol 2 - Generic Token Batch {#test-vectors-arbitrary-batched}
+## Generic Token Batch Issuance {#test-vectors-arbitrary-batched}
 
 The test vector below lists the following values:
 
