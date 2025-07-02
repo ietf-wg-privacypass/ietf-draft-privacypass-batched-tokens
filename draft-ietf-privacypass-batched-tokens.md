@@ -911,7 +911,7 @@ specified in this document. {{test-vectors-batched-voprf}} contains test vectors
 for batched token issuance protocol (0x0005), and {{test-vectors-arbitrary-batched}} contains
 test vectors for arbitrary batched token issuance protocol.
 
-## Issuance Protocol 1 - VOPRF (ristretto255, SHA-512) {#test-vectors-batched-voprf}
+## Amortized Privately Verifiable Token Batch Issuance - VOPRF (ristretto255, SHA-512) {#test-vectors-batched-voprf}
 
 The test vector below lists the following values:
 
