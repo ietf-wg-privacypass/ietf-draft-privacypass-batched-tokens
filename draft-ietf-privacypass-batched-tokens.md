@@ -908,7 +908,7 @@ Change controller:
 
 This section includes test vectors for the two issuance protocols
 specified in this document. {{test-vectors-batched-voprf}} contains test vectors
-for batched token issuance protocol (0x0005), and {{test-vectors-arbitrary-batched}} contains
+for Amortized Privately Verifiable Token Batch Issuance (0x0005), and {{test-vectors-arbitrary-batched}} contains
 test vectors for arbitrary batched token issuance protocol.
 
 ## Amortized Privately Verifiable Token Batch Issuance - VOPRF (ristretto255, SHA-512) {#test-vectors-batched-voprf}
