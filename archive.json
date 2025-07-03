@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-01T00:48:50.506646+00:00",
+  "timestamp": "2025-07-03T00:41:52.152878+00:00",
   "repo": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
   "labels": [
     {
@@ -2343,13 +2343,13 @@
       "labels": [],
       "body": "Tests vectors are constructed from [a Go implementation](https://github.com/cloudflare/pat-go/).\r\n\r\nThis has be to updated if #27 is merged, as it updates the token type from 0xf91a to 0x0005.\r\n\r\nCloses #20 and #21.\r\n\r\ncc @raphaelrobert ",
       "createdAt": "2025-01-27T13:02:55Z",
-      "updatedAt": "2025-06-29T19:03:50Z",
+      "updatedAt": "2025-07-02T14:56:09Z",
       "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
       "baseRefName": "main",
       "baseRefOid": "249dc63d1969841d9115fc1665cc2fcfb06c6779",
       "headRepository": "thibmeu/ietf-draft-privacypass-batched-tokens",
       "headRefName": "add-test-vectors",
-      "headRefOid": "d4db6634199362f347f9803cf8d1677596e1349d",
+      "headRefOid": "daa6b806dfa3d867aa39ba93ba1c5c9d08895f4a",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -2384,7 +2384,46 @@
           "updatedAt": "2025-06-29T19:02:13Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c6xlPqU",
+          "commit": {
+            "abbreviatedOid": "d4db663"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-02T14:10:43Z",
+          "updatedAt": "2025-07-02T14:34:03Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "```suggestion\r\nfor Amortized Privately Verifiable Token Batch Issuance (0x0005), and {{test-vectors-arbitrary-batched}} contains\r\n```",
+              "createdAt": "2025-07-02T14:10:43Z",
+              "updatedAt": "2025-07-02T14:34:03Z"
+            },
+            {
+              "originalPosition": 12,
+              "body": "```suggestion\r\ntest vectors for Generic Token Batch Issuance.\r\n```",
+              "createdAt": "2025-07-02T14:11:00Z",
+              "updatedAt": "2025-07-02T14:34:03Z"
+            },
+            {
+              "originalPosition": 14,
+              "body": "```suggestion\r\n## Amortized Privately Verifiable Token Batch Issuance - VOPRF (ristretto255, SHA-512) {#test-vectors-batched-voprf}\r\n```",
+              "createdAt": "2025-07-02T14:17:46Z",
+              "updatedAt": "2025-07-02T14:34:03Z"
+            },
+            {
+              "originalPosition": 666,
+              "body": "```suggestion\r\n## Generic Token Batch Issuance {#test-vectors-arbitrary-batched}\r\n```",
+              "createdAt": "2025-07-02T14:19:11Z",
+              "updatedAt": "2025-07-02T14:34:03Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 32,
