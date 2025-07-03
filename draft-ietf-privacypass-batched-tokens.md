@@ -2526,7 +2526,7 @@ The test vector below lists the following values:
 
 
 Note to implementers:
-Arbitrary batched token is an issuance protocol that does not define
+Generic batched token is an issuance protocol that does not define
 a token type. You should decide which test vectors is required for
 your implementation. The batch for each test vector is the following
 
