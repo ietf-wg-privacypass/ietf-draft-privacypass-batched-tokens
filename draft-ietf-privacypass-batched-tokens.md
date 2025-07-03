@@ -588,7 +588,7 @@ following entry:
 * Publicly Verifiable: N
 * Public Metadata: N
 * Private Metadata: N
-* Nk: 32
+* Nk: 64
 * Nid: 32
 * Change controller: IETF
 * Reference: {{RFC9578, Section 5}}
