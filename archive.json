@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-03T00:41:52.152878+00:00",
+  "timestamp": "2025-07-06T00:46:52.752530+00:00",
   "repo": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
   "labels": [
     {
@@ -135,15 +135,15 @@
       "id": "I_kwDOHtZl1c6f9BQi",
       "title": "Test vectors for amortized tokens",
       "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/20",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thibmeu",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "The draft should provide test vectors for private batched tokens.\r\n\r\n@chris-wood worked on these some time back, and has added some to the [Go implementation](https://github.com/cloudflare/pat-go/blob/main/tokens/token-test-vectors.json).",
       "createdAt": "2024-11-22T15:31:37Z",
-      "updatedAt": "2025-05-12T12:56:47Z",
-      "closedAt": null,
+      "updatedAt": "2025-07-03T15:47:39Z",
+      "closedAt": "2025-07-03T15:47:39Z",
       "comments": []
     },
     {
@@ -151,16 +151,24 @@
       "id": "I_kwDOHtZl1c6f9D9h",
       "title": "Test vectors for generic tokens",
       "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/issues/21",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thibmeu",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "The draft should provide test vector for arbitrary batched tokens. At minimum, it should include batches of size 1 for 0x0001 and 0x0002 which are defined in RFC 9578, as well as a combination of the two.\r\n\r\nGiven this spec defines a new token type 0xF91A, it might be interesting to support it as well.\r\n\r\nI've made a first pass with a [Go implementation](https://github.com/cloudflare/pat-go/blob/thibmeu/batched-tokens/tokens/batched/batched-issuance-test-vectors.json) of arbitrary batched tokens, and associated test vectors.",
       "createdAt": "2024-11-22T15:34:04Z",
-      "updatedAt": "2025-05-12T12:58:32Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2025-07-03T15:48:03Z",
+      "closedAt": "2025-07-03T15:48:03Z",
+      "comments": [
+        {
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closing via #31.",
+          "createdAt": "2025-07-03T15:48:03Z",
+          "updatedAt": "2025-07-03T15:48:03Z"
+        }
+      ]
     },
     {
       "number": 22,
@@ -2336,24 +2344,26 @@
       "id": "PR_kwDOHtZl1c6JFR8J",
       "title": "Add test vectors for batched privately verifiable tokens and arbitrary",
       "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/31",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "thibmeu",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Tests vectors are constructed from [a Go implementation](https://github.com/cloudflare/pat-go/).\r\n\r\nThis has be to updated if #27 is merged, as it updates the token type from 0xf91a to 0x0005.\r\n\r\nCloses #20 and #21.\r\n\r\ncc @raphaelrobert ",
       "createdAt": "2025-01-27T13:02:55Z",
-      "updatedAt": "2025-07-02T14:56:09Z",
+      "updatedAt": "2025-07-03T15:50:23Z",
       "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
       "baseRefName": "main",
-      "baseRefOid": "249dc63d1969841d9115fc1665cc2fcfb06c6779",
+      "baseRefOid": "da6f545d4b9c04559b2903f0a22ac84b26a76562",
       "headRepository": "thibmeu/ietf-draft-privacypass-batched-tokens",
       "headRefName": "add-test-vectors",
-      "headRefOid": "daa6b806dfa3d867aa39ba93ba1c5c9d08895f4a",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "67fbaf7a684f92ec83279b1b158ddf86b60796fc",
+      "closedAt": "2025-07-03T15:47:38Z",
+      "mergedAt": "2025-07-03T15:47:38Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "adce5807a6131b081db4784d426f2e49fc0b1d9e"
+      },
       "comments": [
         {
           "author": "thibmeu",
@@ -2422,6 +2432,19 @@
               "updatedAt": "2025-07-02T14:34:03Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHtZl1c6x1_iO",
+          "commit": {
+            "abbreviatedOid": "67fbaf7"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-07-03T15:47:18Z",
+          "updatedAt": "2025-07-03T15:47:18Z",
+          "comments": []
         }
       ]
     },
@@ -2958,6 +2981,48 @@
           "body": "All good",
           "createdAt": "2025-05-12T12:54:57Z",
           "updatedAt": "2025-05-12T12:54:57Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 46,
+      "id": "PR_kwDOHtZl1c6dQjX4",
+      "title": "Nk for 0x0005 should match RFC9497 Section 4.1",
+      "url": "https://github.com/ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens/pull/46",
+      "state": "MERGED",
+      "author": "thibmeu",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Nk is set as 32. This does not match Nh defined in [RFC 9497 Section 4.1](https://www.rfc-editor.org/rfc/rfc9497#section-4.1).\r\n\r\nIt should be 64 instead.\r\n\r\nThis is what the Rust implementation is using, as well as the underwork Go implementation.\r\n\r\nIf that's not the right value, we should fix it.\r\n\r\n@raphaelrobert ",
+      "createdAt": "2025-07-03T12:15:18Z",
+      "updatedAt": "2025-07-03T12:27:36Z",
+      "baseRepository": "ietf-wg-privacypass/ietf-draft-privacypass-batched-tokens",
+      "baseRefName": "main",
+      "baseRefOid": "249dc63d1969841d9115fc1665cc2fcfb06c6779",
+      "headRepository": "thibmeu/ietf-draft-privacypass-batched-tokens",
+      "headRefName": "fix-nk",
+      "headRefOid": "4437122b9781a9dc8721607a869738ecc91ab219",
+      "closedAt": "2025-07-03T12:27:36Z",
+      "mergedAt": "2025-07-03T12:27:36Z",
+      "mergedBy": "raphaelrobert",
+      "mergeCommit": {
+        "oid": "da6f545d4b9c04559b2903f0a22ac84b26a76562"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHtZl1c6xzJCP",
+          "commit": {
+            "abbreviatedOid": "4437122"
+          },
+          "author": "raphaelrobert",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-07-03T12:27:14Z",
+          "updatedAt": "2025-07-03T12:27:14Z",
           "comments": []
         }
       ]
