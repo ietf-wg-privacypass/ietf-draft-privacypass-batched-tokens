@@ -504,7 +504,7 @@ Table of Contents
 6.  Generic Token Batch Issuance
 
    This section describes an issuance protocol mechanism for issuing
-   multiple tokens in one round trip between Client and Issuer.  An
+   multiple tokens in one round trip between Client and Issuer.  A
    generic batch token request can contain token requests for any token
    type.
 
