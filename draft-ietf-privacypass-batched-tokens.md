@@ -428,7 +428,7 @@ verification works exactly as specified in {{RFC9578}}.
 # Generic Token Batch Issuance {#generic-batch}
 
 This section describes an issuance protocol mechanism for issuing multiple
-tokens in one round trip between Client and Issuer. An generic batch token
+tokens in one round trip between Client and Issuer. A generic batch token
 request can contain token requests for any token type.
 
 ## Client-to-Issuer Request {#generic-client-to-issuer-request}
