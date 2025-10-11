@@ -450,7 +450,7 @@ struct {
           TokenRequest token_request;
       case (0x0005): /* Type VOPRF(ristretto255, SHA-512), RFC XXXX */
           TokenRequest token_request;
-      case (other): /* Other token types */
+      case (other): /* Other token types from the IANA Privacy Pass Token Types Registry */
           TokenRequest token_request;
    }
 } GenericTokenRequest;
