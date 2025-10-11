@@ -464,7 +464,7 @@ The structure fields are defined as follows:
 
 - GenericBatchTokenRequest's "token_type" is a 2-octet integer. The value
   represents the token type from the IANA Privacy Pass Token Types Registry
-  ({{AUTHSCHEME, Section 6.2}}). The rest of the structure follows with the
+  ({{IANA_PRIVACYPASS_TOKEN_TYPES}}). The rest of the structure follows with the
   TokenRequest based on that type.
 
 - "token_requests" is an array of GenericTokenRequest satisfying the above
