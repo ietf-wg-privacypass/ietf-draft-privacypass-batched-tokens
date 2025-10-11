@@ -5,10 +5,10 @@
 Network Working Group                                          R. Robert
 Internet-Draft                                               Phoenix R&D
 Intended status: Standards Track                              C. A. Wood
-Expires: 6 April 2026                                         Cloudflare
+Expires: 14 April 2026                                        Cloudflare
                                                               T. Meunier
                                                          Cloudflare Inc.
-                                                          3 October 2025
+                                                         11 October 2025
 
 
                     Batched Token Issuance Protocol
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 April 2026.
+   This Internet-Draft will expire on 14 April 2026.
 
 Copyright Notice
 
@@ -527,7 +527,7 @@ Table of Contents
              TokenRequest token_request;
          case (0x0005): /* Type VOPRF(ristretto255, SHA-512), RFC XXXX */
              TokenRequest token_request;
-         case (other): /* Other token types */
+         case (other): /* Other token types from the IANA Privacy Pass Token Types Registry */
              TokenRequest token_request;
       }
    } GenericTokenRequest;
