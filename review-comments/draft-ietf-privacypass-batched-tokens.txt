@@ -512,8 +512,8 @@ Table of Contents
 
    The Client first generates all of the individual TokenRequest
    structures that are intended to be batched together.  This request
-   creation follows the protocol describing issuance, such as
-   [AUTHSCHEME], Section 5.1 or [RFC9578], Section 6.1.
+   creation follows the protocol describing issuance, such as [RFC9578],
+   Section 5.1 or [RFC9578], Section 6.1.
 
    The Client then creates a GenericBatchedTokenRequest structure as
    follows:
@@ -538,9 +538,9 @@ Table of Contents
 
    The structure fields are defined as follows:
 
-   *  GenericBatchTokenRequest's "token_type" is a 2-octet integer.  The
+   *  GenericTokenRequest's "token_type" is a 2-octet integer.  The
       value represents the token type from the IANA Privacy Pass Token
-      Types Registry ([AUTHSCHEME], Section 6.2).  The rest of the
+      Types Registry ([IANA_PRIVACYPASS_TOKEN_TYPES]).  The rest of the
       structure follows with the TokenRequest based on that type.
 
    *  "token_requests" is an array of GenericTokenRequest satisfying the
@@ -853,6 +853,11 @@ Table of Contents
 
    [HTTP3]    Bishop, M., Ed., "HTTP/3", RFC 9114, DOI 10.17487/RFC9114,
               June 2022, <https://www.rfc-editor.org/rfc/rfc9114>.
+
+   [IANA_PRIVACYPASS_TOKEN_TYPES]
+              "IANA Privacy Pass Token Types Registry", n.d.,
+              <https://www.iana.org/assignments/privacy-pass/privacy-
+              pass.xhtml#token-type>.
 
    [RFC9000]  Iyengar, J., Ed. and M. Thomson, Ed., "QUIC: A UDP-Based
               Multiplexed and Secure Transport", RFC 9000,

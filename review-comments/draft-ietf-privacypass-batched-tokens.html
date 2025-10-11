@@ -1752,7 +1752,7 @@ request can contain token requests for any token type.<a href="#section-6-1" cla
         </h3>
 <p id="section-6.1-1">The Client first generates all of the individual TokenRequest structures that
 are intended to be batched together. This request creation follows the protocol
-describing issuance, such as <span>[<a href="#AUTHSCHEME" class="cite xref">AUTHSCHEME</a>], <a href="https://rfc-editor.org/rfc/rfc9577#section-5.1" class="relref">Section 5.1</a></span> or <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>], <a href="https://rfc-editor.org/rfc/rfc9578#section-6.1" class="relref">Section 6.1</a></span>.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+describing issuance, such as <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>], <a href="https://rfc-editor.org/rfc/rfc9578#section-5.1" class="relref">Section 5.1</a></span> or <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>], <a href="https://rfc-editor.org/rfc/rfc9578#section-6.1" class="relref">Section 6.1</a></span>.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 <p id="section-6.1-2">The Client then creates a GenericBatchedTokenRequest structure as follows:<a href="#section-6.1-2" class="pilcrow">¶</a></p>
 <div class="lang-tls sourcecode" id="section-6.1-3">
 <pre>
@@ -1778,9 +1778,9 @@ struct {
 <p id="section-6.1-4">The structure fields are defined as follows:<a href="#section-6.1-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.1-5.1">
-            <p id="section-6.1-5.1.1">GenericBatchTokenRequest's "token_type" is a 2-octet integer. The value
+            <p id="section-6.1-5.1.1">GenericTokenRequest's "token_type" is a 2-octet integer. The value
 represents the token type from the IANA Privacy Pass Token Types Registry
-(<span>[<a href="#AUTHSCHEME" class="cite xref">AUTHSCHEME</a>], <a href="https://rfc-editor.org/rfc/rfc9577#section-6.2" class="relref">Section 6.2</a></span>). The rest of the structure follows with the
+(<span>[<a href="#IANA_PRIVACYPASS_TOKEN_TYPES" class="cite xref">IANA_PRIVACYPASS_TOKEN_TYPES</a>]</span>). The rest of the structure follows with the
 TokenRequest based on that type.<a href="#section-6.1-5.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.1-5.2">
@@ -2484,6 +2484,10 @@ including Privacy Pass issuer applications themselves.<a href="#section-8.2.4-1.
 <dt id="HTTP3">[HTTP3]</dt>
         <dd>
 <span class="refAuthor">Bishop, M., Ed.</span>, <span class="refTitle">"HTTP/3"</span>, <span class="seriesInfo">RFC 9114</span>, <span class="seriesInfo">DOI 10.17487/RFC9114</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9114">https://www.rfc-editor.org/rfc/rfc9114</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="IANA_PRIVACYPASS_TOKEN_TYPES">[IANA_PRIVACYPASS_TOKEN_TYPES]</dt>
+        <dd>
+<span class="refTitle">"IANA Privacy Pass Token Types Registry"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.iana.org/assignments/privacy-pass/privacy-pass.xhtml#token-type">https://www.iana.org/assignments/privacy-pass/privacy-pass.xhtml#token-type</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9000">[RFC9000]</dt>
       <dd>
