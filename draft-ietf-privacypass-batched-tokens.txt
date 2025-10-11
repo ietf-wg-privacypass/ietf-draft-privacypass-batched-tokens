@@ -5,10 +5,10 @@
 Network Working Group                                          R. Robert
 Internet-Draft                                               Phoenix R&D
 Intended status: Standards Track                              C. A. Wood
-Expires: 4 January 2026                                       Cloudflare
+Expires: 14 April 2026                                        Cloudflare
                                                               T. Meunier
                                                          Cloudflare Inc.
-                                                             3 July 2025
+                                                         11 October 2025
 
 
                     Batched Token Issuance Protocol
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 January 2026.
+   This Internet-Draft will expire on 14 April 2026.
 
 Copyright Notice
 
@@ -146,20 +146,20 @@ Table of Contents
    in some cases, they cannot take advantage of cryptographic
    optimizations.
 
-   The first variant of the issuance protocol builds upon the privately
-   verifiable issuance protocol in [RFC9578] that uses VOPRF [OPRF], and
-   allows for batched issuance of tokens and amortizes the cost of zero
-   knowledge proofs.  This allows clients to request more than one token
-   at a time and for issuers to issue more than one token at a time.  In
-   effect, private batched issuance performance scales better than
-   linearly.
+   The first variant (Section 5) of the issuance protocol builds upon
+   the privately verifiable issuance protocol in [RFC9578] that uses
+   VOPRF [OPRF], and allows for batched issuance of tokens and amortizes
+   the cost of zero knowledge proofs.  This allows clients to request
+   more than one token at a time and for issuers to issue more than one
+   token at a time.  In effect, private batched issuance performance
+   scales better than linearly.
 
-   The second variant of the issuance protocol introduces a new Client-
-   Issuer communication method, which allows for batched issuance of
-   generic token types.  This allows clients to request more than one
-   token at a time and for issuers to issue more than one token at a
-   time.  This variant has no other effect than batching requests and
-   responses and the issuance performance remains linear.
+   The second variant (Section 6) of the issuance protocol introduces a
+   new Client-Issuer communication method, which allows for batched
+   issuance of generic token types.  This allows clients to request more
+   than one token at a time and for issuers to issue more than one token
+   at a time.  This variant has no other effect than batching requests
+   and responses and the issuance performance remains linear.
 
    This document registers a new token type (Section 8.1) that can
    either be used with the Privately Verifiable Issuance Protocol as
@@ -504,7 +504,7 @@ Table of Contents
 6.  Generic Token Batch Issuance
 
    This section describes an issuance protocol mechanism for issuing
-   multiple tokens in one round trip between Client and Issuer.  An
+   multiple tokens in one round trip between Client and Issuer.  A
    generic batch token request can contain token requests for any token
    type.
 
@@ -525,7 +525,9 @@ Table of Contents
             TokenRequest token_request;
          case (0x0002): /* Type Blind RSA (2048-bit), RFC 9578 */
              TokenRequest token_request;
-         case (0x0005): /* Type VOPRF(ristretto255, SHA-512), RFC 9578 */
+         case (0x0005): /* Type VOPRF(ristretto255, SHA-512), RFC XXXX */
+             TokenRequest token_request;
+         case (other): /* Other token types from the IANA Privacy Pass Token Types Registry */
              TokenRequest token_request;
       }
    } GenericTokenRequest;
@@ -536,10 +538,10 @@ Table of Contents
 
    The structure fields are defined as follows:
 
-   *  GenericBatchTokenRequest's "token_type" is a 2-octet integer.  The
-      rest of the structure follows with the TokenRequest based on that
-      type.  A TokenRequest with a token type not defined in [RFC9578]
-      MAY.
+   *  GenericTokenRequest's "token_type" is a 2-octet integer.  The
+      value represents the token type from the IANA Privacy Pass Token
+      Types Registry ([IANA_PRIVACYPASS_TOKEN_TYPES]).  The rest of the
+      structure follows with the TokenRequest based on that type.
 
    *  "token_requests" is an array of GenericTokenRequest satisfying the
       above constraint.
@@ -580,26 +582,32 @@ Table of Contents
      uint16_t token_type;
      select (token_type) {
        case (0x0001): /* Type VOPRF(P-384, SHA-384), RFC 9578 */
-         uint8_t evaluated_msg[Ne];
-         uint8_t evaluated_proof[Ns + Ns];
+         TokenResponse token_response;
        case (0x0002): /* Type Blind RSA (2048-bit), RFC 9578 */
-         uint8_t blind_sig[Nk];
+         TokenResponse token_response;
+       case (0x0005): /* Type VOPRF(ristretto255, SHA-512), RFC XXXX */
+         TokenResponse token_response;
+       case (other): /* Other token types */
+         TokenResponse token_response;
      }
-   } TokenResponse;
+   } GenericTokenResponse;
 
    struct {
-     optional<TokenResponse> token_response; /* Defined by token_type */
+     optional<GenericTokenResponse> generic_token_response; /* Defined by token_type */
    } OptionalTokenResponse;
 
    struct {
-     OptionalTokenResponse token_responses<V>;
+     OptionalTokenResponse optional_token_responses<V>;
    } GenericBatchTokenResponse
 
-   GenericBatchTokenResponse.token_responses is a variable-size vector
-   of OptionalTokenResponses.  OptionalTokenResponse.token_response is
-   an optional TokenResponse (as specified in Section 4.1) , where an
-   absence of TokenResponse indicates that the Issuer failed or refused
-   to issue the associated TokenRequest.
+   For each request in GenericBatchTokenRequest.token_requests, the
+   issuer generates a TokenResponse according to the token type.
+   GenericBatchTokenResponse.optional_token_responses is a variable-size
+   vector of OptionalTokenResponses.
+   OptionalTokenResponse.token_response is an optional TokenResponse (as
+   specified in Section 4.1), where an absence of TokenResponse
+   indicates that the Issuer failed or refused to issue the associated
+   TokenRequest.
 
    The Issuer MUST generate an HTTP response with status code 200 whose
    content consists of TokenResponse, with the content type set as
@@ -653,8 +661,8 @@ Table of Contents
 
 8.1.  Token Type
 
-   This document updates the "Token Type" Registry ([AUTHSCHEME]) with
-   the following entry:
+   This document updates the "Token Type" Registry (Section 6.2 of
+   [AUTHSCHEME]) with the following entry:
 
    *  Value: 0x0005 (suggested)
 
@@ -845,6 +853,11 @@ Table of Contents
 
    [HTTP3]    Bishop, M., Ed., "HTTP/3", RFC 9114, DOI 10.17487/RFC9114,
               June 2022, <https://www.rfc-editor.org/rfc/rfc9114>.
+
+   [IANA_PRIVACYPASS_TOKEN_TYPES]
+              "IANA Privacy Pass Token Types Registry", n.d.,
+              <https://www.iana.org/assignments/privacy-pass/privacy-
+              pass.xhtml#token-type>.
 
    [RFC9000]  Iyengar, J., Ed. and M. Thomson, Ed., "QUIC: A UDP-Based
               Multiplexed and Secure Transport", RFC 9000,
