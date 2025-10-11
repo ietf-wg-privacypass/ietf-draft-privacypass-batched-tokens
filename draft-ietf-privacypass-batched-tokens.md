@@ -28,6 +28,11 @@ author:
     org: Cloudflare Inc.
     email: ot-ietf@thibault.uk
 
+informative:
+  IANA_PRIVACYPASS_TOKEN_TYPES:
+    title: IANA Privacy Pass Token Types Registry
+    target: https://www.iana.org/assignments/privacy-pass/privacy-pass.xhtml#token-type
+
 --- abstract
 
 This document specifies two variants of the Privacy Pass issuance protocol that
@@ -435,7 +440,7 @@ request can contain token requests for any token type.
 
 The Client first generates all of the individual TokenRequest structures that
 are intended to be batched together. This request creation follows the protocol
-describing issuance, such as {{!AUTHSCHEME=RFC9577, Section 5.1}} or {{RFC9578,
+describing issuance, such as {{RFC9578, Section 5.1}} or {{RFC9578,
 Section 6.1}}.
 
 The Client then creates a GenericBatchedTokenRequest structure as follows:
@@ -462,7 +467,7 @@ struct {
 
 The structure fields are defined as follows:
 
-- GenericBatchTokenRequest's "token_type" is a 2-octet integer. The value
+- GenericTokenRequest's "token_type" is a 2-octet integer. The value
   represents the token type from the IANA Privacy Pass Token Types Registry
   ({{IANA_PRIVACYPASS_TOKEN_TYPES}}). The rest of the structure follows with the
   TokenRequest based on that type.
@@ -585,7 +590,7 @@ This section contains IANA codepoint allocation requests.
 
 ## Token Type {#iana-token-type}
 
-This document updates the "Token Type" Registry ({{Section 6.2 of AUTHSCHEME}}) with the
+This document updates the "Token Type" Registry ({{Section 6.2 of !AUTHSCHEME=RFC9577}}) with the
 following entry:
 
 * Value: 0x0005 (suggested)
