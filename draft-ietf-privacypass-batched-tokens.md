@@ -332,8 +332,8 @@ struct {
 The structure fields are defined as follows:
 
 - "evaluated_msgs" is a list of `Nr` serialized elements, each of length
-  `Ne` bytes and computed as `SerializeElement(evaluate_element_i)`, where
-  evaluate_element_i is the i-th output of `BlindEvaluate`.
+  `Ne` bytes and computed as `SerializeElement(evaluated_element_i)`, where
+  evaluated_element_i is the i-th output of `BlindEvaluate`.
 
 - "evaluated_proof" is the (Ns+Ns)-octet serialized proof, which is a pair of
   Scalar values, computed as `concat(SerializeScalar(proof[0]),
@@ -356,8 +356,8 @@ Content-Length: <Length of AmortizedBatchTokenResponse>
 ## Finalization {#finalization}
 
 Upon receipt, the Client handles the response and, if successful, deserializes
-the body values AmortizedBatchTokenResponse.evaluate_response and
-AmortizedBatchTokenResponse.evaluate_proof, yielding `evaluated_elements` and
+the body values AmortizedBatchTokenResponse.evaluated_msgs and
+AmortizedBatchTokenResponse.evaluated_proof, yielding `evaluated_elements` and
 `proof`. If deserialization of either value fails, the Client aborts the
 protocol. Otherwise, the Client processes the response as follows:
 
