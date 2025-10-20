@@ -416,7 +416,7 @@ corresponds to `nonce`, the i-th nonce that was sampled in
 
 ~~~
 struct {
-    uint16_t token_type;
+    uint16_t token_type; /* 0x0001 or 0x0005 */
     uint8_t nonce[32];
     uint8_t challenge_digest[32];
     uint8_t token_key_id[32];
@@ -425,7 +425,7 @@ struct {
 ~~~
 
 The constant `Nh` is as defined in {{OPRF, Section 4}} and denotes the output
-length of the hash function in bytes.
+length of the hash function in bytes used by the token type.
 
 If the FinalizeBatch function fails, the Client aborts the protocol. Token
 verification works exactly as specified in {{RFC9578}}.
