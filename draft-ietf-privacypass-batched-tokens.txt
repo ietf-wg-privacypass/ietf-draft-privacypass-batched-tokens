@@ -5,10 +5,10 @@
 Network Working Group                                          R. Robert
 Internet-Draft                                               Phoenix R&D
 Intended status: Standards Track                              C. A. Wood
-Expires: 14 April 2026                                        Cloudflare
+Expires: 23 April 2026                                        Cloudflare
                                                               T. Meunier
                                                          Cloudflare Inc.
-                                                         11 October 2025
+                                                         20 October 2025
 
 
                     Batched Token Issuance Protocol
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 April 2026.
+   This Internet-Draft will expire on 23 April 2026.
 
 Copyright Notice
 
@@ -287,13 +287,13 @@ Table of Contents
    The Client then creates a BatchTokenRequest structured as follows:
 
    struct {
-       uint8_t blinded_element[Ne];
-   } BlindedElement;
+       uint8_t blinded_msg[Ne];
+   } BlindedMessage;
 
    struct {
       uint16_t token_type;
       uint8_t truncated_token_key_id;
-      BlindedElement blinded_elements<V>;
+      BlindedMessage blinded_msgs<V>;
    } AmortizedBatchTokenRequest;
 
    The structure fields are defined as follows:
@@ -305,11 +305,10 @@ Table of Contents
       token_key_id in network byte order (in other words, the last 8
       bits of token_key_id).
 
-   *  "blinded_elements" is a list of Nr serialized elements, each of
-      length Ne bytes and computed as
-      SerializeElement(blinded_element_i), where blinded_element_i is
-      the i-th output sequence of Blind invocations above.  Ne is as
-      defined in [OPRF], Section 4.
+   *  "blinded_msgs" is a list of Nr serialized elements, each of length
+      Ne bytes and computed as SerializeElement(blinded_element_i),
+      where blinded_element_i is the i-th output sequence of Blind
+      invocations above.  Ne is as defined in [OPRF], Section 4.
 
    The Client then generates an HTTP POST request to send to the Issuer
    Request URL, with the AmortizedBatchTokenRequest as the content.  The
@@ -335,32 +334,31 @@ Table of Contents
    conditions:
 
    *  The AmortizedBatchTokenRequest contains a supported token_type of
-      the privatley verifiable token kind.
+      the privately verifiable token kind.
 
    *  The AmortizedBatchTokenRequest.truncated_token_key_id corresponds
       to a key ID of a Public Key owned by the issuer.
 
    *  Nr, as determined based on the size of
-      AmortizedBatchTokenRequest.blinded_elements, is less than or equal
-      to the number of tokens that the issuer can issue in a single
-      batch.
+      AmortizedBatchTokenRequest.blinded_msgs, is less than or equal to
+      the number of tokens that the issuer can issue in a single batch.
 
    If any of these conditions is not met, the Issuer MUST return an HTTP
    422 (Unprocessable Content) error to the client.
 
    The Issuer then tries to deseralize the i-th element of
-   AmortizedBatchTokenRequest.blinded_elements using DeserializeElement
-   from Section 2.1 of [OPRF], yielding blinded_element_i of type
-   Element.  If this fails for any of the
-   AmortizedBatchTokenRequest.blinded_elements values, the Issuer MUST
-   return an HTTP 422 (Unprocessable Content) error to the client.
-   Otherwise, if the Issuer is willing to produce a token to the Client,
-   the issuer forms a list of Element values, denoted blinded_elements,
-   and computes a blinded response as follows:
+   AmortizedBatchTokenRequest.blinded_msgs using DeserializeElement from
+   Section 2.1 of [OPRF], yielding blinded_element_i of type Element.
+   If this fails for any of the AmortizedBatchTokenRequest.blinded_msgs
+   values, the Issuer MUST return an HTTP 422 (Unprocessable Content)
+   error to the client.  Otherwise, if the Issuer is willing to produce
+   a token to the Client, the issuer forms a list of Element values,
+   denoted blinded_elements, and computes a blinded response as follows:
 
    server_context = SetupVOPRFServer(ciphersuiteID, skI, pkI)
+
    evaluated_elements, proof =
-     server_context.BlindEvaluateBatch(skI, blinded_elements)
+     BlindEvaluateBatch(skI, blinded_elements)
 
    ciphersuiteID is the ciphersuite identifier from [OPRF] corresponding
    to the ciphersuite being used for this token version.
@@ -372,6 +370,8 @@ Table of Contents
 
    Input:
 
+     Scalar skS
+     Element pkS
      Element blindedElements[Nr]
 
    Output:
@@ -382,10 +382,8 @@ Table of Contents
    Parameters:
 
      Group G
-     Scalar skS
-     Element pkS
 
-   def BlindEvaluateBatch(blindedElements):
+   def BlindEvaluateBatch(skS, blindedElements):
      evaluatedElements = []
      for blindedElement in blindedElements:
        evaluatedElements.append(skS * blindedElement)
@@ -398,20 +396,20 @@ Table of Contents
    follows:
 
    struct {
-       uint8_t evaluated_element[Ne];
-   } EvaluatedElement;
+       uint8_t evaluated_msg[Ne];
+   } EvaluatedMessage;
 
    struct {
-      EvaluatedElement evaluated_elements<V>;
+      EvaluatedMessage evaluated_msgs<V>;
       uint8_t evaluated_proof[Ns + Ns];
    } AmortizedBatchTokenResponse;
 
    The structure fields are defined as follows:
 
-   *  "evaluated_elements" is a list of Nr serialized elements, each of
+   *  "evaluated_msgs" is a list of Nr serialized elements, each of
       length Ne bytes and computed as
-      SerializeElement(evaluate_element_i), where evaluate_element_i is
-      the i-th output of BlindEvaluate.
+      SerializeElement(evaluated_element_i), where evaluated_element_i
+      is the i-th output of BlindEvaluate.
 
    *  "evaluated_proof" is the (Ns+Ns)-octet serialized proof, which is
       a pair of Scalar values, computed as
@@ -420,7 +418,7 @@ Table of Contents
 
    The Issuer MUST generate an HTTP response with status code 200 whose
    content consists of AmortizedBatchTokenResponse, with the content
-   type set as "application/private-token-amorrized-batch-response".
+   type set as "application/private-token-amortized-batch-response".
    Clients MUST ignore the response if the status code is not 200 or if
    the content type is not "application/private-token-amortized-batch-
    response".
@@ -435,8 +433,8 @@ Table of Contents
 
    Upon receipt, the Client handles the response and, if successful,
    deserializes the body values
-   AmortizedBatchTokenResponse.evaluate_response and
-   AmortizedBatchTokenResponse.evaluate_proof, yielding
+   AmortizedBatchTokenResponse.evaluated_msgs and
+   AmortizedBatchTokenResponse.evaluated_proof, yielding
    evaluated_elements and proof.  If deserialization of either value
    fails, the Client aborts the protocol.  Otherwise, the Client
    processes the response as follows:
@@ -455,6 +453,7 @@ Table of Contents
     Scalar blind
     Element evaluatedElements[Nr]
     Element blindedElements[Nr]
+    Element pkS
     Proof proof
 
   Output:
@@ -464,12 +463,11 @@ Table of Contents
   Parameters:
 
     Group G
-    Element pkS
 
   Errors: VerifyError
 
   def FinalizeBatch(input, blind,
-    evaluatedElements, blindedElements, proof):
+    evaluatedElements, blindedElements, pks, proof):
     if VerifyProof(G.Generator(), pkS, blindedElements,
                    evaluatedElements, proof) == false:
       raise VerifyError
@@ -491,12 +489,15 @@ Table of Contents
    was sampled in Section 5.1:
 
    struct {
-       uint16_t token_type;
+       uint16_t token_type; /* 0x0001 or 0x0005 */
        uint8_t nonce[32];
        uint8_t challenge_digest[32];
        uint8_t token_key_id[32];
        uint8_t authenticator[Nh];
    } Token;
+
+   The constant Nh is as defined in [OPRF], Section 4 and denotes the
+   output length of the hash function in bytes used by the token type.
 
    If the FinalizeBatch function fails, the Client aborts the protocol.
    Token verification works exactly as specified in [RFC9578].

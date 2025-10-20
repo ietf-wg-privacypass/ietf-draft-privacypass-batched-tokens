@@ -13,22 +13,21 @@
 allow for batched issuance of tokens. These allow clients to request more than
 one token at a time and for issuers to issue more than one token at a time. 
     " name="description">
-<meta content="xml2rfc 3.30.2" name="generator">
+<meta content="xml2rfc 3.31.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-privacypass-batched-tokens-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.30.2
-    Python 3.12.11
+  xml2rfc 3.31.0
+    Python 3.12.12
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
     Jinja2 3.1.6
     lxml 5.3.1
-    platformdirs 4.4.0
+    platformdirs 4.5.0
     pycountry 24.6.1
     PyYAML 6.0.2
     requests 2.32.5
-    setuptools 80.9.0
     wcwidth 0.2.14
 -->
 <link href="draft-ietf-privacypass-batched-tokens.xml" rel="alternate" type="application/rfc+xml">
@@ -1052,7 +1051,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Robert, et al.</td>
-<td class="center">Expires 14 April 2026</td>
+<td class="center">Expires 23 April 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1065,12 +1064,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-privacypass-batched-tokens-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-10-11" class="published">11 October 2025</time>
+<time datetime="2025-10-20" class="published">20 October 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-04-14">14 April 2026</time></dd>
+<dd class="expires"><time datetime="2026-04-23">23 April 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1114,7 +1113,7 @@ one token at a time and for issuers to issue more than one token at a time.<a hr
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 14 April 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 23 April 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1387,7 +1386,8 @@ VOPRF proof generation and verification, respectively.<a href="#section-3-3.2.1"
       </ol>
 <p id="section-3-4">Generic Token Batch Issuance <a href="#generic-batch" class="auto internal xref">Section 6</a> allows for a single
 GenericBatchTokenRequest to be sent that encompasses multiple token requests.
-This improves upon the basic issuance protocols defined in <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span> in the following key ways:<a href="#section-3-4" class="pilcrow">¶</a></p>
+This improves upon the basic issuance protocols defined in <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span> in the
+following key ways:<a href="#section-3-4" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-3-5">
 <li id="section-3-5.1">
           <p id="section-3-5.1.1">Issuing multiple tokens at once of the same type with different keys.<a href="#section-3-5.1.1" class="pilcrow">¶</a></p>
@@ -1498,13 +1498,13 @@ blind_i, blinded_element_i = client_context.Blind(token_input)
 <div class="lang-tls sourcecode" id="section-5.1-10">
 <pre>
 struct {
-    uint8_t blinded_element[Ne];
-} BlindedElement;
+    uint8_t blinded_msg[Ne];
+} BlindedMessage;
 
 struct {
    uint16_t token_type;
    uint8_t truncated_token_key_id;
-   BlindedElement blinded_elements&lt;V&gt;;
+   BlindedMessage blinded_msgs&lt;V&gt;;
 } AmortizedBatchTokenRequest;
 </pre><a href="#section-5.1-10" class="pilcrow">¶</a>
 </div>
@@ -1518,9 +1518,9 @@ struct {
 in network byte order (in other words, the last 8 bits of <code>token_key_id</code>).<a href="#section-5.1-12.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.1-12.3">
-            <p id="section-5.1-12.3.1">"blinded_elements" is a list of <code>Nr</code> serialized elements, each of length <code>Ne</code>
+            <p id="section-5.1-12.3.1">"blinded_msgs" is a list of <code>Nr</code> serialized elements, each of length <code>Ne</code>
 bytes and computed as <code>SerializeElement(blinded_element_i)</code>, where
-blinded_element_i is the i-th output sequence of <code>Blind</code> invocations above. Ne
+blinded_element_i is the i-th output sequence of <code>Blind</code> invocations above. <code>Ne</code>
 is as defined in <span>[<a href="#OPRF" class="cite xref">OPRF</a>], <a href="https://rfc-editor.org/rfc/rfc9497#section-4" class="relref">Section 4</a></span>.<a href="#section-5.1-12.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
@@ -1553,7 +1553,7 @@ described in <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>], <a href="
 <ul class="normal">
 <li class="normal" id="section-5.2-3.1">
             <p id="section-5.2-3.1.1">The AmortizedBatchTokenRequest contains a supported token_type of the
-privatley verifiable token kind.<a href="#section-5.2-3.1.1" class="pilcrow">¶</a></p>
+privately verifiable token kind.<a href="#section-5.2-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.2-3.2">
             <p id="section-5.2-3.2.1">The AmortizedBatchTokenRequest.truncated_token_key_id corresponds to a key ID
@@ -1561,16 +1561,16 @@ of a Public Key owned by the issuer.<a href="#section-5.2-3.2.1" class="pilcrow"
 </li>
           <li class="normal" id="section-5.2-3.3">
             <p id="section-5.2-3.3.1">Nr, as determined based on the size of
-AmortizedBatchTokenRequest.blinded_elements, is less than or equal to the
+AmortizedBatchTokenRequest.blinded_msgs, is less than or equal to the
 number of tokens that the issuer can issue in a single batch.<a href="#section-5.2-3.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-5.2-4">If any of these conditions is not met, the Issuer <span class="bcp14">MUST</span> return an HTTP 422
 (Unprocessable Content) error to the client.<a href="#section-5.2-4" class="pilcrow">¶</a></p>
 <p id="section-5.2-5">The Issuer then tries to deseralize the i-th element of
-AmortizedBatchTokenRequest.blinded_elements using DeserializeElement from
+AmortizedBatchTokenRequest.blinded_msgs using DeserializeElement from
 <span><a href="https://rfc-editor.org/rfc/rfc9497#section-2.1" class="relref">Section 2.1</a> of [<a href="#OPRF" class="cite xref">OPRF</a>]</span>, yielding <code>blinded_element_i</code> of type <code>Element</code>. If this
-fails for any of the AmortizedBatchTokenRequest.blinded_elements values, the
+fails for any of the AmortizedBatchTokenRequest.blinded_msgs values, the
 Issuer <span class="bcp14">MUST</span> return an HTTP 422 (Unprocessable Content) error to the client.
 Otherwise, if the Issuer is willing to produce a token to the Client, the issuer
 forms a list of <code>Element</code> values, denoted <code>blinded_elements</code>, and computes a
@@ -1578,8 +1578,9 @@ blinded response as follows:<a href="#section-5.2-5" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.2-6">
 <pre>
 server_context = SetupVOPRFServer(ciphersuiteID, skI, pkI)
+
 evaluated_elements, proof =
-  server_context.BlindEvaluateBatch(skI, blinded_elements)
+  BlindEvaluateBatch(skI, blinded_elements)
 </pre><a href="#section-5.2-6" class="pilcrow">¶</a>
 </div>
 <p id="section-5.2-7"><code>ciphersuiteID</code> is the ciphersuite identifier from <span>[<a href="#OPRF" class="cite xref">OPRF</a>]</span> corresponding to the
@@ -1592,6 +1593,8 @@ The description of <code>BlindEvaluateBatch</code> is below.<a href="#section-5.
 <pre>
 Input:
 
+  Scalar skS
+  Element pkS
   Element blindedElements[Nr]
 
 Output:
@@ -1602,10 +1605,8 @@ Output:
 Parameters:
 
   Group G
-  Scalar skS
-  Element pkS
 
-def BlindEvaluateBatch(blindedElements):
+def BlindEvaluateBatch(skS, blindedElements):
   evaluatedElements = []
   for blindedElement in blindedElements:
     evaluatedElements.append(skS * blindedElement)
@@ -1619,11 +1620,11 @@ def BlindEvaluateBatch(blindedElements):
 <div class="lang-tls sourcecode" id="section-5.2-10">
 <pre>
 struct {
-    uint8_t evaluated_element[Ne];
-} EvaluatedElement;
+    uint8_t evaluated_msg[Ne];
+} EvaluatedMessage;
 
 struct {
-   EvaluatedElement evaluated_elements&lt;V&gt;;
+   EvaluatedMessage evaluated_msgs&lt;V&gt;;
    uint8_t evaluated_proof[Ns + Ns];
 } AmortizedBatchTokenResponse;
 </pre><a href="#section-5.2-10" class="pilcrow">¶</a>
@@ -1631,9 +1632,9 @@ struct {
 <p id="section-5.2-11">The structure fields are defined as follows:<a href="#section-5.2-11" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2-12.1">
-            <p id="section-5.2-12.1.1">"evaluated_elements" is a list of <code>Nr</code> serialized elements, each of length
-<code>Ne</code> bytes and computed as <code>SerializeElement(evaluate_element_i)</code>, where
-evaluate_element_i is the i-th output of <code>BlindEvaluate</code>.<a href="#section-5.2-12.1.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-12.1.1">"evaluated_msgs" is a list of <code>Nr</code> serialized elements, each of length
+<code>Ne</code> bytes and computed as <code>SerializeElement(evaluated_element_i)</code>, where
+evaluated_element_i is the i-th output of <code>BlindEvaluate</code>.<a href="#section-5.2-12.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.2-12.2">
             <p id="section-5.2-12.2.1">"evaluated_proof" is the (Ns+Ns)-octet serialized proof, which is a pair of
@@ -1643,7 +1644,7 @@ SerializeScalar(proof[1]))</code>, where Ns is as defined in <span>[<a href="#OP
         </ul>
 <p id="section-5.2-13">The Issuer <span class="bcp14">MUST</span> generate an HTTP response with status code 200 whose content
 consists of AmortizedBatchTokenResponse, with the content type set as
-"application/private-token-amorrized-batch-response". Clients <span class="bcp14">MUST</span> ignore the
+"application/private-token-amortized-batch-response". Clients <span class="bcp14">MUST</span> ignore the
 response if the status code is not 200 or if the content type is not
 "application/private-token-amortized-batch-response".<a href="#section-5.2-13" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.2-14">
@@ -1663,8 +1664,8 @@ Content-Length: &lt;Length of AmortizedBatchTokenResponse&gt;
 <a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-finalization" class="section-name selfRef">Finalization</a>
         </h3>
 <p id="section-5.3-1">Upon receipt, the Client handles the response and, if successful, deserializes
-the body values AmortizedBatchTokenResponse.evaluate_response and
-AmortizedBatchTokenResponse.evaluate_proof, yielding <code>evaluated_elements</code> and
+the body values AmortizedBatchTokenResponse.evaluated_msgs and
+AmortizedBatchTokenResponse.evaluated_proof, yielding <code>evaluated_elements</code> and
 <code>proof</code>. If deserialization of either value fails, the Client aborts the
 protocol. Otherwise, the Client processes the response as follows:<a href="#section-5.3-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.3-2">
@@ -1685,6 +1686,7 @@ Input:
   Scalar blind
   Element evaluatedElements[Nr]
   Element blindedElements[Nr]
+  Element pkS
   Proof proof
 
 Output:
@@ -1694,12 +1696,11 @@ Output:
 Parameters:
 
   Group G
-  Element pkS
 
 Errors: VerifyError
 
 def FinalizeBatch(input, blind,
-  evaluatedElements, blindedElements, proof):
+  evaluatedElements, blindedElements, pks, proof):
   if VerifyProof(G.Generator(), pkS, blindedElements,
                  evaluatedElements, proof) == false:
     raise VerifyError
@@ -1723,7 +1724,7 @@ corresponds to <code>nonce</code>, the i-th nonce that was sampled in
 <div class="alignLeft art-text artwork" id="section-5.3-6">
 <pre>
 struct {
-    uint16_t token_type;
+    uint16_t token_type; /* 0x0001 or 0x0005 */
     uint8_t nonce[32];
     uint8_t challenge_digest[32];
     uint8_t token_key_id[32];
@@ -1731,8 +1732,10 @@ struct {
 } Token;
 </pre><a href="#section-5.3-6" class="pilcrow">¶</a>
 </div>
-<p id="section-5.3-7">If the FinalizeBatch function fails, the Client aborts the protocol. Token
-verification works exactly as specified in <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span>.<a href="#section-5.3-7" class="pilcrow">¶</a></p>
+<p id="section-5.3-7">The constant <code>Nh</code> is as defined in <span>[<a href="#OPRF" class="cite xref">OPRF</a>], <a href="https://rfc-editor.org/rfc/rfc9497#section-4" class="relref">Section 4</a></span> and denotes the output
+length of the hash function in bytes used by the token type.<a href="#section-5.3-7" class="pilcrow">¶</a></p>
+<p id="section-5.3-8">If the FinalizeBatch function fails, the Client aborts the protocol. Token
+verification works exactly as specified in <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span>.<a href="#section-5.3-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
