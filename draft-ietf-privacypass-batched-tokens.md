@@ -230,7 +230,7 @@ The structure fields are defined as follows:
 
 - "blinded_msgs" is a list of `Nr` serialized elements, each of length `Ne`
   bytes and computed as `SerializeElement(blinded_element_i)`, where
-  blinded_element_i is the i-th output sequence of `Blind` invocations above. Ne
+  blinded_element_i is the i-th output sequence of `Blind` invocations above. `Ne`
   is as defined in {{OPRF, Section 4}}.
 
 The Client then generates an HTTP POST request to send to the Issuer Request
@@ -423,6 +423,9 @@ struct {
     uint8_t authenticator[Nh];
 } Token;
 ~~~
+
+The constant `Nh` is as defined in {{OPRF, Section 4}} and denotes the output
+length of the hash function in bytes.
 
 If the FinalizeBatch function fails, the Client aborts the protocol. Token
 verification works exactly as specified in {{RFC9578}}.
