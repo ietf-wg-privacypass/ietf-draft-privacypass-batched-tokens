@@ -1766,7 +1766,7 @@ struct {
          TokenRequest token_request;
       case (0x0002): /* Type Blind RSA (2048-bit), RFC 9578 */
           TokenRequest token_request;
-      case (0x0005): /* Type VOPRF(ristretto255, SHA-512), RFC XXXX */
+      case (0x0005): /* Type VOPRF(ristretto255, SHA-512), this document */
           TokenRequest token_request;
       case (other): /* Other token types from the IANA Privacy Pass Token Types Registry */
           TokenRequest token_request;
@@ -1836,7 +1836,7 @@ struct {
       TokenResponse token_response;
     case (0x0002): /* Type Blind RSA (2048-bit), RFC 9578 */
       TokenResponse token_response;
-    case (0x0005): /* Type VOPRF(ristretto255, SHA-512), RFC XXXX */
+    case (0x0005): /* Type VOPRF(ristretto255, SHA-512), this document */
       TokenResponse token_response;
     case (other): /* Other token types */
       TokenResponse token_response;
@@ -1862,7 +1862,7 @@ associated TokenRequest.<a href="#section-6.2-6" class="pilcrow">¶</a></p>
 <p id="section-6.2-7">The Issuer <span class="bcp14">MUST</span> generate an HTTP response with status code 200 whose content
 consists of TokenResponse, with the content type set as
 "application/private-token-generic-batch-response". Clients <span class="bcp14">MUST</span> ignore the
-response if the status code is not 200 or if the content type is not
+response if the status code is not 200, 206 or if the content type is not
 "application/private-token-generic-batch-response".<a href="#section-6.2-7" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6.2-8">
 <pre>
@@ -1873,12 +1873,12 @@ Content-Length: &lt;Length of GenericBatchTokenResponse&gt;
 &lt;Bytes containing the GenericBatchTokenResponse&gt;
 </pre><a href="#section-6.2-8" class="pilcrow">¶</a>
 </div>
-<p id="section-6.2-9">If the Issuer issues some but not all tokens, it <span class="bcp14">MUST</span> return an HTTP 206 error
+<p id="section-6.2-9">If the Issuer issues some but not all tokens, it <span class="bcp14">MUST</span> return an HTTP 206 Partial Content response defined in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-15.3.7" class="relref">Section 15.3.7</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>
 to the client and continue processing subsequent requests.
 For instance, an Issuer <span class="bcp14">MAY</span> return an HTTP 206 error if requests for tokens of
 the same token type refer to more than one <code>truncated_token_key_id</code>.<a href="#section-6.2-9" class="pilcrow">¶</a></p>
-<p id="section-6.2-10">If the Issuer decides not to issue any tokens, it <span class="bcp14">MUST</span> return an HTTP 400 to the
-client.<a href="#section-6.2-10" class="pilcrow">¶</a></p>
+<p id="section-6.2-10">If the Issuer decides not to issue any tokens, it <span class="bcp14">MUST</span> return an HTTP 400 Bad Request
+as defined in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-15.5.1" class="relref">Section 15.5.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span> to the client.<a href="#section-6.2-10" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="generic-finalization">
@@ -1917,7 +1917,8 @@ requests per client per key.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
 <a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-generic-token-batch-issuance" class="section-name selfRef">Generic Token Batch Issuance</a>
         </h3>
 <p id="section-7.2-1">Implementors <span class="bcp14">SHOULD</span> be aware of the inherent linear cost of this token type. An
-Issuer <span class="bcp14">MAY</span> ignore TokenRequest if the number of tokens per request past a limit.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
+Issuer <span class="bcp14">MAY</span> ignore <code>GenericTokenRequest</code> if the number of tokens per request is
+past a limit.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2466,6 +2467,10 @@ including Privacy Pass issuer applications themselves.<a href="#section-8.2.4-1.
 <dt id="RFC8446">[RFC8446]</dt>
         <dd>
 <span class="refAuthor">Rescorla, E.</span>, <span class="refTitle">"The Transport Layer Security (TLS) Protocol Version 1.3"</span>, <span class="seriesInfo">RFC 8446</span>, <span class="seriesInfo">DOI 10.17487/RFC8446</span>, <time datetime="2018-08" class="refDate">August 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8446">https://www.rfc-editor.org/rfc/rfc8446</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9110">[RFC9110]</dt>
+        <dd>
+<span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Semantics"</span>, <span class="seriesInfo">STD 97</span>, <span class="seriesInfo">RFC 9110</span>, <span class="seriesInfo">DOI 10.17487/RFC9110</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9110">https://www.rfc-editor.org/rfc/rfc9110</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9576">[RFC9576]</dt>
         <dd>
