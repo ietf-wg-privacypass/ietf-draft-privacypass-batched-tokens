@@ -378,6 +378,7 @@ Input:
   Scalar blind
   Element evaluatedElements[Nr]
   Element blindedElements[Nr]
+  Element pkS
   Proof proof
 
 Output:
@@ -387,12 +388,11 @@ Output:
 Parameters:
 
   Group G
-  Element pkS
 
 Errors: VerifyError
 
 def FinalizeBatch(input, blind,
-  evaluatedElements, blindedElements, proof):
+  evaluatedElements, blindedElements, pks, proof):
   if VerifyProof(G.Generator(), pkS, blindedElements,
                  evaluatedElements, proof) == false:
     raise VerifyError
