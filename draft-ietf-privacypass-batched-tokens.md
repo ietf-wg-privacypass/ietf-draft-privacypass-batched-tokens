@@ -341,7 +341,7 @@ The structure fields are defined as follows:
 
 The Issuer MUST generate an HTTP response with status code 200 whose content
 consists of AmortizedBatchTokenResponse, with the content type set as
-"application/private-token-amorrized-batch-response". Clients MUST ignore the
+"application/private-token-amortized-batch-response". Clients MUST ignore the
 response if the status code is not 200 or if the content type is not
 "application/private-token-amortized-batch-response".
 
