@@ -257,7 +257,7 @@ described in {{RFC9578, Section 5.2}}.
 Upon receipt of the request, the Issuer validates the following conditions:
 
 - The AmortizedBatchTokenRequest contains a supported token_type of the
-  privatley verifiable token kind.
+  privately verifiable token kind.
 - The AmortizedBatchTokenRequest.truncated_token_key_id corresponds to a key ID
   of a Public Key owned by the issuer.
 - Nr, as determined based on the size of
@@ -278,8 +278,9 @@ blinded response as follows:
 
 ~~~
 server_context = SetupVOPRFServer(ciphersuiteID, skI, pkI)
+
 evaluated_elements, proof =
-  server_context.BlindEvaluateBatch(skI, blinded_elements)
+  BlindEvaluateBatch(skI, blinded_elements)
 ~~~
 
 `ciphersuiteID` is the ciphersuite identifier from {{OPRF}} corresponding to the
@@ -292,6 +293,8 @@ The description of `BlindEvaluateBatch` is below.
 ~~~
 Input:
 
+  Scalar skS
+  Element pkS
   Element blindedElements[Nr]
 
 Output:
@@ -302,10 +305,8 @@ Output:
 Parameters:
 
   Group G
-  Scalar skS
-  Element pkS
 
-def BlindEvaluateBatch(blindedElements):
+def BlindEvaluateBatch(skS, blindedElements):
   evaluatedElements = []
   for blindedElement in blindedElements:
     evaluatedElements.append(skS * blindedElement)
