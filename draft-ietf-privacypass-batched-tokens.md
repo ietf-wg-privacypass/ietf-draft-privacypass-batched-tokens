@@ -45,6 +45,14 @@ one token at a time and for issuers to issue more than one token at a time.
 
 RFC EDITOR PLEASE DELETE THIS SECTION.
 
+draft-06
+
+ - Address various review comments
+
+draft-05
+
+ - Address various review comments
+
 draft-04
 
  - Rename the issuance variants
