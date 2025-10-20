@@ -119,7 +119,8 @@ the basic Privately Verifiable Token issuance protocol in the following key ways
 
 Generic Token Batch Issuance {{generic-batch}} allows for a single
 GenericBatchTokenRequest to be sent that encompasses multiple token requests.
-This improves upon the basic issuance protocols defined in {{RFC9578}} in the following key ways:
+This improves upon the basic issuance protocols defined in {{RFC9578}} in the
+following key ways:
 
 1. Issuing multiple tokens at once of the same type with different keys.
 2. Issuing multiple tokens at once of different types.
@@ -210,13 +211,13 @@ The Client then creates a BatchTokenRequest structured as follows:
 
 ~~~tls
 struct {
-    uint8_t blinded_element[Ne];
-} BlindedElement;
+    uint8_t blinded_msg[Ne];
+} BlindedMessage;
 
 struct {
    uint16_t token_type;
    uint8_t truncated_token_key_id;
-   BlindedElement blinded_elements<V>;
+   BlindedMessage blinded_msgs<V>;
 } AmortizedBatchTokenRequest;
 ~~~
 
@@ -227,7 +228,7 @@ The structure fields are defined as follows:
 - "truncated_token_key_id" is the least significant byte of the `token_key_id`
   in network byte order (in other words, the last 8 bits of `token_key_id`).
 
-- "blinded_elements" is a list of `Nr` serialized elements, each of length `Ne`
+- "blinded_msgs" is a list of `Nr` serialized elements, each of length `Ne`
   bytes and computed as `SerializeElement(blinded_element_i)`, where
   blinded_element_i is the i-th output sequence of `Blind` invocations above. Ne
   is as defined in {{OPRF, Section 4}}.
@@ -260,16 +261,16 @@ Upon receipt of the request, the Issuer validates the following conditions:
 - The AmortizedBatchTokenRequest.truncated_token_key_id corresponds to a key ID
   of a Public Key owned by the issuer.
 - Nr, as determined based on the size of
-  AmortizedBatchTokenRequest.blinded_elements, is less than or equal to the
+  AmortizedBatchTokenRequest.blinded_msgs, is less than or equal to the
   number of tokens that the issuer can issue in a single batch.
 
 If any of these conditions is not met, the Issuer MUST return an HTTP 422
 (Unprocessable Content) error to the client.
 
 The Issuer then tries to deseralize the i-th element of
-AmortizedBatchTokenRequest.blinded_elements using DeserializeElement from
+AmortizedBatchTokenRequest.blinded_msgs using DeserializeElement from
 {{Section 2.1 of OPRF}}, yielding `blinded_element_i` of type `Element`. If this
-fails for any of the AmortizedBatchTokenRequest.blinded_elements values, the
+fails for any of the AmortizedBatchTokenRequest.blinded_msgs values, the
 Issuer MUST return an HTTP 422 (Unprocessable Content) error to the client.
 Otherwise, if the Issuer is willing to produce a token to the Client, the issuer
 forms a list of `Element` values, denoted `blinded_elements`, and computes a
