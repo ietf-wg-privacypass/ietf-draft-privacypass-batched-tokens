@@ -320,18 +320,18 @@ The Issuer then creates a AmortizedBatchTokenResponse structured as follows:
 
 ~~~tls
 struct {
-    uint8_t evaluated_element[Ne];
-} EvaluatedElement;
+    uint8_t evaluated_msg[Ne];
+} EvaluatedMessage;
 
 struct {
-   EvaluatedElement evaluated_elements<V>;
+   EvaluatedMessage evaluated_msgs<V>;
    uint8_t evaluated_proof[Ns + Ns];
 } AmortizedBatchTokenResponse;
 ~~~
 
 The structure fields are defined as follows:
 
-- "evaluated_elements" is a list of `Nr` serialized elements, each of length
+- "evaluated_msgs" is a list of `Nr` serialized elements, each of length
   `Ne` bytes and computed as `SerializeElement(evaluate_element_i)`, where
   evaluate_element_i is the i-th output of `BlindEvaluate`.
 
