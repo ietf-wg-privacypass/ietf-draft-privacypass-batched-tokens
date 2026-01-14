@@ -5,10 +5,10 @@
 Network Working Group                                          R. Robert
 Internet-Draft                                               Phoenix R&D
 Intended status: Standards Track                              C. A. Wood
-Expires: 23 April 2026                                        Cloudflare
+Expires: 18 July 2026                                         Cloudflare
                                                               T. Meunier
                                                          Cloudflare Inc.
-                                                         20 October 2025
+                                                         14 January 2026
 
 
                     Batched Token Issuance Protocol
@@ -36,11 +36,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 April 2026.
+   This Internet-Draft will expire on 18 July 2026.
 
 Copyright Notice
 
-   Copyright (c) 2025 IETF Trust and the persons identified as the
+   Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -159,8 +159,9 @@ Table of Contents
    VOPRF [OPRF], and allows for batched issuance of tokens and amortizes
    the cost of zero knowledge proofs.  This allows clients to request
    more than one token at a time and for issuers to issue more than one
-   token at a time.  In effect, private batched issuance performance
-   scales better than linearly.
+   token at a time.  In effect, amortizing private batched issuance
+   reduces the per-token cost, approaching a factor of 2 for large
+   batches.
 
    The second variant (Section 6) of the issuance protocol introduces a
    new Client-Issuer communication method, which allows for batched
@@ -399,6 +400,12 @@ Table of Contents
      proof = GenerateProof(skS, G.Generator(), pkS,
                            blindedElements, evaluatedElements)
      return evaluatedElements, proof
+
+   The computational complexity of BlindEvaluateBatch is linear in the
+   number of evaluations Nr.  However the amortization of proof
+   generation across all Nr evaluations reduces the practical cost by
+   approximately half that of Nr individual token issuance operations as
+   Nr increases.
 
    The Issuer then creates a AmortizedBatchTokenResponse structured as
    follows:
