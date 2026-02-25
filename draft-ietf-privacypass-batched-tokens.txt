@@ -5,10 +5,10 @@
 Network Working Group                                          R. Robert
 Internet-Draft                                               Phoenix R&D
 Intended status: Standards Track                              C. A. Wood
-Expires: 18 July 2026                                         Cloudflare
+Expires: 29 August 2026                                       Cloudflare
                                                               T. Meunier
                                                          Cloudflare Inc.
-                                                         14 January 2026
+                                                        25 February 2026
 
 
                     Batched Token Issuance Protocol
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 July 2026.
+   This Internet-Draft will expire on 29 August 2026.
 
 Copyright Notice
 
@@ -99,6 +99,10 @@ Table of Contents
 1.  Change Log:
 
    RFC EDITOR PLEASE DELETE THIS SECTION.
+
+   draft-07
+
+   *  Add some precision on linear cost of amortized batched tokens
 
    draft-06
 
