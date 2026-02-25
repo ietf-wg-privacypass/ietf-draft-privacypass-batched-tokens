@@ -45,6 +45,10 @@ one token at a time and for issuers to issue more than one token at a time.
 
 RFC EDITOR PLEASE DELETE THIS SECTION.
 
+draft-07
+
+ - Add some precision on linear cost of amortized batched tokens
+
 draft-06
 
  - Address various review comments
