@@ -233,9 +233,9 @@ struct {
 } BlindedMessage;
 
 struct {
-   uint16_t token_type;
-   uint8_t truncated_token_key_id;
-   BlindedMessage blinded_msgs<V>;
+    uint16_t token_type;
+    uint8_t truncated_token_key_id;
+    BlindedMessage blinded_msgs<V>;
 } AmortizedBatchTokenRequest;
 ~~~
 
@@ -347,8 +347,8 @@ struct {
 } EvaluatedMessage;
 
 struct {
-   EvaluatedMessage evaluated_msgs<V>;
-   uint8_t evaluated_proof[Ns + Ns];
+    EvaluatedMessage evaluated_msgs<V>;
+    uint8_t evaluated_proof[Ns + Ns];
 } AmortizedBatchTokenResponse;
 ~~~
 
@@ -470,21 +470,21 @@ The Client then creates a GenericBatchedTokenRequest structure as follows:
 
 ~~~tls
 struct {
-   uint16_t token_type;
-   select (token_type) {
-      case (0x0001): /* Type VOPRF(P-384, SHA-384), RFC 9578 */
-         TokenRequest token_request;
-      case (0x0002): /* Type Blind RSA (2048-bit), RFC 9578 */
-          TokenRequest token_request;
-      case (0x0005): /* Type VOPRF(ristretto255, SHA-512), this document */
-          TokenRequest token_request;
-      case (other): /* Other token types from the IANA Privacy Pass Token Types Registry */
-          TokenRequest token_request;
-   }
+    uint16_t token_type;
+    select (token_type) {
+        case (0x0001): /* Type VOPRF(P-384, SHA-384), RFC 9578 */
+            TokenRequest token_request;
+        case (0x0002): /* Type Blind RSA (2048-bit), RFC 9578 */
+            TokenRequest token_request;
+        case (0x0005): /* Type VOPRF(ristretto255, SHA-512), this document */
+            TokenRequest token_request;
+        case (other): /* Other token types from the IANA Privacy Pass Token Types Registry */
+            TokenRequest token_request;
+    }
 } GenericTokenRequest;
 
 struct {
-  GenericTokenRequest generic_token_requests<V>;
+    GenericTokenRequest generic_token_requests<V>;
 } GenericBatchTokenRequest
 ~~~
 
@@ -531,25 +531,25 @@ the client. The issuer creates a GenericBatchTokenResponse structured as follows
 
 ~~~tls
 struct {
-  uint16_t token_type;
-  select (token_type) {
-    case (0x0001): /* Type VOPRF(P-384, SHA-384), RFC 9578 */
-      TokenResponse token_response;
-    case (0x0002): /* Type Blind RSA (2048-bit), RFC 9578 */
-      TokenResponse token_response;
-    case (0x0005): /* Type VOPRF(ristretto255, SHA-512), this document */
-      TokenResponse token_response;
-    case (other): /* Other token types */
-      TokenResponse token_response;
-  }
+    uint16_t token_type;
+    select (token_type) {
+        case (0x0001): /* Type VOPRF(P-384, SHA-384), RFC 9578 */
+            TokenResponse token_response;
+        case (0x0002): /* Type Blind RSA (2048-bit), RFC 9578 */
+            TokenResponse token_response;
+        case (0x0005): /* Type VOPRF(ristretto255, SHA-512), this document */
+            TokenResponse token_response;
+        case (other): /* Other token types */
+            TokenResponse token_response;
+    }
 } GenericTokenResponse;
 
 struct {
-  optional<GenericTokenResponse> generic_token_response; /* Defined by token_type */
+    optional<GenericTokenResponse> generic_token_response; /* Defined by token_type */
 } OptionalTokenResponse;
 
 struct {
-  OptionalTokenResponse optional_token_responses<V>;
+    OptionalTokenResponse optional_token_responses<V>;
 } GenericBatchTokenResponse
 ~~~
 
