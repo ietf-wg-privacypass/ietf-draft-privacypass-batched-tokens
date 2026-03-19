@@ -298,7 +298,7 @@ blinded response as follows:
 server_context = SetupVOPRFServer(ciphersuiteID, skI, pkI)
 
 evaluated_elements, proof =
-  BlindEvaluateBatch(skI, blinded_elements)
+  BlindEvaluateBatch(skI, pkI, blinded_elements)
 ~~~
 
 `ciphersuiteID` is the ciphersuite identifier from {{OPRF}} corresponding to the
@@ -324,7 +324,7 @@ Parameters:
 
   Group G
 
-def BlindEvaluateBatch(skS, blindedElements):
+def BlindEvaluateBatch(skS, pkS, blindedElements):
   evaluatedElements = []
   for blindedElement in blindedElements:
     evaluatedElements.append(skS * blindedElement)
