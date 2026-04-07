@@ -1601,7 +1601,7 @@ blinded response as follows:<a href="#section-5.2-5" class="pilcrow">¶</a></p>
 server_context = SetupVOPRFServer(ciphersuiteID, skI, pkI)
 
 evaluated_elements, proof =
-  BlindEvaluateBatch(skI, blinded_elements)
+  BlindEvaluateBatch(skI, pkI, blinded_elements)
 </pre><a href="#section-5.2-6" class="pilcrow">¶</a>
 </div>
 <p id="section-5.2-7"><code>ciphersuiteID</code> is the ciphersuite identifier from <span>[<a href="#OPRF" class="cite xref">OPRF</a>]</span> corresponding to the
@@ -1627,7 +1627,7 @@ Parameters:
 
   Group G
 
-def BlindEvaluateBatch(skS, blindedElements):
+def BlindEvaluateBatch(skS, pkS, blindedElements):
   evaluatedElements = []
   for blindedElement in blindedElements:
     evaluatedElements.append(skS * blindedElement)
