@@ -5,10 +5,10 @@
 Network Working Group                                          R. Robert
 Internet-Draft                                               Phoenix R&D
 Intended status: Standards Track                              C. A. Wood
-Expires: 29 August 2026                                       Cloudflare
+Expires: 9 October 2026                                       Cloudflare
                                                               T. Meunier
                                                          Cloudflare Inc.
-                                                        25 February 2026
+                                                            7 April 2026
 
 
                     Batched Token Issuance Protocol
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 August 2026.
+   This Internet-Draft will expire on 9 October 2026.
 
 Copyright Notice
 
@@ -304,9 +304,9 @@ Table of Contents
    } BlindedMessage;
 
    struct {
-      uint16_t token_type;
-      uint8_t truncated_token_key_id;
-      BlindedMessage blinded_msgs<V>;
+       uint16_t token_type;
+       uint8_t truncated_token_key_id;
+       BlindedMessage blinded_msgs<V>;
    } AmortizedBatchTokenRequest;
 
    The structure fields are defined as follows:
@@ -419,8 +419,8 @@ Table of Contents
    } EvaluatedMessage;
 
    struct {
-      EvaluatedMessage evaluated_msgs<V>;
-      uint8_t evaluated_proof[Ns + Ns];
+       EvaluatedMessage evaluated_msgs<V>;
+       uint8_t evaluated_proof[Ns + Ns];
    } AmortizedBatchTokenResponse;
 
    The structure fields are defined as follows:
@@ -539,21 +539,21 @@ Table of Contents
    follows:
 
    struct {
-      uint16_t token_type;
-      select (token_type) {
-         case (0x0001): /* Type VOPRF(P-384, SHA-384), RFC 9578 */
-            TokenRequest token_request;
-         case (0x0002): /* Type Blind RSA (2048-bit), RFC 9578 */
-             TokenRequest token_request;
-         case (0x0005): /* Type VOPRF(ristretto255, SHA-512), this document */
-             TokenRequest token_request;
-         case (other): /* Other token types from the IANA Privacy Pass Token Types Registry */
-             TokenRequest token_request;
-      }
+       uint16_t token_type;
+       select (token_type) {
+           case (0x0001): /* Type VOPRF(P-384, SHA-384), RFC 9578 */
+               TokenRequest token_request;
+           case (0x0002): /* Type Blind RSA (2048-bit), RFC 9578 */
+               TokenRequest token_request;
+           case (0x0005): /* Type VOPRF(ristretto255, SHA-512), this document */
+               TokenRequest token_request;
+           case (other): /* Other token types from the IANA Privacy Pass Token Types Registry */
+               TokenRequest token_request;
+       }
    } GenericTokenRequest;
 
    struct {
-     GenericTokenRequest generic_token_requests<V>;
+       GenericTokenRequest generic_token_requests<V>;
    } GenericBatchTokenRequest
 
    The structure fields are defined as follows:
@@ -599,25 +599,25 @@ Table of Contents
    GenericBatchTokenResponse structured as follows:
 
    struct {
-     uint16_t token_type;
-     select (token_type) {
-       case (0x0001): /* Type VOPRF(P-384, SHA-384), RFC 9578 */
-         TokenResponse token_response;
-       case (0x0002): /* Type Blind RSA (2048-bit), RFC 9578 */
-         TokenResponse token_response;
-       case (0x0005): /* Type VOPRF(ristretto255, SHA-512), this document */
-         TokenResponse token_response;
-       case (other): /* Other token types */
-         TokenResponse token_response;
-     }
+       uint16_t token_type;
+       select (token_type) {
+           case (0x0001): /* Type VOPRF(P-384, SHA-384), RFC 9578 */
+               TokenResponse token_response;
+           case (0x0002): /* Type Blind RSA (2048-bit), RFC 9578 */
+               TokenResponse token_response;
+           case (0x0005): /* Type VOPRF(ristretto255, SHA-512), this document */
+               TokenResponse token_response;
+           case (other): /* Other token types */
+               TokenResponse token_response;
+       }
    } GenericTokenResponse;
 
    struct {
-     optional<GenericTokenResponse> generic_token_response; /* Defined by token_type */
+       optional<GenericTokenResponse> generic_token_response; /* Defined by token_type */
    } OptionalTokenResponse;
 
    struct {
-     OptionalTokenResponse optional_token_responses<V>;
+       OptionalTokenResponse optional_token_responses<V>;
    } GenericBatchTokenResponse
 
    For each request in GenericBatchTokenRequest.token_requests, the
@@ -750,8 +750,8 @@ Table of Contents
                             Deprecated alias names for this type:  N/A
                             File extension(s):  N/A
                             Macintosh file type code(s):  N/A
-   Person and email address to contact for further information:  see Aut
-      hors' Addresses section
+   Person and email address to contact for further information:  see
+      Authors' Addresses section
    Intended usage:  COMMON
    Restrictions on usage:  N/A
    Author:  see Authors' Addresses section
@@ -776,8 +776,8 @@ Table of Contents
                             Deprecated alias names for this type:  N/A
                             File extension(s):  N/A
                             Macintosh file type code(s):  N/A
-   Person and email address to contact for further information:  see Aut
-      hors' Addresses section
+   Person and email address to contact for further information:  see
+      Authors' Addresses section
    Intended usage:  COMMON
    Restrictions on usage:  N/A
    Author:  see Authors' Addresses section
@@ -802,8 +802,8 @@ Table of Contents
                             Deprecated alias names for this type:  N/A
                             File extension(s):  N/A
                             Macintosh file type code(s):  N/A
-   Person and email address to contact for further information:  see Aut
-      hors' Addresses section
+   Person and email address to contact for further information:  see
+      Authors' Addresses section
    Intended usage:  COMMON
    Restrictions on usage:  N/A
    Author:  see Authors' Addresses section
@@ -828,8 +828,8 @@ Table of Contents
                             Deprecated alias names for this type:  N/A
                             File extension(s):  N/A
                             Macintosh file type code(s):  N/A
-   Person and email address to contact for further information:  see Aut
-      hors' Addresses section
+   Person and email address to contact for further information:  see
+      Authors' Addresses section
    Intended usage:  COMMON
    Restrictions on usage:  N/A
    Author:  see Authors' Addresses section
