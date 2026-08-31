@@ -150,7 +150,7 @@ following key ways:
 
 # Presentation Language
 
-This document uses the TLS presentation language {{!RFC8446}} to describe the
+This document uses the TLS presentation language {{!RFC9846}} to describe the
 structure of protocol messages.  In addition to the base syntax, it uses two
 additional features: the ability for fields to be optional and the ability for
 vectors to have variable-size length headers.
@@ -483,7 +483,7 @@ struct {
             TokenRequest token_request;
         case (0x0005): /* Type VOPRF(ristretto255, SHA-512), this document */
             TokenRequest token_request;
-        case (other): /* Other token types from the IANA Privacy Pass Token Types Registry */
+        case (other): /* Other registered token types */
             TokenRequest token_request;
     }
 } GenericTokenRequest;
@@ -550,7 +550,8 @@ struct {
 } GenericTokenResponse;
 
 struct {
-    optional<GenericTokenResponse> generic_token_response; /* Defined by token_type */
+    /* The response format is defined by token_type. */
+    optional<GenericTokenResponse> generic_token_response;
 } OptionalTokenResponse;
 
 struct {
