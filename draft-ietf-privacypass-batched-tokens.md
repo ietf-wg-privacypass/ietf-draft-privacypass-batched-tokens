@@ -99,6 +99,10 @@ are not intended for reuse by HTTP caches. For instance, Issuers may include
 `Cache-Control: no-store` in issuance responses ({{Section 5.2.2.5 of ?RFC9111}}).
 This does not prevent Clients from storing issued tokens for later redemption.
 
+Both variants follow the Client-Issuer issuance exchange shown in Figure 1 of
+{{Section 3 of RFC9578}}, with a batch request and response replacing the
+individual token request and response.
+
 The base Privacy Pass issuance protocol {{RFC9578}} defines stateless anonymous
 tokens, which can either be publicly verifiable or not. While it is possible to
 run multiple instances of the issuance protocol in parallel, e.g., over a
@@ -131,6 +135,8 @@ defined below.
 
 {::boilerplate bcp14-tagged}
 
+This document uses the terms Client and Issuer as defined in {{RFC9576}}.
+
 # Motivation
 
 Privacy Pass tokens (as defined in {{RFC9576}} and {{RFC9578}}) are unlinkable
@@ -144,7 +150,7 @@ the basic Privately Verifiable Token issuance protocol in the following key ways
 
 1. Issuing multiple tokens at once in response to a single TokenChallenge,
    thereby reducing the size of the proofs required for multiple tokens.
-2. Improving server and client issuance efficiency by amortizing the cost of the
+2. Improving Issuer and Client issuance efficiency by amortizing the cost of the
    VOPRF proof generation and verification, respectively.
 
 Generic Token Batch Issuance {{generic-batch}} allows for a single
