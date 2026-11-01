@@ -94,6 +94,11 @@ than one token at a time. Clients obtain the Issuer Request URL and keys as
 described in {{Section 4 of !RFC9578}}. The request media type identifies the
 variant.
 
+For both variants, issuance responses are specific to the Client's request and
+are not intended for reuse by HTTP caches. For instance, Issuers may include
+`Cache-Control: no-store` in issuance responses ({{Section 5.2.2.5 of ?RFC9111}}).
+This does not prevent Clients from storing issued tokens for later redemption.
+
 Both variants follow the Client-Issuer issuance exchange shown in Figure 1 of
 {{Section 3 of RFC9578}}, with a batch request and response replacing the
 individual token request and response.
@@ -602,8 +607,8 @@ matching TokenRequest and the procedure defined by the token type.
 
 ## Amortized Privately Verifiable Token Batch Issuance
 
-Implementors SHOULD be aware of the security considerations described in {{OPRF,
-Section 6.2.3}} and implement mitigation mechanisms. Application can mitigate
+Implementors should be aware of the security considerations described in {{OPRF,
+Section 7.2.3}} and implement mitigation mechanisms. Application can mitigate
 this issue by limiting the number of clients and limiting the number of token
 requests per client per key.
 
@@ -612,13 +617,21 @@ limits then apply to both.
 
 ## Generic Token Batch Issuance
 
-Implementors SHOULD be aware of the inherent linear cost of this token type. An
+Implementors should be aware of the inherent linear cost of this token type. An
 Issuer MAY ignore `GenericTokenRequest` if the number of tokens per request is
 past a limit.
 
 Generic Token Batch Issuance does not change the security properties of the
 batched token types. Each token inherits the security considerations of its
 token type, for instance {{Section 7 of RFC9578}} for type `0x0002` tokens (Blind RSA, 2048-bit).
+
+# Privacy considerations
+
+The privacy considerations described in {{Section 6 of RFC9576}} apply to both
+variants. The Issuer observes which token requests are batched together,
+including the batch size and, for Generic Token Batch Issuance, the token types
+and key identifiers. Batch sizes and issuance timing can contribute to the
+side channels described in {{Section 6.3 of RFC9576}}.
 
 # IANA considerations
 
