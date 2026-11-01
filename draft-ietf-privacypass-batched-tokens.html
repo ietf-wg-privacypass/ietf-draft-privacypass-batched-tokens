@@ -1356,30 +1356,34 @@ clients to request more than one token at a time and for issuers to issue more
 than one token at a time. Clients obtain the Issuer Request URL and keys as
 described in <span><a href="https://rfc-editor.org/rfc/rfc9578#section-4" class="relref">Section 4</a> of [<a href="#RFC9578" class="cite xref">RFC9578</a>]</span>. The request media type identifies the
 variant.<a href="#section-2-1" class="pilcrow">¶</a></p>
-<p id="section-2-2">The base Privacy Pass issuance protocol <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span> defines stateless anonymous
+<p id="section-2-2">For both variants, issuance responses are specific to the Client's request and
+are not intended for reuse by HTTP caches. For instance, Issuers may include
+<code>Cache-Control: no-store</code> in issuance responses (<span><a href="https://rfc-editor.org/rfc/rfc9111#section-5.2.2.5" class="relref">Section 5.2.2.5</a> of [<a href="#RFC9111" class="cite xref">RFC9111</a>]</span>).
+This does not prevent Clients from storing issued tokens for later redemption.<a href="#section-2-2" class="pilcrow">¶</a></p>
+<p id="section-2-3">The base Privacy Pass issuance protocol <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span> defines stateless anonymous
 tokens, which can either be publicly verifiable or not. While it is possible to
 run multiple instances of the issuance protocol in parallel, e.g., over a
 multiplexed transport such as HTTP/3 <span>[<a href="#HTTP3" class="cite xref">HTTP3</a>]</span> or by orchestrating
 multiple HTTP requests, these ad-hoc solutions vary based on transport protocol
 support. In addition, in some cases, they cannot take advantage of cryptographic
-optimizations.<a href="#section-2-2" class="pilcrow">¶</a></p>
-<p id="section-2-3">The first variant (<a href="#amortized-batch" class="auto internal xref">Section 5</a>) of the issuance protocol builds upon the
+optimizations.<a href="#section-2-3" class="pilcrow">¶</a></p>
+<p id="section-2-4">The first variant (<a href="#amortized-batch" class="auto internal xref">Section 5</a>) of the issuance protocol builds upon the
 privately verifiable issuance protocol in <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span> that uses VOPRF
 <span>[<a href="#OPRF" class="cite xref">OPRF</a>]</span>, and allows for batched issuance of tokens and amortizes the
 cost of zero knowledge proofs. This allows clients to request more than one
 token at a time and for issuers to issue more than one token at a time. In
 effect, amortizing private batched issuance reduces the per-token cost,
-approaching a factor of 2 for large batches.<a href="#section-2-3" class="pilcrow">¶</a></p>
-<p id="section-2-4">The second variant (<a href="#generic-batch" class="auto internal xref">Section 6</a>) of the issuance protocol introduces a new
+approaching a factor of 2 for large batches.<a href="#section-2-4" class="pilcrow">¶</a></p>
+<p id="section-2-5">The second variant (<a href="#generic-batch" class="auto internal xref">Section 6</a>) of the issuance protocol introduces a new
 Client-Issuer communication method, which allows for batched issuance of generic
 token types. This allows clients to request more than one token at a time and
 for issuers to issue more than one token at a time. This variant has no other
 effect than batching requests and responses and the issuance performance remains
-linear.<a href="#section-2-4" class="pilcrow">¶</a></p>
-<p id="section-2-5">This document registers a new token type (<a href="#iana-token-type" class="auto internal xref">Section 9.1</a>) that can either
+linear.<a href="#section-2-5" class="pilcrow">¶</a></p>
+<p id="section-2-6">This document registers a new token type (<a href="#iana-token-type" class="auto internal xref">Section 9.1</a>) that can either
 be used with the Privately Verifiable Issuance Protocol as defined in
 <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span>, or with the Amortized Privately Verifiable Batch Issuance Protocol
-defined below.<a href="#section-2-5" class="pilcrow">¶</a></p>
+defined below.<a href="#section-2-6" class="pilcrow">¶</a></p>
 <div id="terminology">
 <section id="section-2.1">
         <h3 id="name-terminology">
@@ -1933,7 +1937,7 @@ matching TokenRequest and the procedure defined by the token type.<a href="#sect
         <h3 id="name-amortized-privately-verifiab">
 <a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-amortized-privately-verifiab" class="section-name selfRef">Amortized Privately Verifiable Token Batch Issuance</a>
         </h3>
-<p id="section-7.1-1">Implementors <span class="bcp14">SHOULD</span> be aware of the security considerations described in <span>[<a href="#OPRF" class="cite xref">OPRF</a>], <a href="https://rfc-editor.org/rfc/rfc9497#section-6.2.3" class="relref">Section 6.2.3</a></span> and implement mitigation mechanisms. Application can mitigate
+<p id="section-7.1-1">Implementors should be aware of the security considerations described in <span>[<a href="#OPRF" class="cite xref">OPRF</a>], <a href="https://rfc-editor.org/rfc/rfc9497#section-7.2.3" class="relref">Section 7.2.3</a></span> and implement mitigation mechanisms. Application can mitigate
 this issue by limiting the number of clients and limiting the number of token
 requests per client per key.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
 <p id="section-7.1-2">An Issuer can use the same key for single-token and batched issuance. These
@@ -1945,7 +1949,7 @@ limits then apply to both.<a href="#section-7.1-2" class="pilcrow">¶</a></p>
         <h3 id="name-generic-token-batch-issuance">
 <a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-generic-token-batch-issuance" class="section-name selfRef">Generic Token Batch Issuance</a>
         </h3>
-<p id="section-7.2-1">Implementors <span class="bcp14">SHOULD</span> be aware of the inherent linear cost of this token type. An
+<p id="section-7.2-1">Implementors should be aware of the inherent linear cost of this token type. An
 Issuer <span class="bcp14">MAY</span> ignore <code>GenericTokenRequest</code> if the number of tokens per request is
 past a limit.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
 <p id="section-7.2-2">Generic Token Batch Issuance does not change the security properties of the
@@ -2543,6 +2547,10 @@ including Privacy Pass issuer applications themselves.<a href="#section-9.2.4-1.
 <dt id="IANA_PRIVACYPASS_TOKEN_TYPES">[IANA_PRIVACYPASS_TOKEN_TYPES]</dt>
         <dd>
 <span class="refTitle">"IANA Privacy Pass Token Types Registry"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.iana.org/assignments/privacy-pass/privacy-pass.xhtml#token-type">https://www.iana.org/assignments/privacy-pass/privacy-pass.xhtml#token-type</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9111">[RFC9111]</dt>
+        <dd>
+<span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Caching"</span>, <span class="seriesInfo">STD 98</span>, <span class="seriesInfo">RFC 9111</span>, <span class="seriesInfo">DOI 10.17487/RFC9111</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9111">https://www.rfc-editor.org/rfc/rfc9111</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9576">[RFC9576]</dt>
       <dd>
