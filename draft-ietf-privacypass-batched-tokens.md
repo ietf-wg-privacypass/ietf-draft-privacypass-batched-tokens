@@ -614,6 +614,14 @@ Generic Token Batch Issuance does not change the security properties of the
 batched token types. Each token inherits the security considerations of its
 token type, for instance {{Section 7 of RFC9578}} for type `0x0002` tokens (Blind RSA, 2048-bit).
 
+# Privacy considerations
+
+The privacy considerations described in {{Section 6 of RFC9576}} apply to both
+variants. The Issuer observes which token requests are batched together,
+including the batch size and, for Generic Token Batch Issuance, the token types
+and key identifiers. Batch sizes and issuance timing can contribute to the
+side channels described in {{Section 6.3 of RFC9576}}.
+
 # IANA considerations
 
 This section contains IANA codepoint allocation requests.
