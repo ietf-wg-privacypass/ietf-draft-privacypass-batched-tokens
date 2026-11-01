@@ -1360,30 +1360,33 @@ variant.<a href="#section-2-1" class="pilcrow">¶</a></p>
 are not intended for reuse by HTTP caches. For instance, Issuers may include
 <code>Cache-Control: no-store</code> in issuance responses (<span><a href="https://rfc-editor.org/rfc/rfc9111#section-5.2.2.5" class="relref">Section 5.2.2.5</a> of [<a href="#RFC9111" class="cite xref">RFC9111</a>]</span>).
 This does not prevent Clients from storing issued tokens for later redemption.<a href="#section-2-2" class="pilcrow">¶</a></p>
-<p id="section-2-3">The base Privacy Pass issuance protocol <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span> defines stateless anonymous
+<p id="section-2-3">Both variants follow the Client-Issuer issuance exchange shown in Figure 1 of
+<span><a href="https://rfc-editor.org/rfc/rfc9578#section-3" class="relref">Section 3</a> of [<a href="#RFC9578" class="cite xref">RFC9578</a>]</span>, with a batch request and response replacing the
+individual token request and response.<a href="#section-2-3" class="pilcrow">¶</a></p>
+<p id="section-2-4">The base Privacy Pass issuance protocol <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span> defines stateless anonymous
 tokens, which can either be publicly verifiable or not. While it is possible to
 run multiple instances of the issuance protocol in parallel, e.g., over a
 multiplexed transport such as HTTP/3 <span>[<a href="#HTTP3" class="cite xref">HTTP3</a>]</span> or by orchestrating
 multiple HTTP requests, these ad-hoc solutions vary based on transport protocol
 support. In addition, in some cases, they cannot take advantage of cryptographic
-optimizations.<a href="#section-2-3" class="pilcrow">¶</a></p>
-<p id="section-2-4">The first variant (<a href="#amortized-batch" class="auto internal xref">Section 5</a>) of the issuance protocol builds upon the
+optimizations.<a href="#section-2-4" class="pilcrow">¶</a></p>
+<p id="section-2-5">The first variant (<a href="#amortized-batch" class="auto internal xref">Section 5</a>) of the issuance protocol builds upon the
 privately verifiable issuance protocol in <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span> that uses VOPRF
 <span>[<a href="#OPRF" class="cite xref">OPRF</a>]</span>, and allows for batched issuance of tokens and amortizes the
 cost of zero knowledge proofs. This allows clients to request more than one
 token at a time and for issuers to issue more than one token at a time. In
 effect, amortizing private batched issuance reduces the per-token cost,
-approaching a factor of 2 for large batches.<a href="#section-2-4" class="pilcrow">¶</a></p>
-<p id="section-2-5">The second variant (<a href="#generic-batch" class="auto internal xref">Section 6</a>) of the issuance protocol introduces a new
+approaching a factor of 2 for large batches.<a href="#section-2-5" class="pilcrow">¶</a></p>
+<p id="section-2-6">The second variant (<a href="#generic-batch" class="auto internal xref">Section 6</a>) of the issuance protocol introduces a new
 Client-Issuer communication method, which allows for batched issuance of generic
 token types. This allows clients to request more than one token at a time and
 for issuers to issue more than one token at a time. This variant has no other
 effect than batching requests and responses and the issuance performance remains
-linear.<a href="#section-2-5" class="pilcrow">¶</a></p>
-<p id="section-2-6">This document registers a new token type (<a href="#iana-token-type" class="auto internal xref">Section 9.1</a>) that can either
+linear.<a href="#section-2-6" class="pilcrow">¶</a></p>
+<p id="section-2-7">This document registers a new token type (<a href="#iana-token-type" class="auto internal xref">Section 9.1</a>) that can either
 be used with the Privately Verifiable Issuance Protocol as defined in
 <span>[<a href="#RFC9578" class="cite xref">RFC9578</a>]</span>, or with the Amortized Privately Verifiable Batch Issuance Protocol
-defined below.<a href="#section-2-6" class="pilcrow">¶</a></p>
+defined below.<a href="#section-2-7" class="pilcrow">¶</a></p>
 <div id="terminology">
 <section id="section-2.1">
         <h3 id="name-terminology">
@@ -1393,6 +1396,7 @@ defined below.<a href="#section-2-6" class="pilcrow">¶</a></p>
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
 described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
 appear in all capitals, as shown here.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">This document uses the terms Client and Issuer as defined in <span>[<a href="#RFC9576" class="cite xref">RFC9576</a>]</span>.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1415,7 +1419,7 @@ the basic Privately Verifiable Token issuance protocol in the following key ways
 thereby reducing the size of the proofs required for multiple tokens.<a href="#section-3-3.1.1" class="pilcrow">¶</a></p>
 </li>
         <li id="section-3-3.2">
-          <p id="section-3-3.2.1">Improving server and client issuance efficiency by amortizing the cost of the
+          <p id="section-3-3.2.1">Improving Issuer and Client issuance efficiency by amortizing the cost of the
 VOPRF proof generation and verification, respectively.<a href="#section-3-3.2.1" class="pilcrow">¶</a></p>
 </li>
       </ol>

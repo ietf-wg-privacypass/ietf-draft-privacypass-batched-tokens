@@ -163,6 +163,10 @@ Table of Contents
    (Section 5.2.2.5 of [RFC9111]).  This does not prevent Clients from
    storing issued tokens for later redemption.
 
+   Both variants follow the Client-Issuer issuance exchange shown in
+   Figure 1 of Section 3 of [RFC9578], with a batch request and response
+   replacing the individual token request and response.
+
    The base Privacy Pass issuance protocol [RFC9578] defines stateless
    anonymous tokens, which can either be publicly verifiable or not.
    While it is possible to run multiple instances of the issuance
@@ -201,6 +205,9 @@ Table of Contents
    BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
+   This document uses the terms Client and Issuer as defined in
+   [RFC9576].
+
 3.  Motivation
 
    Privacy Pass tokens (as defined in [RFC9576] and [RFC9578]) are
@@ -218,7 +225,7 @@ Table of Contents
        TokenChallenge, thereby reducing the size of the proofs required
        for multiple tokens.
 
-   2.  Improving server and client issuance efficiency by amortizing the
+   2.  Improving Issuer and Client issuance efficiency by amortizing the
        cost of the VOPRF proof generation and verification,
        respectively.
 
