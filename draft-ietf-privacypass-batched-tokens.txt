@@ -5,9 +5,9 @@
 Network Working Group                                          R. Robert
 Internet-Draft                                               Phoenix R&D
 Intended status: Standards Track                              C. A. Wood
-Expires: 3 May 2027                                           T. Meunier
+Expires: 5 May 2027                                           T. Meunier
                                                               Cloudflare
-                                                         30 October 2026
+                                                         1 November 2026
 
 
                     Batched Token Issuance Protocol
@@ -35,7 +35,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 May 2027.
+   This Internet-Draft will expire on 5 May 2027.
 
 Copyright Notice
 
@@ -71,20 +71,21 @@ Table of Contents
    7.  Security considerations
      7.1.  Amortized Privately Verifiable Token Batch Issuance
      7.2.  Generic Token Batch Issuance
-   8.  IANA considerations
-     8.1.  Token Type
-     8.2.  Media Types
-       8.2.1.  "application/private-token-amortized-batch-request"
+   8.  Privacy considerations
+   9.  IANA considerations
+     9.1.  Token Type
+     9.2.  Media Types
+       9.2.1.  "application/private-token-amortized-batch-request"
                media type
-       8.2.2.  "application/private-token-amortized-batch-response"
+       9.2.2.  "application/private-token-amortized-batch-response"
                media type
-       8.2.3.  "application/private-token-generic-batch-request" media
+       9.2.3.  "application/private-token-generic-batch-request" media
                type
-       8.2.4.  "application/private-token-generic-batch-response"
+       9.2.4.  "application/private-token-generic-batch-response"
                media type
-   9.  References
-     9.1.  Normative References
-     9.2.  Informative References
+   10. References
+     10.1.  Normative References
+     10.2.  Informative References
    Appendix A.  Test Vectors
      A.1.  Privately Verifiable Token Issuance - VOPRF (ristretto255,
            SHA-512)
@@ -181,7 +182,7 @@ Table of Contents
    at a time.  This variant has no other effect than batching requests
    and responses and the issuance performance remains linear.
 
-   This document registers a new token type (Section 8.1) that can
+   This document registers a new token type (Section 9.1) that can
    either be used with the Privately Verifiable Issuance Protocol as
    defined in [RFC9578], or with the Amortized Privately Verifiable
    Batch Issuance Protocol defined below.
@@ -680,11 +681,20 @@ Table of Contents
    considerations of its token type, for instance Section 7 of [RFC9578]
    for type 0x0002 tokens (Blind RSA, 2048-bit).
 
-8.  IANA considerations
+8.  Privacy considerations
+
+   The privacy considerations described in Section 6 of [RFC9576] apply
+   to both variants.  The Issuer observes which token requests are
+   batched together, including the batch size and, for Generic Token
+   Batch Issuance, the token types and key identifiers.  Batch sizes and
+   issuance timing can contribute to the side channels described in
+   Section 6.3 of [RFC9576].
+
+9.  IANA considerations
 
    This section contains IANA codepoint allocation requests.
 
-8.1.  Token Type
+9.1.  Token Type
 
    RFC EDITOR: please replace "RFC XXXX" with the RFC number of this
    document, and 0x0005 with the value assigned by IANA, throughout this
@@ -725,7 +735,7 @@ Table of Contents
    Section 4.1 of [OPRF] and uses the ristretto255 group defined in
    [RISTRETTO].
 
-8.2.  Media Types
+9.2.  Media Types
 
    The following entries should be added to the IANA "media types"
    registry:
@@ -741,7 +751,7 @@ Table of Contents
    The templates for these entries are listed below and the reference
    should be this RFC.
 
-8.2.1.  "application/private-token-amortized-batch-request" media type
+9.2.1.  "application/private-token-amortized-batch-request" media type
 
    Type name:  application
    Subtype name:  private-token-amortized-batch-request
@@ -767,7 +777,7 @@ Table of Contents
    Author:  see Authors' Addresses section
    Change controller:  IETF
 
-8.2.2.  "application/private-token-amortized-batch-response" media type
+9.2.2.  "application/private-token-amortized-batch-response" media type
 
    Type name:  application
    Subtype name:  private-token-amortized-batch-response
@@ -793,7 +803,7 @@ Table of Contents
    Author:  see Authors' Addresses section
    Change controller:  IETF
 
-8.2.3.  "application/private-token-generic-batch-request" media type
+9.2.3.  "application/private-token-generic-batch-request" media type
 
    Type name:  application
    Subtype name:  private-token-generic-batch-request
@@ -819,7 +829,7 @@ Table of Contents
    Author:  see Authors' Addresses section
    Change controller:  IETF
 
-8.2.4.  "application/private-token-generic-batch-response" media type
+9.2.4.  "application/private-token-generic-batch-response" media type
 
    Type name:  application
    Subtype name:  private-token-generic-batch-response
@@ -845,9 +855,9 @@ Table of Contents
    Author:  see Authors' Addresses section
    Change controller:  IETF
 
-9.  References
+10.  References
 
-9.1.  Normative References
+10.1.  Normative References
 
    [AUTHSCHEME]
               Pauly, T., Valdez, S., and C. A. Wood, "The Privacy Pass
@@ -889,7 +899,7 @@ Table of Contents
               decaf448 Groups", RFC 9496, DOI 10.17487/RFC9496, December
               2023, <https://www.rfc-editor.org/rfc/rfc9496>.
 
-9.2.  Informative References
+10.2.  Informative References
 
    [HTTP3]    Bishop, M., Ed., "HTTP/3", RFC 9114, DOI 10.17487/RFC9114,
               June 2022, <https://www.rfc-editor.org/rfc/rfc9114>.
@@ -919,7 +929,7 @@ A.1.  Privately Verifiable Token Issuance - VOPRF (ristretto255, SHA-
       (Section 2.1 of [OPRF]) and represented as a hexadecimal string.
 
    *  pkS: The Issuer Public Key, serialized according to the encoding
-      in Section 8.1.
+      in Section 9.1.
 
    *  token_challenge: A randomly generated TokenChallenge structure,
       represented as a hexadecimal string. nonce: The 32-byte Client
@@ -1838,7 +1848,7 @@ A.3.  Amortized Privately Verifiable Token Batch Issuance - VOPRF
       Section 2.1 of [OPRF] and represented as a hexadecimal string.
 
    *  pkS: The Issuer Public Key, serialized according to the encoding
-      in Section 8.1.
+      in Section 9.1.
 
    *  token_challenge: A randomly generated TokenChallenge structure,
       represented as a hexadecimal string.
