@@ -305,14 +305,13 @@ Upon receipt of the request, the Issuer validates the following conditions:
   AmortizedBatchTokenRequest.blinded_msgs, is less than or equal to the
   number of tokens that the issuer can issue in a single batch.
 
-If any of these conditions is not met, the Issuer can return a 4xx status code,
-for instance 422 (Unprocessable Content).
+If any of these conditions is not met, the Issuer rejects the request.
 
 The Issuer then tries to deseralize the i-th element of
 AmortizedBatchTokenRequest.blinded_msgs using DeserializeElement from
 {{Section 2.1 of OPRF}}, yielding `blinded_element_i` of type `Element`. If this
 fails for any of the AmortizedBatchTokenRequest.blinded_msgs values, the
-Issuer can return a 4xx status code, for instance 422 (Unprocessable Content).
+Issuer rejects the request.
 Otherwise, if the Issuer is willing to produce a token to the Client, the issuer
 forms a list of `Element` values, denoted `blinded_elements`, and computes a
 blinded response as follows:
@@ -542,7 +541,7 @@ Content-Length: <Length of GenericBatchTokenRequest>
 
 The Issuer then tries to deserialize the first 2 bytes of the i-th element of
 GenericBatchTokenRequest.generic_token_requests. If this is not a token type
-registered with IANA, the Issuer can return a 4xx status code.
+registered with IANA, the Issuer rejects the request.
 The issuer creates a GenericBatchTokenResponse structured as follows:
 
 ~~~tls
@@ -597,7 +596,7 @@ in which the unissued tokens are absent. For instance, an Issuer can refuse
 requests for tokens of the same token type that refer to more than one
 `truncated_token_key_id`.
 
-If the Issuer decides not to issue any tokens, it can return a 4xx status code.
+If the Issuer decides not to issue any tokens, it rejects the request.
 
 ## Finalization {#generic-finalization}
 
