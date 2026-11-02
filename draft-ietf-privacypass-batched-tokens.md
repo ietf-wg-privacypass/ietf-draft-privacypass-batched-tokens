@@ -90,9 +90,7 @@ draft-01
 This document specifies two variants of Privacy Pass issuance protocols (as
 defined in {{?RFC9576}}) that allow for batched issuance of tokens. This allows
 clients to request more than one token at a time and for issuers to issue more
-than one token at a time. Clients obtain the Issuer Request URL and keys as
-described in {{Section 4 of !RFC9578}}. The request media type identifies the
-variant.
+than one token at a time.
 
 For both variants, issuance responses are specific to the Client's request and
 are not intended for reuse by HTTP caches. For instance, Issuers may include
@@ -204,6 +202,11 @@ struct {
 } StructWithVectors;
 ~~~
 
+# Issuer Configuration
+
+Clients obtain the Issuer Request URL and keys as described in
+{{Section 4 of !RFC9578}}. The request media type identifies the variant.
+
 # Amortized Privately Verifiable Token Batch Issuance {#amortized-batch}
 
 This section describes a batched issuance protocol for select token types,
@@ -272,9 +275,10 @@ The structure fields are defined as follows:
 
 The Client then generates an HTTP POST request to send to the Issuer Request
 URL, with the AmortizedBatchTokenRequest as the content. The media type for this
-request MUST be "application/private-token-amortized-batch-request". If not, the
-Issuer returns status code 415. An example request for the Issuer Request
-URL "https://issuer.example.net/request" is shown below.
+request MUST be "application/private-token-amortized-batch-request". The Issuer
+can use a 415 (Unsupported Media Type) status code for unsupported media types.
+An example request for the Issuer Request URL
+"https://issuer.example.net/request" is shown below.
 
 ~~~
 POST /request HTTP/1.1
@@ -301,14 +305,14 @@ Upon receipt of the request, the Issuer validates the following conditions:
   AmortizedBatchTokenRequest.blinded_msgs, is less than or equal to the
   number of tokens that the issuer can issue in a single batch.
 
-If any of these conditions is not met, the Issuer returns an HTTP 400
-(Bad Request) error to the client.
+If any of these conditions is not met, the Issuer can return a 4xx status code,
+for instance 422 (Unprocessable Content).
 
 The Issuer then tries to deseralize the i-th element of
 AmortizedBatchTokenRequest.blinded_msgs using DeserializeElement from
 {{Section 2.1 of OPRF}}, yielding `blinded_element_i` of type `Element`. If this
 fails for any of the AmortizedBatchTokenRequest.blinded_msgs values, the
-Issuer returns an HTTP 400 (Bad Request) error to the client.
+Issuer can return a 4xx status code, for instance 422 (Unprocessable Content).
 Otherwise, if the Issuer is willing to produce a token to the Client, the issuer
 forms a list of `Element` values, denoted `blinded_elements`, and computes a
 blinded response as follows:
@@ -519,9 +523,10 @@ The structure fields are defined as follows:
 
 The Client then generates an HTTP POST request to send to the Issuer Request
 URL, with the GenericBatchTokenRequest as the content. The media type for this
-request MUST be "application/private-token-generic-batch-request". If not, the
-Issuer returns status code 415. An example request for the Issuer Request
-URL "https://issuer.example.net/request" is shown below.
+request MUST be "application/private-token-generic-batch-request". The Issuer
+can use a 415 (Unsupported Media Type) status code for unsupported media types.
+An example request for the Issuer Request URL
+"https://issuer.example.net/request" is shown below.
 
 ~~~
 POST /request HTTP/1.1
@@ -537,8 +542,8 @@ Content-Length: <Length of GenericBatchTokenRequest>
 
 The Issuer then tries to deserialize the first 2 bytes of the i-th element of
 GenericBatchTokenRequest.generic_token_requests. If this is not a token type
-registered with IANA, the Issuer returns an HTTP 400 (Bad Request) error to the
-client. The issuer creates a GenericBatchTokenResponse structured as follows:
+registered with IANA, the Issuer can return a 4xx status code.
+The issuer creates a GenericBatchTokenResponse structured as follows:
 
 ~~~tls
 struct {
@@ -592,8 +597,7 @@ in which the unissued tokens are absent. For instance, an Issuer can refuse
 requests for tokens of the same token type that refer to more than one
 `truncated_token_key_id`.
 
-If the Issuer decides not to issue any tokens, it returns an HTTP 400 (Bad
-Request) error to the client.
+If the Issuer decides not to issue any tokens, it can return a 4xx status code.
 
 ## Finalization {#generic-finalization}
 
