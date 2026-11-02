@@ -45,6 +45,18 @@ one token at a time and for issuers to issue more than one token at a time.
 
 RFC EDITOR PLEASE DELETE THIS SECTION.
 
+draft-10
+
+ - Update HTTP status handling, partial issuance, and caching guidance
+ - Accept non-minimal variable-length integer encodings
+ - Clarify issuance roles, finalization, and shared-key limits
+ - Add batching privacy considerations and fix editorial issues
+
+draft-09
+
+ - Update references and clarify token type registration
+ - Clarify security considerations for generic batching
+
 draft-08
 
  - Fix indentation
