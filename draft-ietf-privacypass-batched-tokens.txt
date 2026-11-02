@@ -5,9 +5,9 @@
 Network Working Group                                          R. Robert
 Internet-Draft                                               Phoenix R&D
 Intended status: Standards Track                              C. A. Wood
-Expires: 5 May 2027                                           T. Meunier
+Expires: 6 May 2027                                           T. Meunier
                                                               Cloudflare
-                                                         1 November 2026
+                                                         2 November 2026
 
 
                     Batched Token Issuance Protocol
@@ -35,7 +35,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 May 2027.
+   This Internet-Draft will expire on 6 May 2027.
 
 Copyright Notice
 
@@ -60,32 +60,33 @@ Table of Contents
    4.  Presentation Language
      4.1.  Optional Value
      4.2.  Variable-Size Vector Length Headers
-   5.  Amortized Privately Verifiable Token Batch Issuance
-     5.1.  Client-to-Issuer Request
-     5.2.  Issuer-to-Client Response
-     5.3.  Finalization
-   6.  Generic Token Batch Issuance
+   5.  Issuer Configuration
+   6.  Amortized Privately Verifiable Token Batch Issuance
      6.1.  Client-to-Issuer Request
      6.2.  Issuer-to-Client Response
      6.3.  Finalization
-   7.  Security considerations
-     7.1.  Amortized Privately Verifiable Token Batch Issuance
-     7.2.  Generic Token Batch Issuance
-   8.  Privacy considerations
-   9.  IANA considerations
-     9.1.  Token Type
-     9.2.  Media Types
-       9.2.1.  "application/private-token-amortized-batch-request"
+   7.  Generic Token Batch Issuance
+     7.1.  Client-to-Issuer Request
+     7.2.  Issuer-to-Client Response
+     7.3.  Finalization
+   8.  Security considerations
+     8.1.  Amortized Privately Verifiable Token Batch Issuance
+     8.2.  Generic Token Batch Issuance
+   9.  Privacy considerations
+   10. IANA considerations
+     10.1.  Token Type
+     10.2.  Media Types
+       10.2.1.  "application/private-token-amortized-batch-request"
                media type
-       9.2.2.  "application/private-token-amortized-batch-response"
+       10.2.2.  "application/private-token-amortized-batch-response"
                media type
-       9.2.3.  "application/private-token-generic-batch-request" media
-               type
-       9.2.4.  "application/private-token-generic-batch-response"
+       10.2.3.  "application/private-token-generic-batch-request"
                media type
-   10. References
-     10.1.  Normative References
-     10.2.  Informative References
+       10.2.4.  "application/private-token-generic-batch-response"
+               media type
+   11. References
+     11.1.  Normative References
+     11.2.  Informative References
    Appendix A.  Test Vectors
      A.1.  Privately Verifiable Token Issuance - VOPRF (ristretto255,
            SHA-512)
@@ -153,9 +154,7 @@ Table of Contents
    This document specifies two variants of Privacy Pass issuance
    protocols (as defined in [RFC9576]) that allow for batched issuance
    of tokens.  This allows clients to request more than one token at a
-   time and for issuers to issue more than one token at a time.  Clients
-   obtain the Issuer Request URL and keys as described in Section 4 of
-   [RFC9578].  The request media type identifies the variant.
+   time and for issuers to issue more than one token at a time.
 
    For both variants, issuance responses are specific to the Client's
    request and are not intended for reuse by HTTP caches.  For instance,
@@ -176,7 +175,7 @@ Table of Contents
    in some cases, they cannot take advantage of cryptographic
    optimizations.
 
-   The first variant (Section 5) of the issuance protocol builds upon
+   The first variant (Section 6) of the issuance protocol builds upon
    the privately verifiable issuance protocol in [RFC9578] that uses
    VOPRF [OPRF], and allows for batched issuance of tokens and amortizes
    the cost of zero knowledge proofs.  This allows clients to request
@@ -185,14 +184,14 @@ Table of Contents
    reduces the per-token cost, approaching a factor of 2 for large
    batches.
 
-   The second variant (Section 6) of the issuance protocol introduces a
+   The second variant (Section 7) of the issuance protocol introduces a
    new Client-Issuer communication method, which allows for batched
    issuance of generic token types.  This allows clients to request more
    than one token at a time and for issuers to issue more than one token
    at a time.  This variant has no other effect than batching requests
    and responses and the issuance performance remains linear.
 
-   This document registers a new token type (Section 9.1) that can
+   This document registers a new token type (Section 10.1) that can
    either be used with the Privately Verifiable Issuance Protocol as
    defined in [RFC9578], or with the Amortized Privately Verifiable
    Batch Issuance Protocol defined below.
@@ -217,7 +216,7 @@ Table of Contents
    especially where a large number of clients need to fetch a large
    number of tokens, this may introduce performance bottlenecks.
 
-   Amortized Privately Verifiable Token Issuance Section 5 improves upon
+   Amortized Privately Verifiable Token Issuance Section 6 improves upon
    the basic Privately Verifiable Token issuance protocol in the
    following key ways:
 
@@ -229,7 +228,7 @@ Table of Contents
        cost of the VOPRF proof generation and verification,
        respectively.
 
-   Generic Token Batch Issuance Section 6 allows for a single
+   Generic Token Batch Issuance Section 7 allows for a single
    GenericBatchTokenRequest to be sent that encompasses multiple token
    requests.  This improves upon the basic issuance protocols defined in
    [RFC9578] in the following key ways:
@@ -281,7 +280,13 @@ Table of Contents
        opaque variable<V>;
    } StructWithVectors;
 
-5.  Amortized Privately Verifiable Token Batch Issuance
+5.  Issuer Configuration
+
+   Clients obtain the Issuer Request URL and keys as described in
+   Section 4 of [RFC9578].  The request media type identifies the
+   variant.
+
+6.  Amortized Privately Verifiable Token Batch Issuance
 
    This section describes a batched issuance protocol for select token
    types, including 0x0001 (defined in [RFC9578]) and 0x0005 (defined in
@@ -289,7 +294,7 @@ Table of Contents
    Batch Issuance defined below.  It does so by requiring the same key
    to be used by all token requests.
 
-5.1.  Client-to-Issuer Request
+6.1.  Client-to-Issuer Request
 
    Except where specified otherwise, the client follows the same
    protocol as described in [RFC9578], Section 5.1.
@@ -348,9 +353,10 @@ Table of Contents
    The Client then generates an HTTP POST request to send to the Issuer
    Request URL, with the AmortizedBatchTokenRequest as the content.  The
    media type for this request MUST be "application/private-token-
-   amortized-batch-request".  If not, the Issuer returns status code
-   415.  An example request for the Issuer Request URL
-   "https://issuer.example.net/request" is shown below.
+   amortized-batch-request".  The Issuer can use a 415 (Unsupported
+   Media Type) status code for unsupported media types.  An example
+   request for the Issuer Request URL "https://issuer.example.net/
+   request" is shown below.
 
    POST /request HTTP/1.1
    Host: issuer.example.net
@@ -360,7 +366,7 @@ Table of Contents
 
    <Bytes containing the AmortizedBatchTokenRequest>
 
-5.2.  Issuer-to-Client Response
+6.2.  Issuer-to-Client Response
 
    Except where specified otherwise, the client follows the same
    protocol as described in [RFC9578], Section 5.2.
@@ -378,17 +384,17 @@ Table of Contents
       AmortizedBatchTokenRequest.blinded_msgs, is less than or equal to
       the number of tokens that the issuer can issue in a single batch.
 
-   If any of these conditions is not met, the Issuer returns an HTTP 400
-   (Bad Request) error to the client.
+   If any of these conditions is not met, the Issuer rejects the
+   request.
 
    The Issuer then tries to deseralize the i-th element of
    AmortizedBatchTokenRequest.blinded_msgs using DeserializeElement from
    Section 2.1 of [OPRF], yielding blinded_element_i of type Element.
    If this fails for any of the AmortizedBatchTokenRequest.blinded_msgs
-   values, the Issuer returns an HTTP 400 (Bad Request) error to the
-   client.  Otherwise, if the Issuer is willing to produce a token to
-   the Client, the issuer forms a list of Element values, denoted
-   blinded_elements, and computes a blinded response as follows:
+   values, the Issuer rejects the request.  Otherwise, if the Issuer is
+   willing to produce a token to the Client, the issuer forms a list of
+   Element values, denoted blinded_elements, and computes a blinded
+   response as follows:
 
    server_context = SetupVOPRFServer(ciphersuiteID, skI, pkI)
 
@@ -469,7 +475,7 @@ Table of Contents
 
    <Bytes containing the AmortizedBatchTokenResponse>
 
-5.3.  Finalization
+6.3.  Finalization
 
    Upon receipt, the Client handles the response and, if successful,
    deserializes the body values
@@ -526,7 +532,7 @@ Table of Contents
    If this succeeds, the Client then constructs Nr Token values, where
    authenticator is the i-th Nh-byte length slice of
    authenticator_values that corresponds to nonce, the i-th nonce that
-   was sampled in Section 5.1:
+   was sampled in Section 6.1:
 
    struct {
        uint16_t token_type; /* 0x0001 or 0x0005 */
@@ -542,14 +548,14 @@ Table of Contents
    If the FinalizeBatch function fails, the Client aborts the protocol.
    Token verification works exactly as specified in [RFC9578].
 
-6.  Generic Token Batch Issuance
+7.  Generic Token Batch Issuance
 
    This section describes an issuance protocol mechanism for issuing
    multiple tokens in one round trip between Client and Issuer.  A
    generic batch token request can contain token requests for any token
    type.
 
-6.1.  Client-to-Issuer Request
+7.1.  Client-to-Issuer Request
 
    The Client first generates all of the individual TokenRequest
    structures that are intended to be batched together.  This request
@@ -590,9 +596,10 @@ Table of Contents
    The Client then generates an HTTP POST request to send to the Issuer
    Request URL, with the GenericBatchTokenRequest as the content.  The
    media type for this request MUST be "application/private-token-
-   generic-batch-request".  If not, the Issuer returns status code 415.
-   An example request for the Issuer Request URL
-   "https://issuer.example.net/request" is shown below.
+   generic-batch-request".  The Issuer can use a 415 (Unsupported Media
+   Type) status code for unsupported media types.  An example request
+   for the Issuer Request URL "https://issuer.example.net/request" is
+   shown below.
 
    POST /request HTTP/1.1
    Host: issuer.example.net
@@ -602,13 +609,13 @@ Table of Contents
 
    <Bytes containing the GenericBatchTokenRequest>
 
-6.2.  Issuer-to-Client Response
+7.2.  Issuer-to-Client Response
 
    The Issuer then tries to deserialize the first 2 bytes of the i-th
    element of GenericBatchTokenRequest.generic_token_requests.  If this
-   is not a token type registered with IANA, the Issuer returns an HTTP
-   400 (Bad Request) error to the client.  The issuer creates a
-   GenericBatchTokenResponse structured as follows:
+   is not a token type registered with IANA, the Issuer rejects the
+   request.  The issuer creates a GenericBatchTokenResponse structured
+   as follows:
 
    struct {
        uint16_t token_type;
@@ -659,10 +666,10 @@ Table of Contents
    Issuer can refuse requests for tokens of the same token type that
    refer to more than one truncated_token_key_id.
 
-   If the Issuer decides not to issue any tokens, it returns an HTTP 400
-   (Bad Request) error to the client.
+   If the Issuer decides not to issue any tokens, it rejects the
+   request.
 
-6.3.  Finalization
+7.3.  Finalization
 
    The Client processes each element of
    GenericBatchTokenResponse.optional_token_responses in request order.
@@ -671,9 +678,9 @@ Table of Contents
    the TokenResponse using the matching TokenRequest and the procedure
    defined by the token type.
 
-7.  Security considerations
+8.  Security considerations
 
-7.1.  Amortized Privately Verifiable Token Batch Issuance
+8.1.  Amortized Privately Verifiable Token Batch Issuance
 
    Implementors should be aware of the security considerations described
    in [OPRF], Section 7.2.3 and implement mitigation mechanisms.
@@ -683,7 +690,7 @@ Table of Contents
    An Issuer can use the same key for single-token and batched issuance.
    These limits then apply to both.
 
-7.2.  Generic Token Batch Issuance
+8.2.  Generic Token Batch Issuance
 
    Implementors should be aware of the inherent linear cost of this
    token type.  An Issuer MAY ignore GenericTokenRequest if the number
@@ -694,7 +701,7 @@ Table of Contents
    considerations of its token type, for instance Section 7 of [RFC9578]
    for type 0x0002 tokens (Blind RSA, 2048-bit).
 
-8.  Privacy considerations
+9.  Privacy considerations
 
    The privacy considerations described in Section 6 of [RFC9576] apply
    to both variants.  The Issuer observes which token requests are
@@ -703,11 +710,11 @@ Table of Contents
    issuance timing can contribute to the side channels described in
    Section 6.3 of [RFC9576].
 
-9.  IANA considerations
+10.  IANA considerations
 
    This section contains IANA codepoint allocation requests.
 
-9.1.  Token Type
+10.1.  Token Type
 
    RFC EDITOR: please replace "RFC XXXX" with the RFC number of this
    document, and 0x0005 with the value assigned by IANA, throughout this
@@ -748,7 +755,7 @@ Table of Contents
    Section 4.1 of [OPRF] and uses the ristretto255 group defined in
    [RISTRETTO].
 
-9.2.  Media Types
+10.2.  Media Types
 
    The following entries should be added to the IANA "media types"
    registry:
@@ -764,19 +771,19 @@ Table of Contents
    The templates for these entries are listed below and the reference
    should be this RFC.
 
-9.2.1.  "application/private-token-amortized-batch-request" media type
+10.2.1.  "application/private-token-amortized-batch-request" media type
 
    Type name:  application
    Subtype name:  private-token-amortized-batch-request
    Required parameters:  N/A
    Optional parameters:  N/A
    Encoding considerations:  "binary"
-   Security considerations:  see Section 7
+   Security considerations:  see Section 8
    Interoperability considerations:  N/A
    Published specification:  this specification
    Applications that use this media type:  Applications that want to
       issue or facilitate issuance of Privacy Pass Amortized Privately
-      Verifiable tokens as defined in Section 5, including Privacy Pass
+      Verifiable tokens as defined in Section 6, including Privacy Pass
       issuer applications themselves.
    Fragment identifier considerations:  N/A
    Additional information:  Magic number(s):  N/A
@@ -790,19 +797,19 @@ Table of Contents
    Author:  see Authors' Addresses section
    Change controller:  IETF
 
-9.2.2.  "application/private-token-amortized-batch-response" media type
+10.2.2.  "application/private-token-amortized-batch-response" media type
 
    Type name:  application
    Subtype name:  private-token-amortized-batch-response
    Required parameters:  N/A
    Optional parameters:  N/A
    Encoding considerations:  "binary"
-   Security considerations:  see Section 7
+   Security considerations:  see Section 8
    Interoperability considerations:  N/A
    Published specification:  this specification
    Applications that use this media type:  Applications that want to
       issue or facilitate issuance of Privacy Pass Amortized Privately
-      Verifiable tokens as defined in Section 5, including Privacy Pass
+      Verifiable tokens as defined in Section 6, including Privacy Pass
       issuer applications themselves.
    Fragment identifier considerations:  N/A
    Additional information:  Magic number(s):  N/A
@@ -816,19 +823,19 @@ Table of Contents
    Author:  see Authors' Addresses section
    Change controller:  IETF
 
-9.2.3.  "application/private-token-generic-batch-request" media type
+10.2.3.  "application/private-token-generic-batch-request" media type
 
    Type name:  application
    Subtype name:  private-token-generic-batch-request
    Required parameters:  N/A
    Optional parameters:  N/A
    Encoding considerations:  "binary"
-   Security considerations:  see Section 7
+   Security considerations:  see Section 8
    Interoperability considerations:  N/A
    Published specification:  this specification
    Applications that use this media type:  Applications that want to
       issue or facilitate issuance of Privacy Pass Generic tokens as
-      defined in Section 6, including Privacy Pass issuer applications
+      defined in Section 7, including Privacy Pass issuer applications
       themselves.
    Fragment identifier considerations:  N/A
    Additional information:  Magic number(s):  N/A
@@ -842,19 +849,19 @@ Table of Contents
    Author:  see Authors' Addresses section
    Change controller:  IETF
 
-9.2.4.  "application/private-token-generic-batch-response" media type
+10.2.4.  "application/private-token-generic-batch-response" media type
 
    Type name:  application
    Subtype name:  private-token-generic-batch-response
    Required parameters:  N/A
    Optional parameters:  N/A
    Encoding considerations:  "binary"
-   Security considerations:  see Section 7
+   Security considerations:  see Section 8
    Interoperability considerations:  N/A
    Published specification:  this specification
    Applications that use this media type:  Applications that want to
       issue or facilitate issuance of Privacy Pass Generic tokens as
-      defined in Section 6, including Privacy Pass issuer applications
+      defined in Section 7, including Privacy Pass issuer applications
       themselves.
    Fragment identifier considerations:  N/A
    Additional information:  Magic number(s):  N/A
@@ -868,9 +875,9 @@ Table of Contents
    Author:  see Authors' Addresses section
    Change controller:  IETF
 
-10.  References
+11.  References
 
-10.1.  Normative References
+11.1.  Normative References
 
    [AUTHSCHEME]
               Pauly, T., Valdez, S., and C. A. Wood, "The Privacy Pass
@@ -912,7 +919,7 @@ Table of Contents
               decaf448 Groups", RFC 9496, DOI 10.17487/RFC9496, December
               2023, <https://www.rfc-editor.org/rfc/rfc9496>.
 
-10.2.  Informative References
+11.2.  Informative References
 
    [HTTP3]    Bishop, M., Ed., "HTTP/3", RFC 9114, DOI 10.17487/RFC9114,
               June 2022, <https://www.rfc-editor.org/rfc/rfc9114>.
@@ -947,17 +954,17 @@ A.1.  Privately Verifiable Token Issuance - VOPRF (ristretto255, SHA-
       (Section 2.1 of [OPRF]) and represented as a hexadecimal string.
 
    *  pkS: The Issuer Public Key, serialized according to the encoding
-      in Section 9.1.
+      in Section 10.1.
 
    *  token_challenge: A randomly generated TokenChallenge structure,
       represented as a hexadecimal string. nonce: The 32-byte Client
-      nonce generated according to Section 5.1, represented as a
+      nonce generated according to Section 6.1, represented as a
       hexadecimal string. blind: The blind used when computing the OPRF
       blinded message, serialized using SerializeScalar (Section 2.1 of
       [OPRF]) and represented as a hexadecimal string. token_request:
-      The TokenRequest message constructed according to Section 5.1,
+      The TokenRequest message constructed according to Section 6.1,
       represented as a hexadecimal string. token_response: The
-      TokenResponse message constructed according to Section 5.2,
+      TokenResponse message constructed according to Section 6.2,
       represented as a hexadecimal string. token: The output token from
       the protocol, represented as a hexadecimal string.
 
@@ -1215,17 +1222,17 @@ A.2.  Amortized Privately Verifiable Token Issuance - VOPRF (P-384, SHA-
       represented as a hexadecimal string.
 
    *  nonces: An array of 32-byte client nonces generated according to
-      Section 5.1, represented as a hexadecimal string.
+      Section 6.1, represented as a hexadecimal string.
 
    *  blinds: An array of blinds used when computing the OPRF blinded
       message, serialized using SerializeScalar from Section 2.1 of
       [OPRF] and represented as a hexadecimal string.
 
    *  token_request: The AmortizedBatchTokenRequest message constructed
-      according to Section 5.1, represented as a hexadecimal string.
+      according to Section 6.1, represented as a hexadecimal string.
 
    *  token_response: The BatchedTokenResponse message constructed
-      according to Section 5.2, represented as a hexadecimal string.
+      according to Section 6.2, represented as a hexadecimal string.
 
    *  tokens: An array of output Tokens from the protocol, represented
       as a hexadecimal string.
@@ -1866,23 +1873,23 @@ A.3.  Amortized Privately Verifiable Token Batch Issuance - VOPRF
       Section 2.1 of [OPRF] and represented as a hexadecimal string.
 
    *  pkS: The Issuer Public Key, serialized according to the encoding
-      in Section 9.1.
+      in Section 10.1.
 
    *  token_challenge: A randomly generated TokenChallenge structure,
       represented as a hexadecimal string.
 
    *  nonces: An array of 32-byte client nonces generated according to
-      Section 5.1, represented as a hexadecimal string.
+      Section 6.1, represented as a hexadecimal string.
 
    *  blinds: An array of blinds used when computing the OPRF blinded
       message, serialized using SerializeScalar from Section 2.1 of
       [OPRF] and represented as a hexadecimal string.
 
    *  token_request: The AmortizedBatchTokenRequest message constructed
-      according to Section 5.1, represented as a hexadecimal string.
+      according to Section 6.1, represented as a hexadecimal string.
 
    *  token_response: The BatchedTokenResponse message constructed
-      according to Section 5.2, represented as a hexadecimal string.
+      according to Section 6.2, represented as a hexadecimal string.
 
    *  tokens: An array of output Tokens from the protocol, represented
       as a hexadecimal string.
@@ -2566,10 +2573,10 @@ A.4.  Generic Token Batch Issuance
       hexadecimal string.
 
    *  token_request: The AmortizedBatchTokenRequest message constructed
-      according to Section 6.1, represented as a hexadecimal string.
+      according to Section 7.1, represented as a hexadecimal string.
 
    *  token_response: The BatchedTokenResponse message constructed
-      according to Section 6.2, represented as a hexadecimal string.
+      according to Section 7.2, represented as a hexadecimal string.
 
    Note to implementers: Generic batched token is an issuance protocol
    that does not define a token type.  You should decide which test
