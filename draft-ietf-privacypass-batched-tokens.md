@@ -100,7 +100,7 @@ draft-01
 # Introduction
 
 This document specifies two variants of Privacy Pass issuance protocols (as
-defined in {{?RFC9576}}) that allow for batched issuance of tokens. This allows
+defined in {{!RFC9576}}) that allow for batched issuance of tokens. This allows
 clients to request more than one token at a time and for issuers to issue more
 than one token at a time.
 
